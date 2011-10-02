@@ -425,7 +425,7 @@
     "message_type": "retrieved",
     "signal": {
         "units": "mv",
-        "data": [(500)
+        "data": [
             179.6875,
             172.85156,
             158.20312,
@@ -467,151 +467,112 @@
 </div></blockquote>
 <p>Specifically for signal-based objects (Analog Signal, Irregularly Sampled Signal) the following GET request parameters are supported:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>* [start_time] - start time of the required range (calculated using the same time unit as the t_start of the signal)
-* [end_time] - end time of the required range (calculated using the same time unit as the t_start of the signal)
-* [duration] - duration of the required range (calculated using the same time unit as the t_start of the signal)
-* [start_index] - start index of the required datarange (an index of the starting datapoint)
-* [end_index] - end index of the required range (an index of the end datapoint)
-* [samples_count] - number of points of the required range (an index of the end datapoint)
-* [downsample] - number of datapoints. This parameter is used to indicate whether downsampling is needed. The downsampling is applied on top of the selected data range using other parameters (if specified).</pre>
-</div>
+<div><ul class="simple">
+<li>[start_time] - start time of the required range (calculated using the same time unit as the t_start of the signal)</li>
+<li>[end_time] - end time of the required range (calculated using the same time unit as the t_start of the signal)</li>
+<li>[duration] - duration of the required range (calculated using the same time unit as the t_start of the signal)</li>
+<li>[start_index] - start index of the required datarange (an index of the starting datapoint)</li>
+<li>[end_index] - end index of the required range (an index of the end datapoint)</li>
+<li>[samples_count] - number of points of the required range (an index of the end datapoint)</li>
+<li>[downsample] - number of datapoints. This parameter is used to indicate whether downsampling is needed. The downsampling is applied on top of the selected data range using other parameters (if specified).</li>
+</ul>
 </div></blockquote>
 <p><em>Note. Some reasonable combinations of these parameters (like &#8216; &#8216; or &#8216; &#8216; will return a correct response. Using redundant number of parameters will lead to their disregard, useless combinations may throw a 400 bad request.</em></p>
 <p>For example, send the following GET request</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /electrophysiology/analogsignal_11/?start_index=20&amp;end_index=100&amp;downsample=10</p>
-<p>to get the Analog Signal range with datapoints as of 20 to 100, downsampled from 81 point to 10:</p>
-<blockquote>
-<div></div></blockquote>
-<dl class="docutils">
-<dt>{</dt>
-<dd><p class="first">&#8220;neo_id&#8221;: &#8220;analogsignal_11&#8221;,
-&#8220;name&#8221;: &#8220;LFP-FIX-500&#8221;,
-&#8220;author&#8221;: &#8220;bob&#8221;,
-&#8220;analogsignalarray&#8221;: null,
-&#8220;t_start&#8221;: {</p>
-<blockquote>
-<div>&#8220;units&#8221;: &#8220;ms&#8221;,
-&#8220;data&#8221;: 0</div></blockquote>
-<p>},
-&#8220;recordingchannel&#8221;: null,
-&#8220;sampling_rate&#8221;: {</p>
-<blockquote>
-<div>&#8220;units&#8221;: &#8220;Hz&#8221;,
-&#8220;data&#8221;: 20000</div></blockquote>
-<p>},
-&#8220;date_created&#8221;: &#8220;2011-07-25 09:52:39&#8221;,
-&#8220;logged_in_as&#8221;: &#8220;bob&#8221;,
-&#8220;segment&#8221;: &#8220;segment_5&#8221;,
-&#8220;signal&#8221;: {</p>
-<blockquote>
-<div><p>&#8220;units&#8221;: &#8220;mV&#8221;,
-&#8220;data&#8221;: [(10)</p>
-<blockquote>
-<div>0.46432680131911985,
-0.5456842091662228,
-0.6783521384934397,
-0.5167997997773193,
-0.5030103845118078,
-0.32649586390407914,
-0.5636338450661179,
-0.5419234347214149,
-0.44553808099036957,
-0.6578889505696893]</div></blockquote>
-<p>},</p>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/11/?start_index=20&amp;end_index=100&amp;downsample=10</pre>
+</div>
 </div></blockquote>
-<p class="last">&#8220;size&#8221;: 240</p>
-</dd>
-</dl>
-<p>}</p>
-<p>Basically, for Analog Signal the range, provided in the request parameters, is just two sequential numbers, between which the requested data array will be retrieved. However, for Irregularly Sampled Analog Signal, this will work in a slightly different way. The range requested will be calculated using &#8220;times&#8221; array, attached to the object.</p>
-<p>When a SpikeTrain is requested, that range of waveforms (if defined) will be retrieved, which fall into the requested range. The comparison is made matching each waveform to the time, provided in the time array.</p>
-<p>&#8216;&#8217;&#8216;2.4 Getting object relationships only&#8217;&#8216;&#8217;</p>
-<p>According to the NEO data model, all objects in the scheme are connected. You may get the both &#8220;parent-to-child&#8221; (like which Segments are contained in a Block) and &#8220;child-to-parent&#8221; (like from which Recording Point an Analog Signal was recorded) relations by sending request to /electrophysiology/children/&lt;neo_id&gt;/ or /electrophysiology/parents/&lt;neo_id&gt;/ accordingly. In the tables below you may find supported objects of either type:</p>
-<p>For example, to request a list of parents for Analog Signal, send the following GET request</p>
+<p>to get the Analog Signal range with datapoints as of 30 to 100, downsampled from 71 points to 10:</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /electrophysiology/parents/analogsignal_34</p>
-<p>A response should look similar to this:</p>
-<blockquote>
-<div></div></blockquote>
-<dl class="docutils">
-<dt>[{</dt>
-<dd>&#8220;neo_id&#8221;: analogsignal_34,
-&#8220;segment&#8221;: &#8220;segment_1&#8221;,
-&#8220;recordingchannel&#8221;: &#8220;recordingchannel_12&#8221;,
-&#8220;message&#8221;: &#8220;Here is the list of object parents.&#8221;</dd>
-</dl>
-<p>}]</p>
-<p>Accordingly, if you want to receive a contents of the certain block, send an HTTP request to &#8220;/electrophysiology/children/block_87&#8221; (assuming block has id=87). If the block contains both segments and recording channel groups, you&#8217;ll get the following response:</p>
-<blockquote>
-<div></div></blockquote>
-<dl class="docutils">
-<dt>[{</dt>
-<dd><p class="first">&#8220;neo_id&#8221;: &#8220;block_87&#8221;,
-&#8220;segment&#8221;: [</p>
-<blockquote>
-<div>&#8220;segment_193&#8221;,
-&#8220;segment_194&#8221;,
-&#8220;segment_195&#8221;</div></blockquote>
-<p>],
-&#8220;recordingchannelgroup&#8221;: [</p>
-<blockquote>
-<div>&#8220;recordingchannelgroup_1&#8221;,
-&#8220;recordingchannelgroup_2&#8221;,</div></blockquote>
-<p class="last">],
-&#8220;message&#8221;: &#8220;Here are the contents of the requested object.&#8221;</p>
-</dd>
-</dl>
-<p>}]</p>
-<p>&#8216;&#8217;Note. When some of the parents / children are not set up, an empty string / list will appear in the response.&#8217;&#8217;
-&#8216;&#8217;Note. While updating objects, please use only child-to-parent relationships (like specify to which segment (parent) particular event (child)  belongs). Parent-to-child relations will not be parsed and saved.&#8217;&#8216;</p>
-<p>&#8216;&#8217;&#8216;2.5 Query data objects - get an object list&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;neo_id&quot;</span><span class="p">:</span> <span class="s">&quot;analogsignal_952&quot;</span><span class="p">,</span>
+    <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;LFP FIX Signal-5&quot;</span><span class="p">,</span>
+    <span class="s">&quot;author&quot;</span><span class="p">:</span> <span class="s">&quot;ray&quot;</span><span class="p">,</span>
+    <span class="s">&quot;message_type&quot;</span><span class="p">:</span> <span class="s">&quot;retrieved&quot;</span><span class="p">,</span>
+    <span class="s">&quot;signal&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;units&quot;</span><span class="p">:</span> <span class="s">&quot;mv&quot;</span><span class="p">,</span>
+    <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="mf">68.57667133722775</span><span class="p">,</span>
+        <span class="mf">77.09840224197298</span><span class="p">,</span>
+        <span class="mf">43.238698121320084</span><span class="p">,</span>
+        <span class="mf">17.58256832247581</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">2.4392013587548016</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">2.2720730942678244</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">13.626765036880082</span><span class="p">,</span>
+        <span class="mf">40.225247238106235</span><span class="p">,</span>
+        <span class="mf">85.47298589746826</span><span class="p">,</span>
+        <span class="mf">52.89693899799824</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s">&quot;t_start&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;units&quot;</span><span class="p">:</span> <span class="s">&quot;ms&quot;</span><span class="p">,</span>
+        <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="mf">1.5</span>
+    <span class="p">},</span>
+    <span class="s">&quot;recordingchannel&quot;</span><span class="p">:</span> <span class="s">&quot;recordingchannel_13&quot;</span><span class="p">,</span>
+    <span class="s">&quot;date_created&quot;</span><span class="p">:</span> <span class="s">&quot;2011-08-22 11:43:56&quot;</span><span class="p">,</span>
+    <span class="s">&quot;sampling_rate&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;units&quot;</span><span class="p">:</span> <span class="s">&quot;hz&quot;</span><span class="p">,</span>
+        <span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="mi">20000</span>
+    <span class="p">},</span>
+    <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Object retrieved successfully.&quot;</span><span class="p">,</span>
+    <span class="s">&quot;logged_in_as&quot;</span><span class="p">:</span> <span class="s">&quot;ray&quot;</span><span class="p">,</span>
+    <span class="s">&quot;segment&quot;</span><span class="p">:</span> <span class="s">&quot;segment_190&quot;</span><span class="p">,</span>
+    <span class="s">&quot;analogsignalarray&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">&quot;size&quot;</span><span class="p">:</span> <span class="mi">12000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Notice that the &#8220;t_start&#8221; data field in the response has a data value of 1.5, indicating the start of the retrieved signal.</p>
+</div>
+<div class="section" id="getting-a-list-of-objects">
+<h4>2.4 Getting a List of Objects<a class="headerlink" href="#getting-a-list-of-objects" title="Permalink to this headline">¶</a></h4>
 <p>Use the following HTTP GET</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /electrophysiology/select/&lt;object_type&gt;/?params</p>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;object_type&gt;/?params</pre>
+</div>
+</div></blockquote>
 <p>to query NEO objects of a specific type. For example, if you want to get all Analog Signals available for a specific user, send the following request</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /electrophysiology/select/analogsignal/</p>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/select/analogsignal/</pre>
+</div>
+</div></blockquote>
 <p>You receive a list of Analog Signals IDs as a response:</p>
 <blockquote>
-<div></div></blockquote>
-<dl class="docutils">
-<dt>[{</dt>
-<dd><dl class="first docutils">
-<dt>&#8220;selected&#8221;: [</dt>
-<dd>&#8220;analogsignal_10&#8221;,
-&#8220;analogsignal_11&#8221;,
-&#8220;analogsignal_12&#8221;,
-&#8220;analogsignal_13&#8221;,
-&#8220;analogsignal_14&#8221;,
-&#8220;analogsignal_15&#8221;,
-&#8220;analogsignal_16&#8221;,
-&#8220;analogsignal_17&#8221;,
-&#8220;analogsignal_18&#8221;,
-&#8220;analogsignal_19&#8221;,
-&#8220;analogsignal_20&#8221;,
-&#8220;analogsignal_21&#8221;</dd>
-</dl>
-<p class="last">]
-&#8220;object_total&#8221;: 21,
-&#8220;object_selected&#8221;: 12,
-&#8220;selected_as_of&#8221;: 10,
-&#8220;message&#8221;: &#8220;Here is the list of requested objects.&#8221;</p>
-</dd>
-</dl>
-<p>}]</p>
-<p>By default the API will return the first 1000 data objects in the response. This saves bandwidth and improves performance. A response will contain &#8220;object_total&#8221; parameter, with the total number of available objects. Use the &#8220;range_start&#8221; parameter indicating the starting point of the range of the whole list of objects (for example, 0 or 1499) to retrieve the rest of the objects. Just send a &#8220;range_start&#8221; parameter in the GET request, like</p>
+<div><div class="highlight-python"><pre>{
+    "object_selected": 10,
+    "message_type": "object_selected",
+    "object_total": 10,
+    "selected": [
+        "analogsignal_12",
+        "analogsignal_13",
+        "analogsignal_14",
+        "analogsignal_15",
+        "analogsignal_16",
+        "analogsignal_17",
+        "analogsignal_18",
+        "analogsignal_19",
+        "analogsignal_20",
+        "analogsignal_21"]
+    "message": "Here is the list of requested objects.",
+    "logged_in_as": "ray",
+    "selected_as_of": 0
+}</pre>
+</div>
+</div></blockquote>
+<p>By default the API will return the first 1000 data objects in the response. This saves bandwidth and improves performance. A response will contain &#8220;object_total&#8221; parameter, with the total number of available objects. The feature to request more than a 1000 objects is coming soon! You&#8217;ll be able to use the &#8220;range_start&#8221; parameter indicating the starting point of the range of the whole list of objects (for example, 0 or 1499) to retrieve the rest of the objects. Just send a &#8220;range_start&#8221; parameter in the GET request, like</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /electrophysiology/select/analogsignals/?range_start=844</p>
-<p>&#8216;&#8217;&#8216;2.6 Tagging raw data objects with metadata&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/select/analogsignals/?range_start=844</pre>
+</div>
+</div></blockquote>
+<p>to get the rest of the objects.</p>
+</div>
+<div class="section" id="tagging-raw-data-objects-with-metadata-coming-soon">
+<h4>2.5 Tagging raw data objects with metadata - COMING SOON<a class="headerlink" href="#tagging-raw-data-objects-with-metadata-coming-soon" title="Permalink to this headline">¶</a></h4>
 <blockquote>
-<div></div></blockquote>
-<p>Request: POST /electrophysiology/assign/&lt;obj_id&gt;/?params</p>
+<div><div class="highlight-python"><pre>Request: POST /electrophysiology/metadata/link/</pre>
+</div>
+</div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first last simple">
@@ -620,103 +581,7 @@
 </ul>
 </dd>
 </dl>
-<p>&#8216;&#8217;Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate, which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, &#8220;StimulusColor&#8221; with values &#8220;red, green, blue&#8221;. In that case, you use this function (being described) to &#8220;tag&#8221; all required Analog Signals with appropriate metadata value, assigning a &#8220;red&#8221; value to, let&#8217;s say, first five hundred Analog Signals, &#8220;green&#8221; - to the second five hundred time series etc.&#8217;&#8216;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;2.7 Computations with specified objects&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: POST /electrophysiology/&lt;operation&gt;/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>operation - an operation to perform</li>
-<li>object_type - analogsignal or spiketrain</li>
-<li>object_list - a tuple of object ids</li>
-<li>[query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.</li>
-<li>datafile_id - where to save the results</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;2.8 Delete an object&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: DELETE /electrophysiology/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>obj_type - type of the object</li>
-<li>obj_id - object id</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<hr class="docutils" />
-<p>== 7. RESOURCE ACTION HISTORY (draft) ==</p>
-<p>In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.</p>
-<p>&#8216;&#8217;&#8216;7.1 Get object action history&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: GET /history/object/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>obj_type - type of the object</li>
-<li>obj_id - object id</li>
-<li>[start_date] - start date of the history</li>
-<li>[end_date] - start date of the history</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;7.2 Get user action history&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: GET /history/user/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>user_id - object id</li>
-<li>[start_date] - start date of the history</li>
-<li>[end_date] - start date of the history</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;Note. Usually you will deal with the following HTTP status codes:&#8217;&#8216;</p>
-<p>201 - &#8220;Created&#8221; - new object was successfully created.
-200 - &#8220;OK&#8221; - the object was successfully updated or GET operation performed successfully.
-404 - &#8220;Not Found&#8221; - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.
-403 - &#8220;Forbidden&#8221; - you don&#8217;t have access to create, modify or view an object.
-400 - &#8220;Bad request&#8221; - some of the request parameters are not provided correctly. Consider the &#8220;message&#8221; contents.
-401 - &#8220;Unauthorized&#8221; - authorization key not provided.</p>
-<hr class="docutils" />
-<hr class="docutils" />
-<dl class="docutils">
-<dt>FUTURE:</dt>
-<dd><ul class="first last simple">
-<li>archiving mechanisms</li>
-<li>include links in respresentations (<a class="reference external" href="http://www.infoq.com/articles/rest-anti-patterns">http://www.infoq.com/articles/rest-anti-patterns</a>)</li>
-<li>caching!! see google + <a class="reference external" href="http://www.mnot.net/cache_docs/">http://www.mnot.net/cache_docs/</a></li>
-<li>etags???</li>
-<li>version management!!!</li>
-<li>import / conversion using Google Refine technologies</li>
-<li>(SOLVED) NEO: /electrophysiology/info/&lt;neo_id&gt;/ - short info: think about what kind of info could there be, like number of segments/signals in a block, total data in MB etc.</li>
-<li>NEO: as above, in /electrophysiology/select/&lt;obj_type&gt;/ - provide short info about every object + a summary about all (total volume, for example)</li>
-<li>NEO: /electrophysiology/select/&lt;obj_type&gt;/ add query mechanism</li>
-<li>(SOLVED) NEO: if an array data is missing for data-related objects, should we throw an error? or just allow a user to create it? Throw an error</li>
-<li>(SOLVED) NEO: should we assign units by default, if not provided? NO</li>
-<li>NEO security: based on files? or not?</li>
-</ul>
-</dd>
-</dl>
+<p><em>Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate (or group them), which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, &#8220;StimulusColor&#8221; with values &#8220;red, green, blue&#8221;. In that case, you use this function to &#8220;tag&#8221; all required Analog Signals with appropriate metadata value, assigning a &#8220;red&#8221; value to, let&#8217;s say, first five hundred Analog Signals, &#8220;green&#8221; - to the second five hundred time series etc.</em></p>
 </div>
 </div>
 </div>
@@ -744,6 +609,8 @@ TBD</p>
 <li><a class="reference internal" href="#create-or-update-data-object">2.1 Create or update data object</a></li>
 <li><a class="reference internal" href="#getting-a-single-object">2.2 Getting a single object</a></li>
 <li><a class="reference internal" href="#partial-data-requests">2.3 Partial Data Requests</a></li>
+<li><a class="reference internal" href="#getting-a-list-of-objects">2.4 Getting a List of Objects</a></li>
+<li><a class="reference internal" href="#tagging-raw-data-objects-with-metadata-coming-soon">2.5 Tagging raw data objects with metadata - COMING SOON</a></li>
 </ul>
 </li>
 </ul>

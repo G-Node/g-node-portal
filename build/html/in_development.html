@@ -420,6 +420,98 @@ TBD</p>
 <p>== 5. SEARCH USING G-NODE API ==</p>
 <p>TBD</p>
 <hr class="docutils" />
+<p>&#8216;&#8217;&#8216;2.7 Computations with specified objects&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /electrophysiology/&lt;operation&gt;/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>operation - an operation to perform</li>
+<li>object_type - analogsignal or spiketrain</li>
+<li>object_list - a tuple of object ids</li>
+<li>[query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.</li>
+<li>datafile_id - where to save the results</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;2.8 Delete an object&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: DELETE /electrophysiology/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>obj_type - type of the object</li>
+<li>obj_id - object id</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<hr class="docutils" />
+<p>== 7. RESOURCE ACTION HISTORY (draft) ==</p>
+<p>In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.</p>
+<p>&#8216;&#8217;&#8216;7.1 Get object action history&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /history/object/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>obj_type - type of the object</li>
+<li>obj_id - object id</li>
+<li>[start_date] - start date of the history</li>
+<li>[end_date] - start date of the history</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;7.2 Get user action history&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /history/user/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>user_id - object id</li>
+<li>[start_date] - start date of the history</li>
+<li>[end_date] - start date of the history</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;Note. Usually you will deal with the following HTTP status codes:&#8217;&#8216;</p>
+<p>201 - &#8220;Created&#8221; - new object was successfully created.
+200 - &#8220;OK&#8221; - the object was successfully updated or GET operation performed successfully.
+404 - &#8220;Not Found&#8221; - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.
+403 - &#8220;Forbidden&#8221; - you don&#8217;t have access to create, modify or view an object.
+400 - &#8220;Bad request&#8221; - some of the request parameters are not provided correctly. Consider the &#8220;message&#8221; contents.
+401 - &#8220;Unauthorized&#8221; - authorization key not provided.</p>
+<hr class="docutils" />
+<hr class="docutils" />
+<dl class="docutils">
+<dt>FUTURE:</dt>
+<dd><ul class="first last simple">
+<li>archiving mechanisms</li>
+<li>include links in respresentations (<a class="reference external" href="http://www.infoq.com/articles/rest-anti-patterns">http://www.infoq.com/articles/rest-anti-patterns</a>)</li>
+<li>caching!! see google + <a class="reference external" href="http://www.mnot.net/cache_docs/">http://www.mnot.net/cache_docs/</a></li>
+<li>etags???</li>
+<li>version management!!!</li>
+<li>import / conversion using Google Refine technologies</li>
+<li>(SOLVED) NEO: /electrophysiology/info/&lt;neo_id&gt;/ - short info: think about what kind of info could there be, like number of segments/signals in a block, total data in MB etc.</li>
+<li>NEO: as above, in /electrophysiology/select/&lt;obj_type&gt;/ - provide short info about every object + a summary about all (total volume, for example)</li>
+<li>NEO: /electrophysiology/select/&lt;obj_type&gt;/ add query mechanism</li>
+<li>(SOLVED) NEO: if an array data is missing for data-related objects, should we throw an error? or just allow a user to create it? Throw an error</li>
+<li>(SOLVED) NEO: should we assign units by default, if not provided? NO</li>
+<li>NEO security: based on files? or not?</li>
+</ul>
+</dd>
+</dl>
 </div>
 </div>
 

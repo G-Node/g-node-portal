@@ -405,170 +405,75 @@ to get the Analog Signal range with datapoints as of 30 to 100, downsampled from
         "size": 12000
     }
 
+Notice that the "t_start" data field in the response has a data value of 1.5, indicating the start of the retrieved signal.
 
-Basically, for Analog Signal the range, provided in the request parameters, is just two sequential numbers, between which the requested data array will be retrieved. However, for Irregularly Sampled Analog Signal, this will work in a slightly different way. The range requested will be calculated using "times" array, attached to the object.
-
-When a SpikeTrain is requested, that range of waveforms (if defined) will be retrieved, which fall into the requested range. The comparison is made matching each waveform to the time, provided in the time array.
-
-
-'''2.4 Getting object relationships only'''
-
-According to the NEO data model, all objects in the scheme are connected. You may get the both "parent-to-child" (like which Segments are contained in a Block) and "child-to-parent" (like from which Recording Point an Analog Signal was recorded) relations by sending request to /electrophysiology/children/<neo_id>/ or /electrophysiology/parents/<neo_id>/ accordingly. In the tables below you may find supported objects of either type:
-
-
-
-For example, to request a list of parents for Analog Signal, send the following GET request
-
- ::
-    
-Request: GET /electrophysiology/parents/analogsignal_34
-
-
-A response should look similar to this:
-
- ::
-    
-[{
-    "neo_id": analogsignal_34, 
-    "segment": "segment_1",
-    "recordingchannel": "recordingchannel_12",
-    "message": "Here is the list of object parents."
-}]
-
-
-Accordingly, if you want to receive a contents of the certain block, send an HTTP request to "/electrophysiology/children/block_87" (assuming block has id=87). If the block contains both segments and recording channel groups, you'll get the following response:
-
- ::
-    
-[{
-    "neo_id": "block_87", 
-    "segment": [
-        "segment_193",
-        "segment_194",
-        "segment_195"
-    ],
-    "recordingchannelgroup": [
-        "recordingchannelgroup_1",
-        "recordingchannelgroup_2",
-    ],
-    "message": "Here are the contents of the requested object."
-}]
-
-
-''Note. When some of the parents / children are not set up, an empty string / list will appear in the response.''
-''Note. While updating objects, please use only child-to-parent relationships (like specify to which segment (parent) particular event (child)  belongs). Parent-to-child relations will not be parsed and saved.''
-
-
-'''2.5 Query data objects - get an object list'''
+-----------------------------
+2.4 Getting a List of Objects
+-----------------------------
 
 Use the following HTTP GET 
 
  ::
     
-Request: GET /electrophysiology/select/<object_type>/?params
+    Request: GET /electrophysiology/<object_type>/?params
 
 
 to query NEO objects of a specific type. For example, if you want to get all Analog Signals available for a specific user, send the following request 
 
  ::
     
-Request: GET /electrophysiology/select/analogsignal/
+    Request: GET /electrophysiology/select/analogsignal/
 
 
 You receive a list of Analog Signals IDs as a response:
 
  ::
     
-[{
-    "selected": [
-        "analogsignal_10",
-        "analogsignal_11", 
-        "analogsignal_12", 
-        "analogsignal_13", 
-        "analogsignal_14", 
-        "analogsignal_15", 
-        "analogsignal_16", 
-        "analogsignal_17", 
-        "analogsignal_18", 
-        "analogsignal_19", 
-        "analogsignal_20", 
-        "analogsignal_21"
-    ]
-    "object_total": 21,
-    "object_selected": 12,
-    "selected_as_of": 10,
-    "message": "Here is the list of requested objects."
-}]
+    {
+        "object_selected": 10,
+        "message_type": "object_selected",
+        "object_total": 10,
+        "selected": [
+            "analogsignal_12", 
+            "analogsignal_13", 
+            "analogsignal_14", 
+            "analogsignal_15", 
+            "analogsignal_16", 
+            "analogsignal_17", 
+            "analogsignal_18", 
+            "analogsignal_19", 
+            "analogsignal_20", 
+            "analogsignal_21"]
+        "message": "Here is the list of requested objects.",
+        "logged_in_as": "ray",
+        "selected_as_of": 0
+    }
 
 
-By default the API will return the first 1000 data objects in the response. This saves bandwidth and improves performance. A response will contain "object_total" parameter, with the total number of available objects. Use the "range_start" parameter indicating the starting point of the range of the whole list of objects (for example, 0 or 1499) to retrieve the rest of the objects. Just send a "range_start" parameter in the GET request, like 
-
- ::
-    
-Request: GET /electrophysiology/select/analogsignals/?range_start=844
-
-
-
-'''2.6 Tagging raw data objects with metadata'''
+By default the API will return the first 1000 data objects in the response. This saves bandwidth and improves performance. A response will contain "object_total" parameter, with the total number of available objects. The feature to request more than a 1000 objects is coming soon! You'll be able to use the "range_start" parameter indicating the starting point of the range of the whole list of objects (for example, 0 or 1499) to retrieve the rest of the objects. Just send a "range_start" parameter in the GET request, like 
 
  ::
     
-Request: POST /electrophysiology/assign/<obj_id>/?params
+    Request: GET /electrophysiology/select/analogsignals/?range_start=844
+
+to get the rest of the objects.
+
+
+--------------------------------------------------------
+2.5 Tagging raw data objects with metadata - COMING SOON
+--------------------------------------------------------
+
+ ::
+    
+    Request: POST /electrophysiology/metadata/link/
 
 
 parameters:
  * obj_id - an object to assign a tag (Section, AnaogSignal etc.)
  * value_id - a value from the values of properties, defined up the hierarchy of the section tree you work in.
 
-''Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate, which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, "StimulusColor" with values "red, green, blue". In that case, you use this function (being described) to "tag" all required Analog Signals with appropriate metadata value, assigning a "red" value to, let's say, first five hundred Analog Signals, "green" - to the second five hundred time series etc.''
+*Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate (or group them), which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, "StimulusColor" with values "red, green, blue". In that case, you use this function to "tag" all required Analog Signals with appropriate metadata value, assigning a "red" value to, let's say, first five hundred Analog Signals, "green" - to the second five hundred time series etc.*
 
-
- ::
-    
-Response:
-TBD
-
-
-
-
-'''2.7 Computations with specified objects'''
-
- ::
-    
-Request: POST /electrophysiology/<operation>/?params
-
-
-parameters:
- * operation - an operation to perform
- * object_type - analogsignal or spiketrain
- * object_list - a tuple of object ids
- * [query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.
- * datafile_id - where to save the results
-
-
- ::
-    
-Response:
-TBD
-
-
-
-'''2.8 Delete an object'''
-
- ::
-    
-Request: DELETE /electrophysiology/?params
-
-
-parameters:
- * obj_type - type of the object
- * obj_id - object id
-
-
- ::
-    
-Response:
-TBD
 
 
 

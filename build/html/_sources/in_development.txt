@@ -447,3 +447,122 @@ TBD
 
 
 ----
+
+
+
+'''2.7 Computations with specified objects'''
+
+ ::
+    
+Request: POST /electrophysiology/<operation>/?params
+
+
+parameters:
+ * operation - an operation to perform
+ * object_type - analogsignal or spiketrain
+ * object_list - a tuple of object ids
+ * [query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.
+ * datafile_id - where to save the results
+
+
+ ::
+    
+Response:
+TBD
+
+
+
+'''2.8 Delete an object'''
+
+ ::
+    
+Request: DELETE /electrophysiology/?params
+
+
+parameters:
+ * obj_type - type of the object
+ * obj_id - object id
+
+
+ ::
+    
+Response:
+TBD
+
+
+
+
+----
+
+== 7. RESOURCE ACTION HISTORY (draft) ==
+
+In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.
+
+'''7.1 Get object action history'''
+
+ ::
+    
+Request: GET /history/object/?params
+
+
+parameters:
+ * obj_type - type of the object
+ * obj_id - object id
+ * [start_date] - start date of the history
+ * [end_date] - start date of the history
+
+
+ ::
+    
+Response:
+TBD
+
+
+
+'''7.2 Get user action history'''
+
+ ::
+    
+Request: GET /history/user/?params
+
+
+parameters:
+ * user_id - object id
+ * [start_date] - start date of the history
+ * [end_date] - start date of the history
+
+
+ ::
+    
+Response:
+TBD
+
+
+
+''Note. Usually you will deal with the following HTTP status codes:''
+
+201 - "Created" - new object was successfully created.
+200 - "OK" - the object was successfully updated or GET operation performed successfully.
+404 - "Not Found" - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.
+403 - "Forbidden" - you don't have access to create, modify or view an object.
+400 - "Bad request" - some of the request parameters are not provided correctly. Consider the "message" contents.
+401 - "Unauthorized" - authorization key not provided.
+
+
+----
+
+----
+
+FUTURE:
+ * archiving mechanisms
+ * include links in respresentations (http://www.infoq.com/articles/rest-anti-patterns)
+ * caching!! see google + http://www.mnot.net/cache_docs/
+ * etags???
+ * version management!!!
+ * import / conversion using Google Refine technologies
+ * (SOLVED) NEO: /electrophysiology/info/<neo_id>/ - short info: think about what kind of info could there be, like number of segments/signals in a block, total data in MB etc.
+ * NEO: as above, in /electrophysiology/select/<obj_type>/ - provide short info about every object + a summary about all (total volume, for example)
+ * NEO: /electrophysiology/select/<obj_type>/ add query mechanism
+ * (SOLVED) NEO: if an array data is missing for data-related objects, should we throw an error? or just allow a user to create it? Throw an error
+ * (SOLVED) NEO: should we assign units by default, if not provided? NO
+ * NEO security: based on files? or not?

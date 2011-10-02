@@ -449,6 +449,49 @@ TBD
 ----
 
 
+
+'''2.7 Computations with specified objects'''
+
+ ::
+    
+Request: POST /electrophysiology/<operation>/?params
+
+
+parameters:
+ * operation - an operation to perform
+ * object_type - analogsignal or spiketrain
+ * object_list - a tuple of object ids
+ * [query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.
+ * datafile_id - where to save the results
+
+
+ ::
+    
+Response:
+TBD
+
+
+
+'''2.8 Delete an object'''
+
+ ::
+    
+Request: DELETE /electrophysiology/?params
+
+
+parameters:
+ * obj_type - type of the object
+ * obj_id - object id
+
+
+ ::
+    
+Response:
+TBD
+
+
+
+
 ----
 
 == 7. RESOURCE ACTION HISTORY (draft) ==
