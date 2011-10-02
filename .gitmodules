@@ -1,0 +1,4 @@
+
+[submodule "source/_themes"]
+	path = source/_themes
+	url = https://github.com/apleonhardt/gnode-sphinx-themes.git

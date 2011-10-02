@@ -1,0 +1,789 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to g-node-portal’s documentation! &mdash; g-node-portal v0.6 documentation</title>
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="g-node-portal v0.6 documentation" href="#" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+  
+  
+  <div class=indexwrapper>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">g-node-portal v0.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-g-node-portal-s-documentation">
+<h1>Welcome to g-node-portal&#8217;s documentation!<a class="headerlink" href="#welcome-to-g-node-portal-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+<div class="section" id="g-node-api-specification">
+<h2>G-Node API Specification<a class="headerlink" href="#g-node-api-specification" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="terminology-used-in-this-specification">
+<h3>Terminology used in this specification<a class="headerlink" href="#terminology-used-in-this-specification" title="Permalink to this headline">¶</a></h3>
+<p>Throughout this specification, it&#8217;s refered to a series of terms like section or datafile, which are intended to have specific meanings.</p>
+<dl class="docutils">
+<dt><strong>Datafile</strong></dt>
+<dd>Any data item maintained by G-Node. It can be either a binary/ascii file or a data structure, hosted in the native G-Node format. This could include a PDF file, MP3 file, TXT file, or a raw data structure in the NEO (native G-Node) format (see <a class="reference external" href="http://packages.python.org/electrophysiology/classes.html">http://packages.python.org/electrophysiology/classes.html</a>). A datafile is created by uploading an ordinary file to G-Node, and possibly converting it to the native G-Node format. That is to say, when you upload something like a MultichannelSystems® file, you have an option to convert it to the native format, and then it is considered as a native (raw) data structure in this specification. If you do not convert it when you upload, then it is considered as just &#8220;file&#8221;.</dd>
+<dt><strong>Section</strong></dt>
+<dd>A container of other sections, properties or datafiles. It could be also named folder. These are basically used to &#8220;label&#8221; your datafiles with a variety of tags (like in GMail), with a difference that you can manage sections (tags) to organize them in a tree-like structure. The Section® is a prototype of the odML section (see <a class="reference external" href="http://www.g-node.org/projects/odml">http://www.g-node.org/projects/odml</a>) and is implemented inline with odML concepts and methodology.</dd>
+<dt><strong>Property</strong></dt>
+<dd>A property is a flexible way to annotate your data (implemented in line with odML). Within these could be a model of your recording device, duration of the stimulus, a layer of the cell you record from. Some properties are provided by default when you create a section of either type. You just need to set values, appropriate for your research.</dd>
+<dt><strong>NEO Raw Data Object</strong></dt>
+<dd>NEO® objects are useful when working with the raw data. NEO objects include Segments, Analog Signals, Spike Trains etc. (see <a class="reference external" href="http://packages.python.org/electrophysiology/classes.html">http://packages.python.org/electrophysiology/classes.html</a>) It is a flexible data structure, compartible with several well-known data-formats, and useful for data analysis. You may convert your files to the NEO (native G-Node) structure using API, when the file is convertible (currently supported information extraction from neuroshare-compliant formats, <a class="reference external" href="http://neuroshare.sourceforge.net/index.shtml">http://neuroshare.sourceforge.net/index.shtml</a>).</dd>
+<dt><strong>Resource</strong></dt>
+<dd>Any item maintained by the API, including sections, datafiles, and NEO objects.</dd>
+<dt><strong>Resource ID</strong></dt>
+<dd>A unique identifier for each resource. This is usually of the format &lt;type&gt;_&lt;id&gt;, e.g. section_12345. Throughout this specification, if not specified, a typed resource ID should be assumed.</dd>
+<dt><strong>Untyped resource ID</strong></dt>
+<dd>A resource ID, without the type prefix. Given the previous example, an untyped resource ID would be 12345.</dd>
+</dl>
+<p><em>Note. For all URLs, given later in this specification, you should add a G-Node prefix URL, which is https://portal.g-node.org/data</em></p>
+</div>
+<div class="section" id="authentication">
+<h3>1. AUTHENTICATION<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h3>
+<p>To authentice at G-Node, please use the following methods:</p>
+<div class="section" id="id1">
+<h4>1.1 Authentication<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /account/authenticate/</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>username - user account name</li>
+<li>password - user password</li>
+</ul>
+</dd>
+</dl>
+<p>A successful response will contain a cookie called <em>sessionid</em>. Use this cookie within every request to work with G-Node API.</p>
+<p><em>Note. If you want to TRY OUT the API from the normal web-browser (like Firefox, Chrome, Safari etc.), just go to the login page (</em> <a class="reference external" href="https://portal.g-node.org/data/account/login/">https://portal.g-node.org/data/account/login/</a> <em>), fill in the login form and subnit it to authenticate. After successful authentication sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example</em> <a class="reference external" href="https://chrome.google.com/webstore/detail/ahdjpgllmllekelefacdedbjnjaplfjn/">Advanced REST Client for Chrome</a> <em>) to query the API.</em></p>
+</div>
+</div>
+<div class="section" id="working-with-raw-data">
+<h3>2. WORKING WITH RAW DATA<a class="headerlink" href="#working-with-raw-data" title="Permalink to this headline">¶</a></h3>
+<p>G-Node Data API provides a common set of objects for dealing with electro-physiological (in vivo and/or simulated) data. It is based on the NEO® data object model. NEO® approach provides common names and concepts to deal with electrophysiological data in an easy and well-structured way. It accounts for the trade-off between minimizing the data validation routine and at the same time keeping sufficient consistency. The NEO® data model concept is already used in several neuroscientific projects (OpenElectrophy, NeuroTools) and thus provides a promising opportunity to cooperate with other initiatives while not increasing the number of existing standards. On top of this data model we provide a set of core services (Data API). You may work with raw data objects - Spike Trains, Analog Signals, combining them in Segments, performing computations with analog signals and spike trains (sum, mean, fft etc.), and store new results back to the G-Node. The following types of raw data objects are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li>block</li>
+<li>segment</li>
+<li>event</li>
+<li>eventarray</li>
+<li>epoch</li>
+<li>epocharray</li>
+<li>unit</li>
+<li>spiketrain</li>
+<li>analogsignal</li>
+<li>analogsignalarray</li>
+<li>irsaanalogsignal</li>
+<li>spike</li>
+<li>recordingchannelgroup</li>
+<li>recordingchannel</li>
+</ul>
+</div></blockquote>
+<p>Every object serves a specific purpose to organize your electrophysiological data. &#8216;Block&#8217;s mainly represent one experiment (or the whole data, recorded within one experiment). &#8216;Segment&#8217; represents an experimental trial, a &#8220;time frame&#8221; within an experiment with unique experimental conditions. Blocks may contain segments, like experiment consists of several trials. A &#8216;Segment&#8217; may contain &#8216;AnalogSignal&#8217;s, &#8216;Event&#8217;s or &#8216;Epoch&#8217;s, which are being used to organize recorded signals, single time events, or events with duration inside one experimental time-frame. Segment may also contain &#8216;SpikeTrain&#8217; objects to accommodate the spike data, sorted online. For every &#8216;Block&#8217; one may define a set of &#8216;RecordingChannel&#8217;s according to the experimental setup. These channels can be organized under a &#8216;RecordingChannelGroup&#8217;, to keep track of tethrodes or anything else. &#8216;AnalogSignals&#8217; can be linked to the appropriate &#8216;RecordingChannel&#8217;s to make the dataset consistent.</p>
+<p>You may find more information and the original description of NEO® classes here <a class="reference external" href="http://packages.python.org/electrophysiology/classes.html">http://packages.python.org/electrophysiology/classes.html</a></p>
+<p>Every raw data object has a set of <em>attributes</em>, <em>data fields</em>, it may also have relationships, like <em>parents</em> and <em>children</em>. For example, a segment has to have an attribute &#8216;name&#8217;. &#8216;AnalogSignal&#8217; should have a &#8216;sampling_rate&#8217; data field, which consists of the unit (say, Hz) and a value (say, 20000). A &#8216;Block&#8217; consists of &#8216;Segments&#8217;, which means the &#8216;Block&#8217; has a child &#8216;Segment&#8217;, and a &#8216;Segment&#8217; has a parent &#8216;Block&#8217;. In the following tables you may find object descriptions:</p>
+<p><strong>Table 2.1 Object Simple Attributes</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Object Type</th>
+<th class="head">Attributes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>block</td>
+<td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
+</tr>
+<tr><td>segment</td>
+<td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
+</tr>
+<tr><td>event</td>
+<td>&#8216;label&#8217;*</td>
+</tr>
+<tr><td>eventarray</td>
+<td>No attributes</td>
+</tr>
+<tr><td>epoch</td>
+<td>&#8216;label&#8217;*</td>
+</tr>
+<tr><td>epocharray</td>
+<td>No attributes</td>
+</tr>
+<tr><td>unit</td>
+<td>&#8216;name&#8217;*</td>
+</tr>
+<tr><td>spiketrain</td>
+<td>No attributes</td>
+</tr>
+<tr><td>analogsignal</td>
+<td>&#8216;name&#8217;*</td>
+</tr>
+<tr><td>analogsignalarray</td>
+<td>No attributes</td>
+</tr>
+<tr><td>irsaanalogsignal</td>
+<td>&#8216;name&#8217;*</td>
+</tr>
+<tr><td>spike</td>
+<td>No attributes</td>
+</tr>
+<tr><td>recordingchannelgroup</td>
+<td>&#8216;name&#8217;*</td>
+</tr>
+<tr><td>recordingchannel</td>
+<td>&#8216;name&#8217;*, &#8216;index&#8217;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note. Attributes with * asterisk are mandatory.</em></p>
+<p><strong>Table 2.2 Object Data Fields (attributes with units)</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Object Type</th>
+<th class="head">Data arrays</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>event</td>
+<td>&#8216;time&#8217;</td>
+</tr>
+<tr><td>epoch</td>
+<td>&#8216;time&#8217;, &#8216;duration&#8217;</td>
+</tr>
+<tr><td>spiketrain</td>
+<td>&#8216;t_start&#8217;, &#8216;t_stop&#8217;, &#8216;times&#8217;, &#8216;waveforms&#8217;</td>
+</tr>
+<tr><td>analogsignal</td>
+<td>&#8216;sampling_rate&#8217;, &#8216;t_start&#8217;, &#8216;signal&#8217;</td>
+</tr>
+<tr><td>irsaanalogsignal</td>
+<td>&#8216;t_start&#8217;, &#8216;signal&#8217;, &#8216;times&#8217;</td>
+</tr>
+<tr><td>spike</td>
+<td>&#8216;left_sweep&#8217;, &#8216;time&#8217;, &#8216;sampling_rate&#8217;, &#8216;waveforms&#8217;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2.3 Object Children</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Object Type</th>
+<th class="head">Children</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>block</td>
+<td>&#8216;segment&#8217;, &#8216;recordingchannelgroup&#8217;</td>
+</tr>
+<tr><td>segment</td>
+<td>&#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;, &#8216;analogsignalarray&#8217;, &#8216;spiketrain&#8217;, &#8216;spike&#8217;, &#8216;event&#8217;, &#8216;eventarray&#8217;, &#8216;epoch&#8217;, &#8216;epocharray&#8217;</td>
+</tr>
+<tr><td>eventarray</td>
+<td>&#8216;event&#8217;</td>
+</tr>
+<tr><td>epocharray</td>
+<td>&#8216;epoch&#8217;</td>
+</tr>
+<tr><td>unit</td>
+<td>&#8216;spiketrain&#8217;,&#8217;spike&#8217;</td>
+</tr>
+<tr><td>analogsignalarray</td>
+<td>&#8216;analogsignal&#8217;</td>
+</tr>
+<tr><td>recordingchannelgroup</td>
+<td>&#8216;recordingchannel&#8217;, &#8216;analogsignalarray&#8217;</td>
+</tr>
+<tr><td>recordingchannel</td>
+<td>&#8216;unit&#8217;, &#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2.4 Object Parents</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Object Type</th>
+<th class="head">Parents</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>segment</td>
+<td>&#8216;block&#8217;</td>
+</tr>
+<tr><td>event</td>
+<td>&#8216;segment&#8217;, &#8216;eventarray&#8217;</td>
+</tr>
+<tr><td>eventarray</td>
+<td>&#8216;segment&#8217;</td>
+</tr>
+<tr><td>epoch</td>
+<td>&#8216;segment&#8217;, &#8216;epocharray&#8217;</td>
+</tr>
+<tr><td>epocharray</td>
+<td>&#8216;segment&#8217;</td>
+</tr>
+<tr><td>unit</td>
+<td>&#8216;recordingchannel&#8217;</td>
+</tr>
+<tr><td>spiketrain</td>
+<td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
+</tr>
+<tr><td>analogsignal</td>
+<td>&#8216;segment&#8217;, &#8216;analogsignalarray&#8217;, &#8216;recordingchannel&#8217;</td>
+</tr>
+<tr><td>analogsignalarray</td>
+<td>&#8216;segment&#8217;</td>
+</tr>
+<tr><td>irsaanalogsignal</td>
+<td>&#8216;segment&#8217;, &#8216;recordingchannel&#8217;</td>
+</tr>
+<tr><td>spike</td>
+<td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
+</tr>
+<tr><td>recordingchannelgroup</td>
+<td>&#8216;block&#8217;</td>
+</tr>
+<tr><td>recordingchannel</td>
+<td>&#8216;recordingchannelgroup&#8217;</td>
+</tr>
+</tbody>
+</table>
+<p>G-Node Data API supports a number of functions to manage objects, listed above. The following sections 2.1 - 2.8 give an overview .</p>
+<div class="section" id="create-or-update-data-object">
+<h4>2.1 Create or update data object<a class="headerlink" href="#create-or-update-data-object" title="Permalink to this headline">¶</a></h4>
+<p>Send an authorized HTTP request with the body (in JSON format), providing object data (attributes, arrays and relationships), to</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;</pre>
+</div>
+</div></blockquote>
+<p>in order to create a new NEO object. You should specify object attributes, data fields (if exist), and relationships in the request body as a JSON object. For example, send an authorized HTTP POST request to the &#8220;/electrophysiology/&#8221; with the following body</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/
+
+{
+    "name": "Trial 12, Saccade, Stim. 45 grad color red",
+    "filedatetime": "10/05/2011",
+    "index": 12
+}</pre>
+</div>
+</div></blockquote>
+<p>to create a new segment. If the response status is &#8216;Created&#8217; (201) a client receives a new ID of a segment from the response. Here is the response example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;neo_id&quot;</span><span class="p">:</span> <span class="s">&quot;segment_213&quot;</span><span class="p">,</span>
+    <span class="s">&quot;index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Trial 12, Saccade, Stim. 45 grad color red&quot;</span><span class="p">,</span>
+    <span class="s">&quot;author&quot;</span><span class="p">:</span> <span class="s">&quot;dummy&quot;</span><span class="p">,</span>
+    <span class="s">&quot;analogsignalarray&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;filedatetime&quot;</span><span class="p">:</span> <span class="s">&quot;2011-05-12 00:00:00&quot;</span><span class="p">,</span>
+    <span class="s">&quot;eventarray&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;irsaanalogsignal&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;epoch&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;epocharray&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;spiketrain&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;spike&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;analogsignal&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;date_created&quot;</span><span class="p">:</span> <span class="s">&quot;2011-09-29 10:42:40.004021&quot;</span><span class="p">,</span>
+    <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Object created successfully.&quot;</span><span class="p">,</span>
+    <span class="s">&quot;logged_in_as&quot;</span><span class="p">:</span> <span class="s">&quot;andrey&quot;</span><span class="p">,</span>
+    <span class="s">&quot;message_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_created&quot;</span><span class="p">,</span>
+    <span class="s">&quot;event&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;block&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">&quot;size&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>A full set of examples for all supported NEO object can be found here ([wiki:APINEOExamples NEO API Examples]).</p>
+<p><em>Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider Tables 2.1 - 2.4,  ([wiki:APINEOExamples NEO API Examples]) as well as the NEO specification (http://packages.python.org/electrophysiology/classes.html).</em></p>
+<p>To update the segment, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we&#8217;ve just created was assigned an ID = 213, send an HTTP POST to the &#8220;/electrophysiology/segment/213/&#8221; with the following body</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP POST /electrophysiology/segment_213/
+
+{
+    "name": "Trial 12, Saccade, Stim. 45 grad color green",
+    "block": "block_1"
+}</pre>
+</div>
+</div></blockquote>
+<p>to change the color in the name of the segment from &#8220;red&#8221; to &#8220;blue&#8221; and link it to the Block with ID 1. When update is required, you may specify only those parameters that you want to update. All other attributes, arrays and relationships will stay as they were.</p>
+<p>A response should look similar to this:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;neo_id&quot;</span><span class="p">:</span> <span class="s">&quot;segment_213&quot;</span><span class="p">,</span>
+    <span class="s">&quot;index&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Trial 12, Saccade, Stim. 45 grad color green&quot;</span><span class="p">,</span>
+    <span class="s">&quot;author&quot;</span><span class="p">:</span> <span class="s">&quot;dummy&quot;</span><span class="p">,</span>
+    <span class="s">&quot;analogsignalarray&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;filedatetime&quot;</span><span class="p">:</span> <span class="s">&quot;2011-05-12 00:00:00&quot;</span><span class="p">,</span>
+    <span class="s">&quot;eventarray&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;irsaanalogsignal&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;epoch&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;epocharray&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;spiketrain&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;spike&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;analogsignal&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;date_created&quot;</span><span class="p">:</span> <span class="s">&quot;2011-09-29 10:42:40.004021&quot;</span><span class="p">,</span>
+    <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Object updated successfully. Data changes saved.&quot;</span><span class="p">,</span>
+    <span class="s">&quot;logged_in_as&quot;</span><span class="p">:</span> <span class="s">&quot;andrey&quot;</span><span class="p">,</span>
+    <span class="s">&quot;message_type&quot;</span><span class="p">:</span> <span class="s">&quot;object_created&quot;</span><span class="p">,</span>
+    <span class="s">&quot;event&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="s">&quot;block&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">&quot;size&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The NEO® model sugest object relationships, like a segment may be connected to a block. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. The full list of supported connections can be found in Tables 2.3 - 2.4. Please provide the relationships inside the POST request to save appropriate data structure of your recordings. Consider the examples page ([wiki:APINEOExamples NEO API Examples]).</p>
+<p>Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (a signal data field of Analog Signal object typically has units &#8220;mV&#8221;, Event object has &#8220;time&#8221; in &#8220;ms&#8221; etc). To save or update the associated object data, provide object data in the request body under a corresponding parameter, as shown in examples page ([wiki:APINEOExamples NEO API Examples]). You may find the whole list of data-related objects with corresponding parameters in the table 2.2 above.</p>
+<dl class="docutils">
+<dt><em>Note. For the moment, the following units types are supported:</em></dt>
+<dd><ul class="first last simple">
+<li>in time domain: &#8220;s&#8221;, &#8220;ms&#8221;, &#8220;mcs&#8221;</li>
+<li>in signal domain: &#8220;v&#8221;, &#8220;mv&#8221;, &#8220;mcv&#8221;</li>
+<li>sampling rate for signals: &#8220;hz&#8221;, &#8220;khz&#8221;, &#8220;mhz&#8221;, &#8220;1/s&#8221;</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="getting-a-single-object">
+<h4>2.2 Getting a single object<a class="headerlink" href="#getting-a-single-object" title="Permalink to this headline">¶</a></h4>
+<p>To get a NEO object with its attributes send a following GET request</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;obj_type&gt;/&lt;obj_id&gt;/</pre>
+</div>
+</div></blockquote>
+<p>You&#8217;ll get the response, similar to:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>{
+    "neo_id": "analogsignal_952",
+    "name": "LFP FIX Signal-5",
+    "author": "ray",
+    "message_type": "retrieved",
+    "signal": {
+        "units": "mv",
+        "data": [(500)
+            179.6875,
+            172.85156,
+            158.20312,
+            151.36719,
+            ...
+            150.87891,
+            132.32422,
+            122.55859,
+            125.48828]
+    },
+    "t_start": {
+        "units": "ms",
+        "data": 0
+    },
+    "recordingchannel": "recordingchannel_13",
+    "date_created": "2011-08-22 11:43:56",
+    "sampling_rate": {
+        "units": "hz",
+        "data": 20000
+    },
+    "message": "Object retrieved successfully.",
+    "logged_in_as": "ray",
+    "segment": "segment_213",
+    "analogsignalarray": null,
+    "size": 12000
+}</pre>
+</div>
+</div></blockquote>
+<p>The response will contain full information about an object, including its attributes, data arrays, downstream and upstream relationships. In the following sections you&#8217;ll find how to query only part of the information (say, data or relationships, or a slice of the signal, when the signal is very long).</p>
+</div>
+<div class="section" id="partial-data-requests">
+<h4>2.3 Partial Data Requests<a class="headerlink" href="#partial-data-requests" title="Permalink to this headline">¶</a></h4>
+<p>You may want to request object data or relationaships only (see list of objects and their attributes, data fields and relationaships in the Tables 2.1 - 2.4), or even just get the overall information about an object (like object size) without getting any data or attributes. We support the following parameters for all GET requests for a single object</p>
+<blockquote>
+<div><ul class="simple">
+<li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;parents&#8221;, &#8220;children&#8221;. The response will contain content varying from just generic object information (&#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
+<li>[cascade] - when set to &#8220;True&#8221; will recursively retrieve all the children objects (not only their IDs). Please be careful with such requests, requesting a big block in a &#8220;cascade&#8221; mode may result in several Gigobytes of data to download, and significant delays.</li>
+</ul>
+</div></blockquote>
+<p>Specifically for signal-based objects (Analog Signal, Irregularly Sampled Signal) the following GET request parameters are supported:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>* [start_time] - start time of the required range (calculated using the same time unit as the t_start of the signal)
+* [end_time] - end time of the required range (calculated using the same time unit as the t_start of the signal)
+* [duration] - duration of the required range (calculated using the same time unit as the t_start of the signal)
+* [start_index] - start index of the required datarange (an index of the starting datapoint)
+* [end_index] - end index of the required range (an index of the end datapoint)
+* [samples_count] - number of points of the required range (an index of the end datapoint)
+* [downsample] - number of datapoints. This parameter is used to indicate whether downsampling is needed. The downsampling is applied on top of the selected data range using other parameters (if specified).</pre>
+</div>
+</div></blockquote>
+<p><em>Note. Some reasonable combinations of these parameters (like &#8216; &#8216; or &#8216; &#8216; will return a correct response. Using redundant number of parameters will lead to their disregard, useless combinations may throw a 400 bad request.</em></p>
+<p>For example, send the following GET request</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /electrophysiology/analogsignal_11/?start_index=20&amp;end_index=100&amp;downsample=10</p>
+<p>to get the Analog Signal range with datapoints as of 20 to 100, downsampled from 81 point to 10:</p>
+<blockquote>
+<div></div></blockquote>
+<dl class="docutils">
+<dt>{</dt>
+<dd><p class="first">&#8220;neo_id&#8221;: &#8220;analogsignal_11&#8221;,
+&#8220;name&#8221;: &#8220;LFP-FIX-500&#8221;,
+&#8220;author&#8221;: &#8220;bob&#8221;,
+&#8220;analogsignalarray&#8221;: null,
+&#8220;t_start&#8221;: {</p>
+<blockquote>
+<div>&#8220;units&#8221;: &#8220;ms&#8221;,
+&#8220;data&#8221;: 0</div></blockquote>
+<p>},
+&#8220;recordingchannel&#8221;: null,
+&#8220;sampling_rate&#8221;: {</p>
+<blockquote>
+<div>&#8220;units&#8221;: &#8220;Hz&#8221;,
+&#8220;data&#8221;: 20000</div></blockquote>
+<p>},
+&#8220;date_created&#8221;: &#8220;2011-07-25 09:52:39&#8221;,
+&#8220;logged_in_as&#8221;: &#8220;bob&#8221;,
+&#8220;segment&#8221;: &#8220;segment_5&#8221;,
+&#8220;signal&#8221;: {</p>
+<blockquote>
+<div><p>&#8220;units&#8221;: &#8220;mV&#8221;,
+&#8220;data&#8221;: [(10)</p>
+<blockquote>
+<div>0.46432680131911985,
+0.5456842091662228,
+0.6783521384934397,
+0.5167997997773193,
+0.5030103845118078,
+0.32649586390407914,
+0.5636338450661179,
+0.5419234347214149,
+0.44553808099036957,
+0.6578889505696893]</div></blockquote>
+<p>},</p>
+</div></blockquote>
+<p class="last">&#8220;size&#8221;: 240</p>
+</dd>
+</dl>
+<p>}</p>
+<p>Basically, for Analog Signal the range, provided in the request parameters, is just two sequential numbers, between which the requested data array will be retrieved. However, for Irregularly Sampled Analog Signal, this will work in a slightly different way. The range requested will be calculated using &#8220;times&#8221; array, attached to the object.</p>
+<p>When a SpikeTrain is requested, that range of waveforms (if defined) will be retrieved, which fall into the requested range. The comparison is made matching each waveform to the time, provided in the time array.</p>
+<p>&#8216;&#8217;&#8216;2.4 Getting object relationships only&#8217;&#8216;&#8217;</p>
+<p>According to the NEO data model, all objects in the scheme are connected. You may get the both &#8220;parent-to-child&#8221; (like which Segments are contained in a Block) and &#8220;child-to-parent&#8221; (like from which Recording Point an Analog Signal was recorded) relations by sending request to /electrophysiology/children/&lt;neo_id&gt;/ or /electrophysiology/parents/&lt;neo_id&gt;/ accordingly. In the tables below you may find supported objects of either type:</p>
+<p>For example, to request a list of parents for Analog Signal, send the following GET request</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /electrophysiology/parents/analogsignal_34</p>
+<p>A response should look similar to this:</p>
+<blockquote>
+<div></div></blockquote>
+<dl class="docutils">
+<dt>[{</dt>
+<dd>&#8220;neo_id&#8221;: analogsignal_34,
+&#8220;segment&#8221;: &#8220;segment_1&#8221;,
+&#8220;recordingchannel&#8221;: &#8220;recordingchannel_12&#8221;,
+&#8220;message&#8221;: &#8220;Here is the list of object parents.&#8221;</dd>
+</dl>
+<p>}]</p>
+<p>Accordingly, if you want to receive a contents of the certain block, send an HTTP request to &#8220;/electrophysiology/children/block_87&#8221; (assuming block has id=87). If the block contains both segments and recording channel groups, you&#8217;ll get the following response:</p>
+<blockquote>
+<div></div></blockquote>
+<dl class="docutils">
+<dt>[{</dt>
+<dd><p class="first">&#8220;neo_id&#8221;: &#8220;block_87&#8221;,
+&#8220;segment&#8221;: [</p>
+<blockquote>
+<div>&#8220;segment_193&#8221;,
+&#8220;segment_194&#8221;,
+&#8220;segment_195&#8221;</div></blockquote>
+<p>],
+&#8220;recordingchannelgroup&#8221;: [</p>
+<blockquote>
+<div>&#8220;recordingchannelgroup_1&#8221;,
+&#8220;recordingchannelgroup_2&#8221;,</div></blockquote>
+<p class="last">],
+&#8220;message&#8221;: &#8220;Here are the contents of the requested object.&#8221;</p>
+</dd>
+</dl>
+<p>}]</p>
+<p>&#8216;&#8217;Note. When some of the parents / children are not set up, an empty string / list will appear in the response.&#8217;&#8217;
+&#8216;&#8217;Note. While updating objects, please use only child-to-parent relationships (like specify to which segment (parent) particular event (child)  belongs). Parent-to-child relations will not be parsed and saved.&#8217;&#8216;</p>
+<p>&#8216;&#8217;&#8216;2.5 Query data objects - get an object list&#8217;&#8216;&#8217;</p>
+<p>Use the following HTTP GET</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /electrophysiology/select/&lt;object_type&gt;/?params</p>
+<p>to query NEO objects of a specific type. For example, if you want to get all Analog Signals available for a specific user, send the following request</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /electrophysiology/select/analogsignal/</p>
+<p>You receive a list of Analog Signals IDs as a response:</p>
+<blockquote>
+<div></div></blockquote>
+<dl class="docutils">
+<dt>[{</dt>
+<dd><dl class="first docutils">
+<dt>&#8220;selected&#8221;: [</dt>
+<dd>&#8220;analogsignal_10&#8221;,
+&#8220;analogsignal_11&#8221;,
+&#8220;analogsignal_12&#8221;,
+&#8220;analogsignal_13&#8221;,
+&#8220;analogsignal_14&#8221;,
+&#8220;analogsignal_15&#8221;,
+&#8220;analogsignal_16&#8221;,
+&#8220;analogsignal_17&#8221;,
+&#8220;analogsignal_18&#8221;,
+&#8220;analogsignal_19&#8221;,
+&#8220;analogsignal_20&#8221;,
+&#8220;analogsignal_21&#8221;</dd>
+</dl>
+<p class="last">]
+&#8220;object_total&#8221;: 21,
+&#8220;object_selected&#8221;: 12,
+&#8220;selected_as_of&#8221;: 10,
+&#8220;message&#8221;: &#8220;Here is the list of requested objects.&#8221;</p>
+</dd>
+</dl>
+<p>}]</p>
+<p>By default the API will return the first 1000 data objects in the response. This saves bandwidth and improves performance. A response will contain &#8220;object_total&#8221; parameter, with the total number of available objects. Use the &#8220;range_start&#8221; parameter indicating the starting point of the range of the whole list of objects (for example, 0 or 1499) to retrieve the rest of the objects. Just send a &#8220;range_start&#8221; parameter in the GET request, like</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /electrophysiology/select/analogsignals/?range_start=844</p>
+<p>&#8216;&#8217;&#8216;2.6 Tagging raw data objects with metadata&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /electrophysiology/assign/&lt;obj_id&gt;/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>obj_id - an object to assign a tag (Section, AnaogSignal etc.)</li>
+<li>value_id - a value from the values of properties, defined up the hierarchy of the section tree you work in.</li>
+</ul>
+</dd>
+</dl>
+<p>&#8216;&#8217;Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate, which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, &#8220;StimulusColor&#8221; with values &#8220;red, green, blue&#8221;. In that case, you use this function (being described) to &#8220;tag&#8221; all required Analog Signals with appropriate metadata value, assigning a &#8220;red&#8221; value to, let&#8217;s say, first five hundred Analog Signals, &#8220;green&#8221; - to the second five hundred time series etc.&#8217;&#8216;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;2.7 Computations with specified objects&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /electrophysiology/&lt;operation&gt;/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>operation - an operation to perform</li>
+<li>object_type - analogsignal or spiketrain</li>
+<li>object_list - a tuple of object ids</li>
+<li>[query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.</li>
+<li>datafile_id - where to save the results</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;2.8 Delete an object&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: DELETE /electrophysiology/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>obj_type - type of the object</li>
+<li>obj_id - object id</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<hr class="docutils" />
+<p>== 7. RESOURCE ACTION HISTORY (draft) ==</p>
+<p>In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.</p>
+<p>&#8216;&#8217;&#8216;7.1 Get object action history&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /history/object/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>obj_type - type of the object</li>
+<li>obj_id - object id</li>
+<li>[start_date] - start date of the history</li>
+<li>[end_date] - start date of the history</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;7.2 Get user action history&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /history/user/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>user_id - object id</li>
+<li>[start_date] - start date of the history</li>
+<li>[end_date] - start date of the history</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;Note. Usually you will deal with the following HTTP status codes:&#8217;&#8216;</p>
+<p>201 - &#8220;Created&#8221; - new object was successfully created.
+200 - &#8220;OK&#8221; - the object was successfully updated or GET operation performed successfully.
+404 - &#8220;Not Found&#8221; - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.
+403 - &#8220;Forbidden&#8221; - you don&#8217;t have access to create, modify or view an object.
+400 - &#8220;Bad request&#8221; - some of the request parameters are not provided correctly. Consider the &#8220;message&#8221; contents.
+401 - &#8220;Unauthorized&#8221; - authorization key not provided.</p>
+<hr class="docutils" />
+<hr class="docutils" />
+<dl class="docutils">
+<dt>FUTURE:</dt>
+<dd><ul class="first last simple">
+<li>archiving mechanisms</li>
+<li>include links in respresentations (<a class="reference external" href="http://www.infoq.com/articles/rest-anti-patterns">http://www.infoq.com/articles/rest-anti-patterns</a>)</li>
+<li>caching!! see google + <a class="reference external" href="http://www.mnot.net/cache_docs/">http://www.mnot.net/cache_docs/</a></li>
+<li>etags???</li>
+<li>version management!!!</li>
+<li>import / conversion using Google Refine technologies</li>
+<li>(SOLVED) NEO: /electrophysiology/info/&lt;neo_id&gt;/ - short info: think about what kind of info could there be, like number of segments/signals in a block, total data in MB etc.</li>
+<li>NEO: as above, in /electrophysiology/select/&lt;obj_type&gt;/ - provide short info about every object + a summary about all (total volume, for example)</li>
+<li>NEO: /electrophysiology/select/&lt;obj_type&gt;/ add query mechanism</li>
+<li>(SOLVED) NEO: if an array data is missing for data-related objects, should we throw an error? or just allow a user to create it? Throw an error</li>
+<li>(SOLVED) NEO: should we assign units by default, if not provided? NO</li>
+<li>NEO security: based on files? or not?</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to g-node-portal&#8217;s documentation!</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a><ul>
+<li><a class="reference internal" href="#g-node-api-specification">G-Node API Specification</a><ul>
+<li><a class="reference internal" href="#terminology-used-in-this-specification">Terminology used in this specification</a></li>
+<li><a class="reference internal" href="#authentication">1. AUTHENTICATION</a><ul>
+<li><a class="reference internal" href="#id1">1.1 Authentication</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-raw-data">2. WORKING WITH RAW DATA</a><ul>
+<li><a class="reference internal" href="#create-or-update-data-object">2.1 Create or update data object</a></li>
+<li><a class="reference internal" href="#getting-a-single-object">2.2 Getting a single object</a></li>
+<li><a class="reference internal" href="#partial-data-requests">2.3 Partial Data Requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2011, asobolev.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </div>
+  
+  </body>
+</html>
