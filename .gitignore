@@ -1,2 +1,3 @@
 *.pyc
 build/
+source/_themes/
