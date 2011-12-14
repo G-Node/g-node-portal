@@ -1,0 +1,590 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DATA API - in development (coming soon) &mdash; g-node-portal v0.6 documentation</title>
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="g-node-portal v0.6 documentation" href="index.html" />
+    <link rel="next" title="G-Node API Object Examples" href="api_object_examples.html" />
+    <link rel="prev" title="G-Node DATA API Specification" href="data_api_specification.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api_object_examples.html" title="G-Node API Object Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="data_api_specification.html" title="G-Node DATA API Specification"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">g-node-portal v0.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="data-api-in-development-coming-soon">
+<h1>DATA API - in development (coming soon)<a class="headerlink" href="#data-api-in-development-coming-soon" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="datafile-management">
+<h2>2. DATAFILE MANAGEMENT<a class="headerlink" href="#datafile-management" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-list-of-datafiles">
+<h3>2.1 Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/list/[&lt;section_id&gt;]/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[section_id] - files in a specific section (root by default)</li>
+<li>[visibility] - private, public, shared, all (default) - which types of files to return</li>
+<li>[scope] - full (default), restricted - amount information about each file to return</li>
+<li>[filter_criteria] - ere you can also apply different filter criteria, adding them as POST parameters.</li>
+</ul>
+</dd>
+</dl>
+<p>TBD
+(as q in Google API)</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="getting-file-details">
+<h3>2.2 Getting file details<a class="headerlink" href="#getting-file-details" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;</pre>
+</div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+<p>(Conversion status (not able to convert, not converted, NEO))
+(if convertable, provide additional statistics)</p>
+</div>
+<div class="section" id="create-datafile-with-a-native-format-neo">
+<h3>2.3 Create datafile with a native format (NEO)<a class="headerlink" href="#create-datafile-with-a-native-format-neo" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /datafiles/create/[section_id]/?params</pre>
+</div>
+<ul class="simple">
+<li>parameters:</li>
+<li>[section_id] - a section id where to put the file (root by default)</li>
+<li>name - file name</li>
+<li>[description] - description</li>
+</ul>
+</div></blockquote>
+<p>(be careful with ACL!! should be by default like for parent section)</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="upload-a-datafile-with-or-without-conversion">
+<h3>2.4. Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /datafile/upload/[section_id]/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[convert] - true (default), false - whether try to convert the file into native format</li>
+</ul>
+</dd>
+</dl>
+<p><em>Note. ACL for the new file is by default assigned as for the parent section.</em></p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="modify-datafile-attributes">
+<h3>2.5 Modify datafile attributes<a class="headerlink" href="#modify-datafile-attributes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /datafile/&lt;datafile_id&gt;/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[name] - file name</li>
+<li>[description] - description</li>
+<li>[convert] - true, false - if true, a request to convert the file to native format is made (asynchronous)</li>
+</ul>
+</dd>
+</dl>
+<p><em>Note. The conversion operation is asynchronous, which means you&#8217;ll not see the status of the conversion in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.</em></p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="export-datafile">
+<h3>2.6 Export datafile<a class="headerlink" href="#export-datafile" title="Permalink to this headline">¶</a></h3>
+<p>When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.[[BR]]</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/download/&lt;datafile_id&gt;/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[format] - required file format</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="delete-datafile">
+<h3>2.7 Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: DELETE /datafile/&lt;datafile_id&gt;/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with collaboration role (able to write). If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</dd>
+</dl>
+<p>&#8216;&#8217;&#8216;3.1 Getting list of sections&#8217;&#8216;&#8217;[[BR]]</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /sections/list/[&lt;section_id&gt;]</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[section_id] - sections in a specific section (root by default)</li>
+<li>[visibility] - private, public, shared, all (default) - which types of sections to return</li>
+<li>[scope] - full (default), restricted - amount information about each section to return</li>
+<li>[filter_criteria] - here you can also apply different filter criteria, adding them as POST parameters. TBD (as q in Google API)</li>
+<li>[recursive] - true, false (default) - do a recursive export</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.2 Getting list of properties in a section&#8217;&#8216;&#8217;[[BR]]</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /properties/list/[&lt;section_id&gt;]</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[section_id] - properties in a specific section (root by default)</li>
+<li>[scope] - full (default), restricted - amount information about each property to return</li>
+<li>[filter_criteria] - here you can also apply different filter criteria, adding them as POST parameters. TBD (as q in Google API)</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<dl class="docutils">
+<dt>&#8216;&#8217;&#8216;3.3 Create or update a section&#8217;&#8216;&#8217;</dt>
+<dd></dd>
+</dl>
+<p>Request: POST /sections/&lt;section_id&gt;/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[where] - a section id where to put new section (root by default)</li>
+<li>[section_id] - if provided, update is performed (when found); new object is created otherwise in [where]</li>
+<li>name - section name, required if creating new section</li>
+<li>type - type of the section according to the odML methodology. Required when creating new section. The list of types TBD here.</li>
+<li>[link]       = some odML parameter</li>
+<li>[repository] = some odML parameter</li>
+<li>[mapping]    = some odML parameter</li>
+<li>[reference]  = some odML parameter</li>
+</ul>
+</dd>
+</dl>
+<p>&#8216;&#8217;Note. ACL for the file is by default assigned as for the parent section.&#8217;&#8216;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.4 Getting section details&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /sections/&lt;section_id&gt;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.5 Delete section&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: DELETE /sections/&lt;section_id&gt;/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with collaboration role (able to write). If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.6 Create or update a property in section&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /properties/[section_id]/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[where] - a section id where to put new property (root by default)</li>
+<li>[property_id] - if provided, update is performed (when found); new object is created otherwise in [where]</li>
+<li>name - property name</li>
+<li>type - type of the property values, according to the odML methodology. The list of types TBD here.</li>
+<li>value[, value] - value(s) of the property</li>
+<li>[unit] - units of the property</li>
+<li>[definition] - some odML property attribute</li>
+<li>[mapping] - some odML property attribute</li>
+<li>[dependency] - some odML property attribute</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.7 Getting property&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /properties/&lt;property_id&gt;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.8 Delete property&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: DELETE /properties/&lt;property_id&gt;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.9 Section - copy &amp; move&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /sections/copy/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>source_section_id - section to copy</li>
+<li>target_section_id - a section to copy into</li>
+<li>[mode] - move (default), copy - whether to move or copy</li>
+<li>[with_properties] - whether or not to copy properties, which belong to the section (in copy mode)</li>
+<li>[with_datafiles] - whether or not to copy links (!!) to datafiles, which belong to the section (in copy mode).</li>
+<li>[recursive] - true, false - copy all subsections recursively (in copy mode)</li>
+</ul>
+</dd>
+</dl>
+<p>&#8216;&#8217;Note. Files themselves are never duplicated while using copy/move function.&#8217;&#8216;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;3.10 Get the root of the section? TBD&#8217;&#8216;&#8217;[[BR]]</p>
+<p>&#8216;&#8217;&#8216;3.11 Get all sections as a tree? TBD&#8217;&#8216;&#8217;[[BR]]</p>
+<hr class="docutils" />
+<p>== 4. MANAGE PERMISSIONS ==</p>
+<dl class="docutils">
+<dt>Datafiles and sections sharing is controlled via the access control lists. Access control lists are just basic lists that show who has access to a given resource. In the ACLs, the following roles are available for a given document or folder:</dt>
+<dd><ul class="first last simple">
+<li>owner — the owner of the resource (section or file). As an owner you have the ability to modify the ACL, delete the file, etc.</li>
+<li>writer — a collaborator.</li>
+<li>reader — a viewer (equivalent to read-only access).</li>
+</ul>
+</dd>
+<dt>A resource (datafile or section) by itself has also a sharing state, which can be</dt>
+<dd><ul class="first last simple">
+<li>public — all users may see the contents of the resource.</li>
+<li>friendly — all friends have a reader role, with no need to assign them for every resource.</li>
+<li>private — noone, except users, specified explicitly, may see the resource.</li>
+</ul>
+</dd>
+</dl>
+<p>With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.</p>
+<p>By &lt;resource_type&gt; in this paragraph we assume either &#8220;sections&#8221;, either &#8220;datafiles&#8221;.</p>
+<p>&#8216;&#8217;&#8216;4.1 Getting resource permissions&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /&lt;resource_type&gt;/acl/&lt;resource_id&gt;/</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;4.2 Set resource state (public, friendly, private)&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /&lt;resource_type&gt;/acl/&lt;resource_id&gt;/?param</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>state - public, friendly, private - resource safety level</li>
+<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;4.3 Share resource with a user&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /&lt;resource_type&gt;/acl/share/&lt;resource_id&gt;/?param</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>user_id - a user to add to the share</li>
+<li>role - reader, writer - a role for this user</li>
+<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
+</ul>
+</dd>
+</dl>
+<p>&#8216;&#8217;Note. A user specified will be added to the list of collaborators (readers).&#8217;&#8216;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;4.4 Retreat resource to completely private state&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /&lt;resource_type&gt;/acl/retreat/&lt;resource_id&gt;/?param</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;4.5 Remove a user from resource share&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /&lt;resource_type&gt;/acl/unshare/&lt;resource_id&gt;/?param</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>user_id - a user to remove from the share</li>
+<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;4.6 Remove a user from ALL shares&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /&lt;resource_type&gt;/acl/disgrace/&lt;user_id&gt;</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>user_id - a user for total remove from any sharing</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<hr class="docutils" />
+<p>== 5. SEARCH USING G-NODE API ==</p>
+<p>TBD</p>
+<hr class="docutils" />
+<p>&#8216;&#8217;&#8216;2.7 Computations with specified objects&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: POST /electrophysiology/&lt;operation&gt;/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>operation - an operation to perform</li>
+<li>object_type - analogsignal or spiketrain</li>
+<li>object_list - a tuple of object ids</li>
+<li>[query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.</li>
+<li>datafile_id - where to save the results</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;2.8 Delete an object&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: DELETE /electrophysiology/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>obj_type - type of the object</li>
+<li>obj_id - object id</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<hr class="docutils" />
+<p>== 7. RESOURCE ACTION HISTORY (draft) ==</p>
+<p>In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.</p>
+<p>&#8216;&#8217;&#8216;7.1 Get object action history&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /history/object/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>obj_type - type of the object</li>
+<li>obj_id - object id</li>
+<li>[start_date] - start date of the history</li>
+<li>[end_date] - start date of the history</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;&#8216;7.2 Get user action history&#8217;&#8216;&#8217;</p>
+<blockquote>
+<div></div></blockquote>
+<p>Request: GET /history/user/?params</p>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>user_id - object id</li>
+<li>[start_date] - start date of the history</li>
+<li>[end_date] - start date of the history</li>
+</ul>
+</dd>
+</dl>
+<p>Response:
+TBD</p>
+<p>&#8216;&#8217;Note. Usually you will deal with the following HTTP status codes:&#8217;&#8216;</p>
+<p>201 - &#8220;Created&#8221; - new object was successfully created.
+200 - &#8220;OK&#8221; - the object was successfully updated or GET operation performed successfully.
+404 - &#8220;Not Found&#8221; - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.
+403 - &#8220;Forbidden&#8221; - you don&#8217;t have access to create, modify or view an object.
+400 - &#8220;Bad request&#8221; - some of the request parameters are not provided correctly. Consider the &#8220;message&#8221; contents.
+401 - &#8220;Unauthorized&#8221; - authorization key not provided.</p>
+<hr class="docutils" />
+<hr class="docutils" />
+<dl class="docutils">
+<dt>FUTURE:</dt>
+<dd><ul class="first last simple">
+<li>archiving mechanisms</li>
+<li>include links in respresentations (<a class="reference external" href="http://www.infoq.com/articles/rest-anti-patterns">http://www.infoq.com/articles/rest-anti-patterns</a>)</li>
+<li>caching!! see google + <a class="reference external" href="http://www.mnot.net/cache_docs/">http://www.mnot.net/cache_docs/</a></li>
+<li>etags???</li>
+<li>version management!!!</li>
+<li>import / conversion using Google Refine technologies</li>
+<li>(SOLVED) NEO: /electrophysiology/info/&lt;neo_id&gt;/ - short info: think about what kind of info could there be, like number of segments/signals in a block, total data in MB etc.</li>
+<li>NEO: as above, in /electrophysiology/select/&lt;obj_type&gt;/ - provide short info about every object + a summary about all (total volume, for example)</li>
+<li>NEO: /electrophysiology/select/&lt;obj_type&gt;/ add query mechanism</li>
+<li>(SOLVED) NEO: if an array data is missing for data-related objects, should we throw an error? or just allow a user to create it? Throw an error</li>
+<li>(SOLVED) NEO: should we assign units by default, if not provided? NO</li>
+<li>NEO security: based on files? or not?</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DATA API - in development (coming soon)</a><ul>
+<li><a class="reference internal" href="#datafile-management">2. DATAFILE MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#getting-list-of-datafiles">2.1 Getting list of datafiles</a></li>
+<li><a class="reference internal" href="#getting-file-details">2.2 Getting file details</a></li>
+<li><a class="reference internal" href="#create-datafile-with-a-native-format-neo">2.3 Create datafile with a native format (NEO)</a></li>
+<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">2.4. Upload a datafile (with or without conversion)</a></li>
+<li><a class="reference internal" href="#modify-datafile-attributes">2.5 Modify datafile attributes</a></li>
+<li><a class="reference internal" href="#export-datafile">2.6 Export datafile</a></li>
+<li><a class="reference internal" href="#delete-datafile">2.7 Delete datafile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="data_api_specification.html" title="previous chapter">G-Node DATA API Specification</a></li>
+      <li>Next: <a href="api_object_examples.html" title="next chapter">G-Node API Object Examples</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/data_api_in_development.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    <h2>Questions/Feedback</h2>
+    <p>Having any questions? Got an idea how to improve a service? You're welcome to contact us!<br> Please send your questions/feedback to support-at-g-node.org , we are happy to help!</p>
+  </div>
+  <div class="footer">
+    &copy; Copyright 2011, asobolev.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>

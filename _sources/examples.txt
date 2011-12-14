@@ -1,0 +1,10 @@
+.. _examples:
+
+==========================
+G-Node API Object Examples
+==========================
+
+Example 1
+=========
+
+blalala
