@@ -13,25 +13,28 @@ DATA API - in development (coming soon)
 
  ::
 
-    Request: GET /datafiles/list/[<section_id>]/?params
+    Request: GET /datafiles/?params
 
 parameters:
- * [section_id] - files in a specific section (root by default)
+ * [section_id] - return files only in a specific section (all files if not provided)
  * [visibility] - private, public, shared, all (default) - which types of files to return
- * [scope] - full (default), restricted - amount information about each file to return
- * [filter_criteria] - ere you can also apply different filter criteria, adding them as POST parameters. 
+ * [owner] - filter by an owner of the file
+ * [created_min] - filters files older than created_min
+ * [created_max] - filters files younger than created_max
+ * [q] - full-text query string (also searches in parent section?)
+ * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
 
-TBD
-(as q in Google API)
+Typically you should get the following response:
 
  ::
 
     Response:
+
     TBD
 
-------------------------
-2.2 Getting file details
-------------------------
+-------------------------------
+2.2 Getting single file details
+-------------------------------
  ::
     
     Request: GET /datafiles/<datafile_id>
@@ -46,61 +49,51 @@ TBD
 (Conversion status (not able to convert, not converted, NEO))
 (if convertable, provide additional statistics)
 
-----------------------------------------------
-2.3 Create datafile with a native format (NEO)
-----------------------------------------------
-
- ::
-    
-    Request: POST /datafiles/create/[section_id]/?params
-
-
- * parameters:
- * [section_id] - a section id where to put the file (root by default)
- * name - file name
- * [description] - description
-
-(be careful with ACL!! should be by default like for parent section)
-
- ::
-    
-    Response:
-    TBD
 
 ---------------------------------------------------
-2.4. Upload a datafile (with or without conversion)
+2.3. Upload a datafile (with or without conversion)
 ---------------------------------------------------
 
  ::
     
-    Request: POST /datafile/upload/[section_id]/?params
+    Request: POST /datafiles/?params
 
+    {
+        "name": "In-vivo single-channel recordings, V1",
+        "description": "Some description here",
+        "keywords": "monkey V1 single-channel"
+    }
 
 parameters:
- * [convert] - true (default), false - whether try to convert the file into native format
+ * [section_id] - provide an ID of the section in which to store the file (recommended).
+ * [convert] - true (default), false - whether try to convert the file into native format, if possible. For the moment the following types are supported: TBD.
 
-*Note. ACL for the new file is by default assigned as for the parent section.*
+*Note. If the file is uploaded into a specific section, the security settings for the new file will be assigned as for the parent section. When no section is specified, the file is private by default.*
 
  ::
     
     Response:
+
+    HTTP CREATED (201)
+
     TBD
 
 ------------------------------
-2.5 Modify datafile attributes
+2.4 Modify datafile attributes
 ------------------------------
 
  ::
     
-    Request: POST /datafile/<datafile_id>/?params
+    Request: POST /datafiles/<datafile_id>/?params
 
+    {
+        "description": "Some REAL description goes here..",
+    }
 
 parameters:
- * [name] - file name
- * [description] - description
- * [convert] - true, false - if true, a request to convert the file to native format is made (asynchronous)
+ * [convert] - provide a convert=true parameter to initiate file conversion. The file should be convertible and never converted previously.
 
-*Note. The conversion operation is asynchronous, which means you'll not see the status of the conversion in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.*
+*Note. The conversion operation is asynchronous, which means you'll not see the status of the conversion immediately in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.*
 
  ::
     
@@ -108,18 +101,18 @@ parameters:
     TBD
 
 -------------------
-2.6 Export datafile
+2.5 Export datafile
 -------------------
 
-When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.[[BR]]
+When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.
 
  ::
     
-    Request: GET /datafiles/download/<datafile_id>/?params
+    Request: GET /datafiles/<datafile_id>/export/?params
 
 
 parameters:
- * [format] - required file format
+ * [format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.
 
  ::
     
@@ -127,15 +120,15 @@ parameters:
     TBD
 
 -------------------
-2.7 Delete datafile
+2.6 Delete datafile
 -------------------
  ::
     
-    Request: DELETE /datafile/<datafile_id>/?params
+    Request: DELETE /datafiles/<datafile_id>/?params
 
 
 parameters:
- * [force] - true, false (default) - use "true" to delete the file even if there are other users with collaboration role (able to write). If "false" or omitted, the file will not be deleted being in the state having collaborators.
+ * [force] - true, false (default) - use "true" to delete the file even if there are other users with access to the file. If "false" or omitted, the file will not be deleted being in the state having collaborators.
 
  ::
     
@@ -143,162 +136,56 @@ parameters:
     TBD
 
 
-----
-== 3. ORGANIZE YOUR DATA - MANAGING SECTIONS & PROPERTIES ==
+======================
+3. METADATA MANAGEMENT
+======================
 
-'''3.1 Getting list of sections'''[[BR]]
+You may organize your experimental data using odML Sections and Properties. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Here are the actions available for you to manage your experimental metadata.
+
+----------------------------
+3.1 Getting list of sections
+----------------------------
 
  ::
     
-Request: GET /sections/list/[<section_id>]
+    GET /metadata/sections/
 
 parameters:
+ * [recursive] - true, false (default) - do a recursive export
  * [section_id] - sections in a specific section (root by default)
  * [visibility] - private, public, shared, all (default) - which types of sections to return
- * [scope] - full (default), restricted - amount information about each section to return
- * [filter_criteria] - here you can also apply different filter criteria, adding them as POST parameters. TBD (as q in Google API)
- * [recursive] - true, false (default) - do a recursive export
+ * [owner] - filter by an owner of the file
+ * [created_min] - filters files older than created_min
+ * [created_max] - filters files younger than created_max
+ * [q] - full-text query string (also searches in parent section?)
+ * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
 
  ::
     
-Response:
-TBD
+    Response:
+    TBD
 
-
-'''3.2 Getting list of properties in a section'''[[BR]]
-
- ::
-    
-Request: GET /properties/list/[<section_id>]
-
-parameters:
- * [section_id] - properties in a specific section (root by default)
- * [scope] - full (default), restricted - amount information about each property to return
- * [filter_criteria] - here you can also apply different filter criteria, adding them as POST parameters. TBD (as q in Google API)
+-----------------------------------------
+3.2 Section: create, update, copy or move
+-----------------------------------------
 
  ::
     
-Response:
-TBD
+    Request: POST /metadata/sections/?params
 
+    { 
+        "title": "Stimuli",
+        "description": "This section describes the stimulus",
+        "type": "stimuli",
+        "link": "",
+        "repository": "",
+        "mapping": "",
+        "reference": "",
+        "parent_section": "section_1234",
+    }
 
-'''3.3 Create or update a section'''
- ::
-    
-Request: POST /sections/<section_id>/?params
+if you need to create a section from the template (or from other section), or you want to move the section to another place in the metadata tree - provide the parameters below:
 
-
-parameters:
- * [where] - a section id where to put new section (root by default)
- * [section_id] - if provided, update is performed (when found); new object is created otherwise in [where]
- * name - section name, required if creating new section
- * type - type of the section according to the odML methodology. Required when creating new section. The list of types TBD here.
- * [link]       = some odML parameter
- * [repository] = some odML parameter
- * [mapping]    = some odML parameter
- * [reference]  = some odML parameter
-
-''Note. ACL for the file is by default assigned as for the parent section.''
-
- ::
-    
-Response:
-TBD
-
-
-'''3.4 Getting section details'''
-
- ::
-    
-Request: GET /sections/<section_id>
-
-
- ::
-    
-Response:
-TBD
-
-
-'''3.5 Delete section'''
-
- ::
-    
-Request: DELETE /sections/<section_id>/?params
-
-
-parameters:
- * [force] - true, false (default) - use "true" to delete the file even if there are other users with collaboration role (able to write). If "false" or omitted, the file will not be deleted being in the state having collaborators.
-
-
- ::
-    
-Response:
-TBD
-
-
-
-'''3.6 Create or update a property in section'''
-
- ::
-    
-Request: POST /properties/[section_id]/?params
-
-
-parameters:
- * [where] - a section id where to put new property (root by default)
- * [property_id] - if provided, update is performed (when found); new object is created otherwise in [where]
- * name - property name
- * type - type of the property values, according to the odML methodology. The list of types TBD here.
- * value[, value] - value(s) of the property
- * [unit] - units of the property
- * [definition] - some odML property attribute
- * [mapping] - some odML property attribute
- * [dependency] - some odML property attribute
-
-
- ::
-    
-Response:
-TBD
-
-
-
-'''3.7 Getting property'''
-
- ::
-    
-Request: GET /properties/<property_id>
-
-
-
- ::
-    
-Response:
-TBD
-
-
-
-'''3.8 Delete property'''
-
- ::
-    
-Request: DELETE /properties/<property_id>
-
-
- ::
-    
-Response:
-TBD
-
-
-'''3.9 Section - copy & move'''
-
- ::
-    
-Request: POST /sections/copy/?params
-
-
-parameters:
  * source_section_id - section to copy
  * target_section_id - a section to copy into
  * [mode] - move (default), copy - whether to move or copy
@@ -306,22 +193,135 @@ parameters:
  * [with_datafiles] - whether or not to copy links (!!) to datafiles, which belong to the section (in copy mode).
  * [recursive] - true, false - copy all subsections recursively (in copy mode)
 
-''Note. Files themselves are never duplicated while using copy/move function.''
+*Note. Attributes of the section, provided in the request body, will be used as values for the newly created section. In case of copy/move, the request body can be empty or contain only required parameters.*
+
+*Note. Files, contained in the section, are never duplicated while using copy/move function. However, in the newly created section you will see the same files: these are only links to the files, which were successfully copied.*
 
 
  ::
     
-Response:
-TBD
+    Response:
+    TBD
 
 
 
-'''3.10 Get the root of the section? TBD'''[[BR]]
+*Note. ACL for the file is by default assigned as for the parent section.*
 
-'''3.11 Get all sections as a tree? TBD'''[[BR]]
+ ::
+    
+    Response:
+    TBD
 
 
-----
+---------------------------
+3.3 Getting section details
+---------------------------
+
+ ::
+    
+    GET /metadata/sections/<section_id>
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+------------------
+3.4 Delete section
+------------------
+
+ ::
+
+    DELETE /metadata/sections/<section_id>/?params
+
+
+parameters:
+ * [force] - true, false (default) - use "true" to delete the file even if there are other users with collaboration role (able to write). If "false" or omitted, the file will not be deleted being in the state having collaborators.
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+------------------------------
+3.5 Getting list of properties
+------------------------------
+
+ ::
+    
+    GET /metadata/properties/
+
+parameters:
+ * [section_id] - properties in a specific section (all by default)
+ * [q] - full-text query string (searches both properties and values)
+ * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+-------------------------------
+3.6 Create or update a property
+-------------------------------
+
+ ::
+    
+    Request: POST /metadata/properties/<property_id>/
+
+    { 
+        "section_id": "section_1234",
+        "description": "This section describes the stimulus",
+        "name": "stimuli colors",
+        "type": "experimental conditions",
+        "unit": "",
+        "definition": "",
+        "mapping": "",
+        "dependency": "",
+    }
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+----------------------
+3.7 Getting a property
+----------------------
+
+ ::
+    
+    GET /metadata/properties/<property_id>
+
+
+ ::
+    
+    Response:
+    TBD
+
+-------------------
+3.8 Delete property
+-------------------
+
+ ::
+    
+    DELETE /metadata/properties/<property_id>
+
+
+ ::
+    
+    Response:
+    TBD
+
+
 
 == 4. MANAGE PERMISSIONS ==
 
