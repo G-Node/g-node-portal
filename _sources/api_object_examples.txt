@@ -1,4 +1,4 @@
-.. _examples:
+.. _api_object_examples:
 
 ==========================
 G-Node API Object Examples

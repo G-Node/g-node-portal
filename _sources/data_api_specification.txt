@@ -22,6 +22,9 @@ Throughout this specification, it's refered to a series of terms like section or
 **NEO Raw Data Object**
     NEO® objects are useful when working with the raw data. NEO objects include Segments, Analog Signals, Spike Trains etc. (see http://packages.python.org/electrophysiology/classes.html) It is a flexible data structure, compartible with several well-known data-formats, and useful for data analysis. You may convert your files to the NEO (native G-Node) structure using API, when the file is convertible (currently supported information extraction from neuroshare-compliant formats, http://neuroshare.sourceforge.net/index.shtml).
 
+**Label**
+    One of the most important concepts in this context. A Label links Raw Data Objects with Property values. For example, when I want to indicate that a specific set of Analog Signals was recorded when the stimuli, shown to the subject, had a specific color (e.g. red), I can create a Property called "Stimuli Colors" with color values ("red" and maybe some more) and then for every Analog Signal I create a label, which links the required value ("red") to the signal. Thus all selected signals become "labeled" with a specific stimuli color ("red"). This labeling can be done in bulk mode, please consider section 2.5 of this document.
+
 **Resource**
     Any item maintained by the API, including sections, datafiles, and NEO objects.
 
@@ -32,7 +35,7 @@ Throughout this specification, it's refered to a series of terms like section or
     A resource ID, without the type prefix. Given the previous example, an untyped resource ID would be 12345.
 
 
-*Note. For all URLs, given later in this specification, you should add a G-Node prefix URL, which is https://portal.g-node.org/data*
+*Note. For all URLs, given later in this specification, you should add a G-Node prefix URL, which is* https://portal.g-node.org/data/
 
 =================
 1. AUTHENTICATION
@@ -54,7 +57,7 @@ parameters:
 
 A successful response will contain a cookie called *sessionid*. Use this cookie within every request to work with G-Node API.
 
-*Note. If you want to TRY OUT the API from the normal web-browser (like Firefox, Chrome, Safari etc.), just go to the login page (* https://portal.g-node.org/data/account/login/ *), fill in the login form and subnit it to authenticate. After successful authentication sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example* `Advanced REST Client for Chrome`_ *) to query the API.*
+*Note. If you want to just TRY the API from the usual web-browser (like Firefox, Chrome, Safari etc.), just go to the login page (* https://portal.g-node.org/data/account/login/ *), fill in the login form and subnit it to authenticate. After successful authentication sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example* `Advanced REST Client for Chrome`_ *) to query the API.*
 
 .. _Advanced REST Client for Chrome: https://chrome.google.com/webstore/detail/ahdjpgllmllekelefacdedbjnjaplfjn/
 
@@ -82,7 +85,9 @@ G-Node Data API provides a common set of objects for dealing with electro-physio
 
 Every object serves a specific purpose to organize your electrophysiological data. 'Block's mainly represent one experiment (or the whole data, recorded within one experiment). 'Segment' represents an experimental trial, a "time frame" within an experiment with unique experimental conditions. Blocks may contain segments, like experiment consists of several trials. A 'Segment' may contain 'AnalogSignal's, 'Event's or 'Epoch's, which are being used to organize recorded signals, single time events, or events with duration inside one experimental time-frame. Segment may also contain 'SpikeTrain' objects to accommodate the spike data, sorted online. For every 'Block' one may define a set of 'RecordingChannel's according to the experimental setup. These channels can be organized under a 'RecordingChannelGroup', to keep track of tethrodes or anything else. 'AnalogSignals' can be linked to the appropriate 'RecordingChannel's to make the dataset consistent.
 
-You may find more information and the original description of NEO® classes here http://packages.python.org/electrophysiology/classes.html
+You may find more information and the original description of NEO® classes here `NEO classes`_.
+
+.. _NEO classes: http://packages.python.org/neo/classes.html
 
 Every raw data object has a set of *attributes*, *data fields*, it may also have relationships, like *parents* and *children*. For example, a segment has to have an attribute 'name'. 'AnalogSignal' should have a 'sampling_rate' data field, which consists of the unit (say, Hz) and a value (say, 20000). A 'Block' consists of 'Segments', which means the 'Block' has a child 'Segment', and a 'Segment' has a parent 'Block'. In the following tables you may find object descriptions:
 
@@ -112,7 +117,7 @@ recordingchannel        'name'\*, 'index'
 **Table 2.2 Object Data Fields (attributes with units)**
 
 =================   =========================================
-Object Type             Data arrays
+Object Type         Data fields
 =================   =========================================
 event               'time'
 epoch               'time', 'duration'
@@ -169,7 +174,7 @@ Send an authorized HTTP request with the body (in JSON format), providing object
 
  ::
     
-    Request: POST /electrophysiology/<object_type>
+    Request: POST /electrophysiology/<object_type>/
 
 in order to create a new NEO object. You should specify object attributes, data fields (if exist), and relationships in the request body as a JSON object. For example, send an authorized HTTP POST request to the "/electrophysiology/" with the following body
 
@@ -186,6 +191,8 @@ in order to create a new NEO object. You should specify object attributes, data 
 to create a new segment. If the response status is 'Created' (201) a client receives a new ID of a segment from the response. Here is the response example:
 
  ::
+
+    HTTP CREATED (201)
     
     {
         "neo_id": "segment_213",
@@ -211,15 +218,15 @@ to create a new segment. If the response status is 'Created' (201) a client rece
     }
 
 
-A full set of examples for all supported NEO object can be found here ([wiki:APINEOExamples NEO API Examples]). 
+A full set of examples for all supported NEO object can be found here (:ref:`api_object_examples`). 
 
-*Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider Tables 2.1 - 2.4,  ([wiki:APINEOExamples NEO API Examples]) as well as the NEO specification (http://packages.python.org/electrophysiology/classes.html).*
+*Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider Tables 2.1 - 2.4, as well as the NEO specification* (http://packages.python.org/electrophysiology/classes.html).
 
 To update the segment, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we've just created was assigned an ID = 213, send an HTTP POST to the "/electrophysiology/segment/213/" with the following body
 
  ::
     
-    HTTP POST /electrophysiology/segment_213/
+    HTTP POST /electrophysiology/segment/213/
 
     {
         "name": "Trial 12, Saccade, Stim. 45 grad color green",
@@ -227,11 +234,13 @@ To update the segment, changing some ot its parameters, you need to send an auth
     }
 
 
-to change the color in the name of the segment from "red" to "blue" and link it to the Block with ID 1. When update is required, you may specify only those parameters that you want to update. All other attributes, arrays and relationships will stay as they were.
+to change the name of the segment and link it to the Block with ID 1. When update is required, you may specify only those parameters that you want to update. All other attributes, arrays and relationships will stay as they were.
 
 A response should look similar to this:
 
  ::
+
+    HTTP SUCCESS (200)
     
     {
         "neo_id": "segment_213",
@@ -250,18 +259,18 @@ A response should look similar to this:
         "date_created": "2011-09-29 10:42:40.004021",
         "message": "Object updated successfully. Data changes saved.",
         "logged_in_as": "andrey",
-        "message_type": "object_created",
+        "message_type": "object updated successfully",
         "event": [(0)],
         "block": null,
         "size": 0
     }
 
 
-The NEO® model sugest object relationships, like a segment may be connected to a block. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. The full list of supported connections can be found in Tables 2.3 - 2.4. Please provide the relationships inside the POST request to save appropriate data structure of your recordings. Consider the examples page ([wiki:APINEOExamples NEO API Examples]).
+The NEO® model sugest object relationships, like a segment may be connected to a block. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. The full list of supported connections can be found in Tables 2.3 - 2.4. Please provide the relationships inside the POST request to save appropriate data structure of your recordings. Consider the examples page (:ref:`api_object_examples`).
 
-Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (a signal data field of Analog Signal object typically has units "mV", Event object has "time" in "ms" etc). To save or update the associated object data, provide object data in the request body under a corresponding parameter, as shown in examples page ([wiki:APINEOExamples NEO API Examples]). You may find the whole list of data-related objects with corresponding parameters in the table 2.2 above.
+Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (a signal data field of Analog Signal object typically has units "mV", Event object has "time" in "ms" etc). To save or update the associated object data, provide object data in the request body under a corresponding parameter, as shown in examples page (:ref:`api_object_examples`). You may find the whole list of data-related objects with corresponding parameters in the table 2.2 above.
 
-*Note. For the moment, the following units types are supported:*
+*Note. For the moment, the following unit types are supported:*
  * in time domain: "s", "ms", "mcs"
  * in signal domain: "v", "mv", "mcv"
  * sampling rate for signals: "hz", "khz", "mhz", "1/s"
@@ -280,7 +289,9 @@ To get a NEO object with its attributes send a following GET request
 You'll get the response, similar to:
 
  ::
-    
+
+    HTTP SUCCESS (200)
+
     {
         "neo_id": "analogsignal_952",
         "name": "LFP FIX Signal-5",
@@ -337,18 +348,20 @@ Specifically for signal-based objects (Analog Signal, Irregularly Sampled Signal
  * [samples_count] - number of points of the required range (an index of the end datapoint)
  * [downsample] - number of datapoints. This parameter is used to indicate whether downsampling is needed. The downsampling is applied on top of the selected data range using other parameters (if specified).
 
-*Note. Some reasonable combinations of these parameters (like ' ' or ' ' will return a correct response. Using redundant number of parameters will lead to their disregard, useless combinations may throw a 400 bad request.*
+*Note. Some reasonable combinations of these parameters (like 'start_time' and 'duration' or 'start_index' and 'end_time' will return a correct response. Using redundant number of parameters will lead to their disregard, useless combinations may throw a 400 bad request.*
 
 For example, send the following GET request
 
  ::
     
-    Request: GET /electrophysiology/analogsignal/11/?start_index=20&end_index=100&downsample=10
+    Request: GET /electrophysiology/analogsignal/11/?start_index=30&end_index=100&downsample=10
 
 
 to get the Analog Signal range with datapoints as of 30 to 100, downsampled from 71 points to 10:
 
  ::
+
+    HTTP SUCCESS (200)
     
     {
         "neo_id": "analogsignal_952",
