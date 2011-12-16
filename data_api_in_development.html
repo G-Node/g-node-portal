@@ -22,8 +22,6 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="g-node-portal v0.6 documentation" href="index.html" />
-    <link rel="next" title="G-Node API Object Examples" href="api_object_examples.html" />
-    <link rel="prev" title="G-Node DATA API Specification" href="data_api_specification.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -39,12 +37,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="api_object_examples.html" title="G-Node API Object Examples"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="data_api_specification.html" title="G-Node DATA API Specification"
-             accesskey="P">previous</a> |</li>
         <li><a href="index.html">g-node-portal v0.6 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -56,34 +48,194 @@
             
   <div class="section" id="data-api-in-development-coming-soon">
 <h1>DATA API - in development (coming soon)<a class="headerlink" href="#data-api-in-development-coming-soon" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="datafile-management">
-<h2>2. DATAFILE MANAGEMENT<a class="headerlink" href="#datafile-management" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="getting-list-of-datafiles">
-<h3>2.1 Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="metadata-management">
+<h2>METADATA MANAGEMENT<a class="headerlink" href="#metadata-management" title="Permalink to this headline">¶</a></h2>
+<p>You may organize your experimental data using odML Sections and Properties. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Here are the actions available for you to manage your experimental metadata.</p>
+<div class="section" id="getting-list-of-sections">
+<h3>Getting list of sections<a class="headerlink" href="#getting-list-of-sections" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: GET /datafiles/list/[&lt;section_id&gt;]/?params</pre>
+<div><div class="highlight-python"><pre>GET /metadata/sections/</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[section_id] - files in a specific section (root by default)</li>
-<li>[visibility] - private, public, shared, all (default) - which types of files to return</li>
-<li>[scope] - full (default), restricted - amount information about each file to return</li>
-<li>[filter_criteria] - ere you can also apply different filter criteria, adding them as POST parameters.</li>
+<dd><ul class="first simple">
+<li>[recursive] - true, false (default) - do a recursive export</li>
+<li>[section_id] - sections in a specific section (root by default)</li>
+<li>[visibility] - private, public, shared, all (default) - which types of sections to return</li>
+<li>[owner] - filter by an owner of the file</li>
+<li>[created_min] - filters files older than created_min</li>
+<li>[created_max] - filters files younger than created_max</li>
+<li>[q] - full-text query string (also searches in parent section?)</li>
+<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
 </ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
 </dd>
 </dl>
-<p>TBD
-(as q in Google API)</p>
+</div>
+<div class="section" id="section-create-update-copy-or-move">
+<h3>Section: create, update, copy or move<a class="headerlink" href="#section-create-update-copy-or-move" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /metadata/sections/?params
+
+{
+    "title": "Stimuli",
+    "description": "This section describes the stimulus",
+    "type": "stimuli",
+    "link": "",
+    "repository": "",
+    "mapping": "",
+    "reference": "",
+    "parent_section": "section_1234",
+}</pre>
+</div>
+</div></blockquote>
+<p>if you need to create a section from the template (or from other section), or you want to move the section to another place in the metadata tree - provide the parameters below:</p>
+<blockquote>
+<div><ul class="simple">
+<li>source_section_id - section to copy</li>
+<li>target_section_id - a section to copy into</li>
+<li>[mode] - move (default), copy - whether to move or copy</li>
+<li>[with_properties] - whether or not to copy properties, which belong to the section (in copy mode)</li>
+<li>[with_datafiles] - whether or not to copy links (!!) to datafiles, which belong to the section (in copy mode).</li>
+<li>[recursive] - true, false - copy all subsections recursively (in copy mode)</li>
+</ul>
+</div></blockquote>
+<p><em>Note. Attributes of the section, provided in the request body, will be used as values for the newly created section. In case of copy/move, the request body can be empty or contain only required parameters.</em></p>
+<p><em>Note. Files, contained in the section, are never duplicated while using copy/move function. However, in the newly created section you will see the same files: these are only links to the files, which were successfully copied.</em></p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+<p><em>Note. ACL for the file is by default assigned as for the parent section.</em></p>
 <blockquote>
 <div><div class="highlight-python"><pre>Response:
 TBD</pre>
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="getting-file-details">
-<h3>2.2 Getting file details<a class="headerlink" href="#getting-file-details" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="getting-section-details">
+<h3>Getting section details<a class="headerlink" href="#getting-section-details" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>GET /metadata/sections/&lt;section_id&gt;</pre>
+</div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="delete-section">
+<h3>Delete section<a class="headerlink" href="#delete-section" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>DELETE /metadata/sections/&lt;section_id&gt;/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with collaboration role (able to write). If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="getting-list-of-properties">
+<h3>Getting list of properties<a class="headerlink" href="#getting-list-of-properties" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>GET /metadata/properties/</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[section_id] - properties in a specific section (all by default)</li>
+<li>[q] - full-text query string (searches both properties and values)</li>
+<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="create-or-update-a-property">
+<h3>Create or update a property<a class="headerlink" href="#create-or-update-a-property" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /metadata/properties/&lt;property_id&gt;/
+
+{
+    "section_id": "section_1234",
+    "description": "This section describes the stimulus",
+    "name": "stimuli colors",
+    "type": "experimental conditions",
+    "unit": "",
+    "definition": "",
+    "mapping": "",
+    "dependency": "",
+}</pre>
+</div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="getting-a-property">
+<h3>Getting a property<a class="headerlink" href="#getting-a-property" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>GET /metadata/properties/&lt;property_id&gt;</pre>
+</div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="delete-property">
+<h3>Delete property<a class="headerlink" href="#delete-property" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>DELETE /metadata/properties/&lt;property_id&gt;</pre>
+</div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="file-management">
+<h2>FILE MANAGEMENT<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-list-of-datafiles">
+<h3>Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[section_id] - return files only in a specific section (all files if not provided)</li>
+<li>[visibility] - private, public, shared, all (default) - which types of files to return</li>
+<li>[owner] - filter by an owner of the file</li>
+<li>[created_min] - filters files older than created_min</li>
+<li>[created_max] - filters files younger than created_max</li>
+<li>[q] - full-text query string (also searches in parent section?)</li>
+<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
+</ul>
+</dd>
+</dl>
+<p>Typically you should get the following response:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="getting-single-file-details">
+<h3>Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;</pre>
 </div>
@@ -94,61 +246,54 @@ TBD</pre>
 <p>(Conversion status (not able to convert, not converted, NEO))
 (if convertable, provide additional statistics)</p>
 </div>
-<div class="section" id="create-datafile-with-a-native-format-neo">
-<h3>2.3 Create datafile with a native format (NEO)<a class="headerlink" href="#create-datafile-with-a-native-format-neo" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: POST /datafiles/create/[section_id]/?params</pre>
-</div>
-<ul class="simple">
-<li>parameters:</li>
-<li>[section_id] - a section id where to put the file (root by default)</li>
-<li>name - file name</li>
-<li>[description] - description</li>
-</ul>
-</div></blockquote>
-<p>(be careful with ACL!! should be by default like for parent section)</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Response:
-TBD</pre>
-</div>
-</div></blockquote>
-</div>
 <div class="section" id="upload-a-datafile-with-or-without-conversion">
-<h3>2.4. Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h3>
+<h3>Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: POST /datafile/upload/[section_id]/?params</pre>
+<div><div class="highlight-python"><pre>Request: POST /datafiles/?params
+
+{
+    "name": "In-vivo single-channel recordings, V1",
+    "description": "Some description here",
+    "keywords": "monkey V1 single-channel"
+}</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first last simple">
-<li>[convert] - true (default), false - whether try to convert the file into native format</li>
+<li>[section_id] - provide an ID of the section in which to store the file (recommended).</li>
+<li>[convert] - true (default), false - whether try to convert the file into native format, if possible. For the moment the following types are supported: TBD.</li>
 </ul>
 </dd>
 </dl>
-<p><em>Note. ACL for the new file is by default assigned as for the parent section.</em></p>
+<p><em>Note. If the file is uploaded into a specific section, the security settings for the new file will be assigned as for the parent section. When no section is specified, the file is private by default.</em></p>
 <blockquote>
 <div><div class="highlight-python"><pre>Response:
+
+HTTP CREATED (201)
+
 TBD</pre>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="modify-datafile-attributes">
-<h3>2.5 Modify datafile attributes<a class="headerlink" href="#modify-datafile-attributes" title="Permalink to this headline">¶</a></h3>
+<h3>Modify datafile attributes<a class="headerlink" href="#modify-datafile-attributes" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: POST /datafile/&lt;datafile_id&gt;/?params</pre>
+<div><div class="highlight-python"><pre>Request: POST /datafiles/&lt;datafile_id&gt;/?params
+
+{
+    "description": "Some REAL description goes here..",
+}</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first last simple">
-<li>[name] - file name</li>
-<li>[description] - description</li>
-<li>[convert] - true, false - if true, a request to convert the file to native format is made (asynchronous)</li>
+<li>[convert] - provide a convert=true parameter to initiate file conversion. The file should be convertible and never converted previously.</li>
 </ul>
 </dd>
 </dl>
-<p><em>Note. The conversion operation is asynchronous, which means you&#8217;ll not see the status of the conversion in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.</em></p>
+<p><em>Note. The conversion operation is asynchronous, which means you&#8217;ll not see the status of the conversion immediately in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.</em></p>
 <blockquote>
 <div><div class="highlight-python"><pre>Response:
 TBD</pre>
@@ -156,16 +301,16 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="export-datafile">
-<h3>2.6 Export datafile<a class="headerlink" href="#export-datafile" title="Permalink to this headline">¶</a></h3>
-<p>When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.[[BR]]</p>
+<h3>Export datafile<a class="headerlink" href="#export-datafile" title="Permalink to this headline">¶</a></h3>
+<p>When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: GET /datafiles/download/&lt;datafile_id&gt;/?params</pre>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/binary/?params</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first simple">
-<li>[format] - required file format</li>
+<li>[format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.</li>
 </ul>
 <div class="last highlight-python"><pre>Response:
 TBD</pre>
@@ -174,164 +319,29 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="delete-datafile">
-<h3>2.7 Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h3>
+<h3>Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: DELETE /datafile/&lt;datafile_id&gt;/?params</pre>
+<div><div class="highlight-python"><pre>Request: DELETE /datafiles/&lt;datafile_id&gt;/?params</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first simple">
-<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with collaboration role (able to write). If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
+<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with access to the file. If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
 </ul>
 <div class="last highlight-python"><pre>Response:
 TBD</pre>
 </div>
 </dd>
 </dl>
-<p>&#8216;&#8217;&#8216;3.1 Getting list of sections&#8217;&#8216;&#8217;[[BR]]</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: GET /sections/list/[&lt;section_id&gt;]</p>
+</div>
+</div>
+<div class="section" id="manage-permissions">
+<h2>MANAGE PERMISSIONS<a class="headerlink" href="#manage-permissions" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
-<dt>parameters:</dt>
+<dt>There is a possibility to share your data with other users in the G-Node Portal. You may share a particular section, which means all resources inside the section become shared. You may share the section recursively, which implies all subsections in the selected section with all their contents will become shared. You may also share a single or multiple datafiles. Datafiles and sections sharing is controlled via the access control lists. Access control lists are just basic lists that show who has access to a given resource. In the ACLs, the following roles are available for a given document or folder:</dt>
 <dd><ul class="first last simple">
-<li>[section_id] - sections in a specific section (root by default)</li>
-<li>[visibility] - private, public, shared, all (default) - which types of sections to return</li>
-<li>[scope] - full (default), restricted - amount information about each section to return</li>
-<li>[filter_criteria] - here you can also apply different filter criteria, adding them as POST parameters. TBD (as q in Google API)</li>
-<li>[recursive] - true, false (default) - do a recursive export</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.2 Getting list of properties in a section&#8217;&#8216;&#8217;[[BR]]</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: GET /properties/list/[&lt;section_id&gt;]</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[section_id] - properties in a specific section (root by default)</li>
-<li>[scope] - full (default), restricted - amount information about each property to return</li>
-<li>[filter_criteria] - here you can also apply different filter criteria, adding them as POST parameters. TBD (as q in Google API)</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<dl class="docutils">
-<dt>&#8216;&#8217;&#8216;3.3 Create or update a section&#8217;&#8216;&#8217;</dt>
-<dd></dd>
-</dl>
-<p>Request: POST /sections/&lt;section_id&gt;/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[where] - a section id where to put new section (root by default)</li>
-<li>[section_id] - if provided, update is performed (when found); new object is created otherwise in [where]</li>
-<li>name - section name, required if creating new section</li>
-<li>type - type of the section according to the odML methodology. Required when creating new section. The list of types TBD here.</li>
-<li>[link]       = some odML parameter</li>
-<li>[repository] = some odML parameter</li>
-<li>[mapping]    = some odML parameter</li>
-<li>[reference]  = some odML parameter</li>
-</ul>
-</dd>
-</dl>
-<p>&#8216;&#8217;Note. ACL for the file is by default assigned as for the parent section.&#8217;&#8216;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.4 Getting section details&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: GET /sections/&lt;section_id&gt;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.5 Delete section&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: DELETE /sections/&lt;section_id&gt;/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with collaboration role (able to write). If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.6 Create or update a property in section&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: POST /properties/[section_id]/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[where] - a section id where to put new property (root by default)</li>
-<li>[property_id] - if provided, update is performed (when found); new object is created otherwise in [where]</li>
-<li>name - property name</li>
-<li>type - type of the property values, according to the odML methodology. The list of types TBD here.</li>
-<li>value[, value] - value(s) of the property</li>
-<li>[unit] - units of the property</li>
-<li>[definition] - some odML property attribute</li>
-<li>[mapping] - some odML property attribute</li>
-<li>[dependency] - some odML property attribute</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.7 Getting property&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: GET /properties/&lt;property_id&gt;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.8 Delete property&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: DELETE /properties/&lt;property_id&gt;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.9 Section - copy &amp; move&#8217;&#8216;&#8217;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Request: POST /sections/copy/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>source_section_id - section to copy</li>
-<li>target_section_id - a section to copy into</li>
-<li>[mode] - move (default), copy - whether to move or copy</li>
-<li>[with_properties] - whether or not to copy properties, which belong to the section (in copy mode)</li>
-<li>[with_datafiles] - whether or not to copy links (!!) to datafiles, which belong to the section (in copy mode).</li>
-<li>[recursive] - true, false - copy all subsections recursively (in copy mode)</li>
-</ul>
-</dd>
-</dl>
-<p>&#8216;&#8217;Note. Files themselves are never duplicated while using copy/move function.&#8217;&#8216;</p>
-<blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;3.10 Get the root of the section? TBD&#8217;&#8216;&#8217;[[BR]]</p>
-<p>&#8216;&#8217;&#8216;3.11 Get all sections as a tree? TBD&#8217;&#8216;&#8217;[[BR]]</p>
-<hr class="docutils" />
-<p>== 4. MANAGE PERMISSIONS ==</p>
-<dl class="docutils">
-<dt>Datafiles and sections sharing is controlled via the access control lists. Access control lists are just basic lists that show who has access to a given resource. In the ACLs, the following roles are available for a given document or folder:</dt>
-<dd><ul class="first last simple">
-<li>owner — the owner of the resource (section or file). As an owner you have the ability to modify the ACL, delete the file, etc.</li>
+<li>owner — the owner of the resource (section or file). As an owner you have the ability to modify the ACL, delete the resource, etc.</li>
 <li>writer — a collaborator.</li>
 <li>reader — a viewer (equivalent to read-only access).</li>
 </ul>
@@ -346,172 +356,208 @@ TBD</p>
 </dl>
 <p>With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.</p>
 <p>By &lt;resource_type&gt; in this paragraph we assume either &#8220;sections&#8221;, either &#8220;datafiles&#8221;.</p>
-<p>&#8216;&#8217;&#8216;4.1 Getting resource permissions&#8217;&#8216;&#8217;</p>
+<div class="section" id="getting-resource-permissions">
+<h3>Getting resource permissions<a class="headerlink" href="#getting-resource-permissions" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /&lt;resource_type&gt;/acl/&lt;resource_id&gt;/</p>
+<div><div class="highlight-python"><pre>GET /&lt;resource_type&gt;/&lt;resource_id&gt;/acl/</pre>
+</div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="update-resource-acl-share-unshare">
+<h3>Update resource ACL (share/unshare)<a class="headerlink" href="#update-resource-acl-share-unshare" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;4.2 Set resource state (public, friendly, private)&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><pre>POST /&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
+
+{
+    "state": "&lt;access level&gt;", # can be public, friendly, private - access level
+    "shared_with": {
+        "&lt;iser_id&gt;": "&lt;user_role&gt;", # a role can be "reader" or "collaborator"
+        "&lt;iser_id&gt;": "&lt;user_role&gt;"
+    }
+}</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[recursive] - true, false (default) - apply to all resources recursivery (when &lt;resource_type&gt; = &#8220;sections&#8221;). Datafiles, found in subsections, will be also updated.</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="bulk-acl-update-share-unshare">
+<h3>Bulk ACL update (share/unshare)<a class="headerlink" href="#bulk-acl-update-share-unshare" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Request: POST /&lt;resource_type&gt;/acl/&lt;resource_id&gt;/?param</p>
+<div><div class="highlight-python"><pre>POST /acl/?params
+
+{
+    "resources": [
+        "section_1345",
+        "section_1346",
+        "datafile_1345"
+    ]
+    "state": "&lt;access level&gt;", # can be public, friendly, private - access level
+    "shared_with": {
+        "&lt;iser_id&gt;": "&lt;user_role&gt;", # a role can be "reader" or "collaborator"
+        "&lt;iser_id&gt;": "&lt;user_role&gt;"
+    }
+}</pre>
+</div>
+</div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first last simple">
-<li>state - public, friendly, private - resource safety level</li>
-<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
+<li>[recursive] - true, false (default) - apply to all resources recursivery.</li>
 </ul>
 </dd>
 </dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;4.3 Share resource with a user&#8217;&#8216;&#8217;</p>
+<p><em>Note. The requested ACL changes will be applied to the resources in a sequence, as they were provided in the request.</em></p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: POST /&lt;resource_type&gt;/acl/share/&lt;resource_id&gt;/?param</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>user_id - a user to add to the share</li>
-<li>role - reader, writer - a role for this user</li>
-<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
-</ul>
-</dd>
-</dl>
-<p>&#8216;&#8217;Note. A user specified will be added to the list of collaborators (readers).&#8217;&#8216;</p>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="remove-a-user-from-all-shares">
+<h3>Remove a user from ALL shares<a class="headerlink" href="#remove-a-user-from-all-shares" title="Permalink to this headline">¶</a></h3>
+<p>Not implemented yet.</p>
+</div>
+</div>
+<div class="section" id="query-data-using-g-node-api">
+<h2>QUERY DATA USING G-NODE API<a class="headerlink" href="#query-data-using-g-node-api" title="Permalink to this headline">¶</a></h2>
+<p>You may select Raw Data objects (Segments, Analog Signals, Spike Trains) based on their attributes and labels and those of their parents and children. You may do that by creating Selections. Selections can be saved for future use.</p>
+<div class="section" id="create-selection">
+<h3>Create Selection<a class="headerlink" href="#create-selection" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;4.4 Retreat resource to completely private state&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><pre>POST /selections/
+
+{
+    "obj_type": "analogsignal", # &lt;obj_type&gt; should be of type NEO.
+    "querysets": [
+        {
+            "filter": {
+                "name__contains": "V1",
+                "date_created__gte": "2006-01-01"
+            },
+            "filter": {
+                "segment__name__contains": "mice"
+            },
+            "exclude": {
+                "label": "red",
+                "date_created__gte": "2006-01-01"
+            }
+        },
+        {
+            "filter": {
+                "sampling_rate": 20000,
+        }],
+    "save_as": "provide some name here.."
+}</pre>
+</div>
+</div></blockquote>
+<p>The way to construct your query is similar to the way described here <a class="reference external" href="https://docs.djangoproject.com/en/dev/topics/db/queries/">https://docs.djangoproject.com/en/dev/topics/db/queries/</a>
+In the response you&#8217;ll get selected objects:</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: POST /&lt;resource_type&gt;/acl/retreat/&lt;resource_id&gt;/?param</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;4.5 Remove a user from resource share&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+<p>If the &#8220;save_as&#8221; parameter was provided, the response will contain &#8220;selection_id&#8221; and &#8220;selection_name&#8221;. You may use this ID to get the contents of a particular selection later.</p>
+</div>
+<div class="section" id="get-list-of-saved-selections">
+<h3>Get list of saved Selections<a class="headerlink" href="#get-list-of-saved-selections" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Request: POST /&lt;resource_type&gt;/acl/unshare/&lt;resource_id&gt;/?param</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>user_id - a user to remove from the share</li>
-<li>[recursive] - true, false (default) - apply to all resources recursivery (when resource_type is sections)</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;4.6 Remove a user from ALL shares&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><pre>GET /selections/</pre>
+</div>
+</div></blockquote>
+<p>In the response you&#8217;ll get all saved selections:</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: POST /&lt;resource_type&gt;/acl/disgrace/&lt;user_id&gt;</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>user_id - a user for total remove from any sharing</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<hr class="docutils" />
-<p>== 5. SEARCH USING G-NODE API ==</p>
-<p>TBD</p>
-<hr class="docutils" />
-<p>&#8216;&#8217;&#8216;2.7 Computations with specified objects&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="get-saved-selection">
+<h3>Get saved Selection<a class="headerlink" href="#get-saved-selection" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Request: POST /electrophysiology/&lt;operation&gt;/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>operation - an operation to perform</li>
-<li>object_type - analogsignal or spiketrain</li>
-<li>object_list - a tuple of object ids</li>
-<li>[query_string] - if defined, a query string will be used to select object for computation. object_list will be ignored.</li>
-<li>datafile_id - where to save the results</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;2.8 Delete an object&#8217;&#8216;&#8217;</p>
+<div><div class="highlight-python"><pre>GET /selections/&lt;selection_id&gt;/</pre>
+</div>
+</div></blockquote>
+<p>In the response you&#8217;ll get selected objects:</p>
 <blockquote>
-<div></div></blockquote>
-<p>Request: DELETE /electrophysiology/?params</p>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>obj_type - type of the object</li>
-<li>obj_id - object id</li>
-</ul>
-</dd>
-</dl>
-<p>Response:
-TBD</p>
-<hr class="docutils" />
-<p>== 7. RESOURCE ACTION HISTORY (draft) ==</p>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="resource-action-history-draft">
+<h2>RESOURCE ACTION HISTORY (draft)<a class="headerlink" href="#resource-action-history-draft" title="Permalink to this headline">¶</a></h2>
 <p>In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.</p>
-<p>&#8216;&#8217;&#8216;7.1 Get object action history&#8217;&#8216;&#8217;</p>
+<div class="section" id="get-object-action-history">
+<h3>Get object action history<a class="headerlink" href="#get-object-action-history" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /history/object/?params</p>
+<div><div class="highlight-python"><pre>GET /&lt;resource_type&gt;/&lt;resource_id&gt;/history/?params</pre>
+</div>
+</div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>obj_type - type of the object</li>
-<li>obj_id - object id</li>
+<dd><ul class="first simple">
 <li>[start_date] - start date of the history</li>
 <li>[end_date] - start date of the history</li>
 </ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
 </dd>
 </dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;&#8216;7.2 Get user action history&#8217;&#8216;&#8217;</p>
+</div>
+<div class="section" id="get-user-action-history">
+<h3>Get user action history<a class="headerlink" href="#get-user-action-history" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
-<p>Request: GET /history/user/?params</p>
+<div><div class="highlight-python"><pre>GET /profiles/profile/&lt;user_id&gt;/history/?params</pre>
+</div>
+</div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>user_id - object id</li>
+<dd><ul class="first simple">
 <li>[start_date] - start date of the history</li>
 <li>[end_date] - start date of the history</li>
 </ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
 </dd>
 </dl>
-<p>Response:
-TBD</p>
-<p>&#8216;&#8217;Note. Usually you will deal with the following HTTP status codes:&#8217;&#8216;</p>
-<p>201 - &#8220;Created&#8221; - new object was successfully created.
-200 - &#8220;OK&#8221; - the object was successfully updated or GET operation performed successfully.
-404 - &#8220;Not Found&#8221; - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.
-403 - &#8220;Forbidden&#8221; - you don&#8217;t have access to create, modify or view an object.
-400 - &#8220;Bad request&#8221; - some of the request parameters are not provided correctly. Consider the &#8220;message&#8221; contents.
-401 - &#8220;Unauthorized&#8221; - authorization key not provided.</p>
-<hr class="docutils" />
+<p><em>Note. Usually you will deal with the following HTTP status codes:</em></p>
+<blockquote>
+<div><ul class="simple">
+<li>201 - &#8220;Created&#8221; - new object was successfully created.</li>
+<li>200 - &#8220;OK&#8221; - the object was successfully updated or GET operation performed successfully.</li>
+<li>404 - &#8220;Not Found&#8221; - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.</li>
+<li>403 - &#8220;Forbidden&#8221; - you don&#8217;t have access to create, modify or view an object.</li>
+<li>400 - &#8220;Bad request&#8221; - some of the request parameters are not provided correctly. Consider the &#8220;message&#8221; contents.</li>
+<li>401 - &#8220;Unauthorized&#8221; - authorization key not provided.</li>
+</ul>
+</div></blockquote>
 <hr class="docutils" />
 <dl class="docutils">
 <dt>FUTURE:</dt>
 <dd><ul class="first last simple">
+<li>bulk sections/datafiles update. just add list of objects to update provided params.</li>
+<li>bulk NEO update. using selections / list of IDs</li>
 <li>archiving mechanisms</li>
 <li>include links in respresentations (<a class="reference external" href="http://www.infoq.com/articles/rest-anti-patterns">http://www.infoq.com/articles/rest-anti-patterns</a>)</li>
-<li>caching!! see google + <a class="reference external" href="http://www.mnot.net/cache_docs/">http://www.mnot.net/cache_docs/</a></li>
-<li>etags???</li>
+<li>(SOLVED) caching!! see google + <a class="reference external" href="http://www.mnot.net/cache_docs/">http://www.mnot.net/cache_docs/</a></li>
+<li>(SOLVED) etags???</li>
 <li>version management!!!</li>
+<li>computations with objects</li>
 <li>import / conversion using Google Refine technologies</li>
 <li>(SOLVED) NEO: /electrophysiology/info/&lt;neo_id&gt;/ - short info: think about what kind of info could there be, like number of segments/signals in a block, total data in MB etc.</li>
 <li>NEO: as above, in /electrophysiology/select/&lt;obj_type&gt;/ - provide short info about every object + a summary about all (total volume, for example)</li>
@@ -535,14 +581,42 @@ TBD</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">DATA API - in development (coming soon)</a><ul>
-<li><a class="reference internal" href="#datafile-management">2. DATAFILE MANAGEMENT</a><ul>
-<li><a class="reference internal" href="#getting-list-of-datafiles">2.1 Getting list of datafiles</a></li>
-<li><a class="reference internal" href="#getting-file-details">2.2 Getting file details</a></li>
-<li><a class="reference internal" href="#create-datafile-with-a-native-format-neo">2.3 Create datafile with a native format (NEO)</a></li>
-<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">2.4. Upload a datafile (with or without conversion)</a></li>
-<li><a class="reference internal" href="#modify-datafile-attributes">2.5 Modify datafile attributes</a></li>
-<li><a class="reference internal" href="#export-datafile">2.6 Export datafile</a></li>
-<li><a class="reference internal" href="#delete-datafile">2.7 Delete datafile</a></li>
+<li><a class="reference internal" href="#metadata-management">METADATA MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#getting-list-of-sections">Getting list of sections</a></li>
+<li><a class="reference internal" href="#section-create-update-copy-or-move">Section: create, update, copy or move</a></li>
+<li><a class="reference internal" href="#getting-section-details">Getting section details</a></li>
+<li><a class="reference internal" href="#delete-section">Delete section</a></li>
+<li><a class="reference internal" href="#getting-list-of-properties">Getting list of properties</a></li>
+<li><a class="reference internal" href="#create-or-update-a-property">Create or update a property</a></li>
+<li><a class="reference internal" href="#getting-a-property">Getting a property</a></li>
+<li><a class="reference internal" href="#delete-property">Delete property</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-management">FILE MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#getting-list-of-datafiles">Getting list of datafiles</a></li>
+<li><a class="reference internal" href="#getting-single-file-details">Getting single file details</a></li>
+<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">Upload a datafile (with or without conversion)</a></li>
+<li><a class="reference internal" href="#modify-datafile-attributes">Modify datafile attributes</a></li>
+<li><a class="reference internal" href="#export-datafile">Export datafile</a></li>
+<li><a class="reference internal" href="#delete-datafile">Delete datafile</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#manage-permissions">MANAGE PERMISSIONS</a><ul>
+<li><a class="reference internal" href="#getting-resource-permissions">Getting resource permissions</a></li>
+<li><a class="reference internal" href="#update-resource-acl-share-unshare">Update resource ACL (share/unshare)</a></li>
+<li><a class="reference internal" href="#bulk-acl-update-share-unshare">Bulk ACL update (share/unshare)</a></li>
+<li><a class="reference internal" href="#remove-a-user-from-all-shares">Remove a user from ALL shares</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#query-data-using-g-node-api">QUERY DATA USING G-NODE API</a><ul>
+<li><a class="reference internal" href="#create-selection">Create Selection</a></li>
+<li><a class="reference internal" href="#get-list-of-saved-selections">Get list of saved Selections</a></li>
+<li><a class="reference internal" href="#get-saved-selection">Get saved Selection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resource-action-history-draft">RESOURCE ACTION HISTORY (draft)</a><ul>
+<li><a class="reference internal" href="#get-object-action-history">Get object action history</a></li>
+<li><a class="reference internal" href="#get-user-action-history">Get user action history</a></li>
 </ul>
 </li>
 </ul>
@@ -551,8 +625,6 @@ TBD</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="data_api_specification.html" title="previous chapter">G-Node DATA API Specification</a></li>
-      <li>Next: <a href="api_object_examples.html" title="next chapter">G-Node API Object Examples</a></li>
   </ul></li>
 </ul>
   <h3>This Page</h3>

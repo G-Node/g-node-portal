@@ -6,48 +6,69 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>4. G-Node API Object Examples &mdash; g-node-portal v0.6 documentation</title>
-    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <title>2. G-Node API Object Examples &mdash; g-node-portal v0.6 documentation</title>
+    <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    '../',
         VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="index.html" />
-    <link rel="next" title="5. Tutorial - Python" href="tutorial_python.html" />
-    <link rel="prev" title="3. DATA API - in development (coming soon)" href="data_api_in_development.html" />
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+    <link rel="up" title="The G-Node DATA API" href="data_api_index.html" />
+    <link rel="prev" title="1. DATA API Specification" href="data_api_specification.html" />
    
   
-  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
 
   </head>
   <body>
+
+<div id="tabhead">
+	<div class="logo">
+
+	<!-- HEADER -->
+	<div id="header">
+		
+		<!-- LOGO -->
+		<div id="logo">
+			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
+		</div>
+		
+		<!-- LOGO PARTNER -->
+		<div id="logo_partner">
+			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
+		</div>
+
+		<!-- KEYVISUAL -->
+		<div id="keyvisual">
+			<img src="../_static/default.jpg" alt="" border="0" />
+		</div>
+    </div>
+    </div>
+</div>
+
   
   
 
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="tutorial_python.html" title="5. Tutorial - Python"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="data_api_in_development.html" title="3. DATA API - in development (coming soon)"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">g-node-portal v0.6 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <div id="right_tabs">
+        <div class="seitenbreite">
+        <ul class="tabs">
+          <li><a href="http://www.g-node.org">G-Node Website</a></li>
+          <li class="last">
+            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+          </li>
+        </ul>
+        </div>
+    </div>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -55,7 +76,7 @@
           <div class="body">
             
   <div class="section" id="g-node-api-object-examples">
-<span id="api-object-examples"></span><h1>4. G-Node API Object Examples<a class="headerlink" href="#g-node-api-object-examples" title="Permalink to this headline">¶</a></h1>
+<span id="api-object-examples"></span><h1>2. G-Node API Object Examples<a class="headerlink" href="#g-node-api-object-examples" title="Permalink to this headline">¶</a></h1>
 <p>Here you may find a list of examples of HTTP request bodies for all supported NEO objects. All examples assume creating a new object. If some of the required parameters to create an object are missing, the system will respond with an error. You may find a list of required parameters (attributes, data parameters and relationships) in the section 6 of the specification in tables 6.1 - 6.4.</p>
 <p>To perform an update, you need to provide an ID of an object (e.g. 12345 for &#8220;segment_12345&#8221;) in the end of the URL, like &#8220;/neo/segment/12345/&#8221;. While requesting an update, only parameters that are proposed for an update can be provided.</p>
 <p>This is an example request to create a new Block:</p>
@@ -325,19 +346,20 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
 <ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="data_api_in_development.html" title="previous chapter">3. DATA API - in development (coming soon)</a></li>
-      <li>Next: <a href="tutorial_python.html" title="next chapter">5. Tutorial - Python</a></li>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="data_api_index.html">The G-Node DATA API</a><ul>
+      <li>Previous: <a href="data_api_specification.html" title="previous chapter">1. DATA API Specification</a></li>
+  </ul></li>
   </ul></li>
 </ul>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/api_object_examples.txt"
+    <li><a href="../_sources/data_api/api_object_examples.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" size="18" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />

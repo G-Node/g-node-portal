@@ -29,23 +29,47 @@
 
   </head>
   <body>
+
+<div id="tabhead">
+	<div class="logo">
+
+	<!-- HEADER -->
+	<div id="header">
+		
+		<!-- LOGO -->
+		<div id="logo">
+			<a href="/"><img src="_static/logo.gif" alt="G-Node" border="0" /></a>
+		</div>
+		
+		<!-- LOGO PARTNER -->
+		<div id="logo_partner">
+			<a href="http://www.incf.org/" target="_blank"><img src="_static/logopartner.gif" alt="INCF" border="0" /></a>
+		</div>
+
+		<!-- KEYVISUAL -->
+		<div id="keyvisual">
+			<img src="_static/default.jpg" alt="" border="0" />
+		</div>
+    </div>
+    </div>
+</div>
+
   
   
   <div class=indexwrapper>
   
 
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="overview.html" title="Overview"
-             accesskey="N">next</a> |</li>
-        <li><a href="#">g-node-portal v0.6 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <div id="right_tabs">
+        <div class="seitenbreite">
+        <ul class="tabs">
+          <li><a href="http://www.g-node.org">G-Node Website</a></li>
+          <li class="last">
+            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+          </li>
+        </ul>
+        </div>
+    </div>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -59,38 +83,26 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_api_specification.html">DATA API Specification</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="data_api_specification.html#terminology-used-in-this-specification">Terminology used in this specification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_api_specification.html#authentication">1. AUTHENTICATION</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_api_specification.html#id2">1.1 Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/tutorial_index.html">Getting started with G-Node Portal</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/tutorial_python.html">1. Tutorial - Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/tutorial_matlab.html">2. Tutorial - Matlab</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="data_api_specification.html#data-management">2. DATA MANAGEMENT</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_api_specification.html#create-or-update-data-object">2.1 Create or update data object</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_specification.html#getting-a-single-object">2.2 Getting a single object</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_specification.html#partial-data-requests">2.3 Partial Data Requests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_specification.html#getting-a-list-of-objects">2.4 Getting a List of Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_specification.html#tagging-raw-data-objects-with-metadata-coming-soon">2.5 Tagging raw data objects with metadata - COMING SOON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_api/data_api_index.html">The G-Node DATA API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_api/data_api_specification.html">1. DATA API Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#terminology-used-in-this-specification">1.1. Terminology used in this specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#authentication">1.2. AUTHENTICATION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#data-management">1.3. DATA MANAGEMENT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#metadata-management">1.4. METADATA MANAGEMENT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#file-management">1.5. FILE MANAGEMENT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#manage-permissions">1.6. MANAGE PERMISSIONS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#query-data-using-g-node-api">1.7. QUERY DATA USING G-NODE API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_api/data_api_specification.html#resource-action-history-draft">1.8. RESOURCE ACTION HISTORY (draft)</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="data_api/api_object_examples.html">2. G-Node API Object Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_api_in_development.html">DATA API - in development (coming soon)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="data_api_in_development.html#datafile-management">2. DATAFILE MANAGEMENT</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_api_in_development.html#getting-list-of-datafiles">2.1 Getting list of datafiles</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_in_development.html#getting-file-details">2.2 Getting file details</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_in_development.html#create-datafile-with-a-native-format-neo">2.3 Create datafile with a native format (NEO)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_in_development.html#upload-a-datafile-with-or-without-conversion">2.4. Upload a datafile (with or without conversion)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_in_development.html#modify-datafile-attributes">2.5 Modify datafile attributes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_in_development.html#export-datafile">2.6 Export datafile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_api_in_development.html#delete-datafile">2.7 Delete datafile</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api_object_examples.html">G-Node API Object Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial_python.html">Tutorial - Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial_matlab.html">Tutorial - Matlab</a></li>
 </ul>
 </div>
 </div>

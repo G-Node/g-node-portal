@@ -6,40 +6,70 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DATA API Specification &mdash; g-node-portal v0.6 documentation</title>
-    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <title>1. DATA API Specification &mdash; g-node-portal v0.6 documentation</title>
+    <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    '../',
         VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="index.html" />
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+    <link rel="up" title="The G-Node DATA API" href="data_api_index.html" />
+    <link rel="next" title="2. G-Node API Object Examples" href="api_object_examples.html" />
+    <link rel="prev" title="The G-Node DATA API" href="data_api_index.html" />
    
   
-  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
 
   </head>
   <body>
+
+<div id="tabhead">
+	<div class="logo">
+
+	<!-- HEADER -->
+	<div id="header">
+		
+		<!-- LOGO -->
+		<div id="logo">
+			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
+		</div>
+		
+		<!-- LOGO PARTNER -->
+		<div id="logo_partner">
+			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
+		</div>
+
+		<!-- KEYVISUAL -->
+		<div id="keyvisual">
+			<img src="../_static/default.jpg" alt="" border="0" />
+		</div>
+    </div>
+    </div>
+</div>
+
   
   
 
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li><a href="index.html">g-node-portal v0.6 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+    <div id="right_tabs">
+        <div class="seitenbreite">
+        <ul class="tabs">
+          <li><a href="http://www.g-node.org">G-Node Website</a></li>
+          <li class="last">
+            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+          </li>
+        </ul>
+        </div>
+    </div>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -47,9 +77,9 @@
           <div class="body">
             
   <div class="section" id="data-api-specification">
-<span id="id1"></span><h1>DATA API Specification<a class="headerlink" href="#data-api-specification" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>1. DATA API Specification<a class="headerlink" href="#data-api-specification" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="terminology-used-in-this-specification">
-<h2>Terminology used in this specification<a class="headerlink" href="#terminology-used-in-this-specification" title="Permalink to this headline">¶</a></h2>
+<h2>1.1. Terminology used in this specification<a class="headerlink" href="#terminology-used-in-this-specification" title="Permalink to this headline">¶</a></h2>
 <p>Throughout this specification, it&#8217;s refered to a series of terms like section or datafile, which are intended to have specific meanings.</p>
 <dl class="docutils">
 <dt><strong>Datafile</strong></dt>
@@ -72,10 +102,10 @@
 <p><em>Note. For all URLs, given later in this specification, you should add a G-Node prefix URL, which is</em> <a class="reference external" href="https://portal.g-node.org/data/">https://portal.g-node.org/data/</a></p>
 </div>
 <div class="section" id="authentication">
-<h2>AUTHENTICATION<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<h2>1.2. AUTHENTICATION<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
 <p>To authentice at G-Node, please use the following methods:</p>
 <div class="section" id="id2">
-<h3>Authentication<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>1.2.1. Authentication<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /account/authenticate/</pre>
 </div>
@@ -93,7 +123,7 @@
 </div>
 </div>
 <div class="section" id="data-management">
-<h2>DATA MANAGEMENT<a class="headerlink" href="#data-management" title="Permalink to this headline">¶</a></h2>
+<h2>1.3. DATA MANAGEMENT<a class="headerlink" href="#data-management" title="Permalink to this headline">¶</a></h2>
 <p>G-Node Data API provides a common set of objects for dealing with electro-physiological (in vivo and/or simulated) data. It is based on the NEO® data object model. NEO® approach provides common names and concepts to deal with electrophysiological data in an easy and well-structured way. It accounts for the trade-off between minimizing the data validation routine and at the same time keeping sufficient consistency. The NEO® data model concept is already used in several neuroscientific projects (OpenElectrophy, NeuroTools) and thus provides a promising opportunity to cooperate with other initiatives while not increasing the number of existing standards. On top of this data model we provide a set of core services (Data API). You may work with raw data objects - Spike Trains, Analog Signals, combining them in Segments, performing computations with analog signals and spike trains (sum, mean, fft etc.), and store new results back to the G-Node. The following types of raw data objects are supported:</p>
 <blockquote>
 <div><ul class="simple">
@@ -298,7 +328,7 @@
 </table>
 <p>G-Node Data API supports a number of functions to manage objects, listed above. The following sections 2.1 - 2.8 give an overview .</p>
 <div class="section" id="create-or-update-data-object">
-<h3>2.1 Create or update data object<a class="headerlink" href="#create-or-update-data-object" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.1. 2.1 Create or update data object<a class="headerlink" href="#create-or-update-data-object" title="Permalink to this headline">¶</a></h3>
 <p>Send an authorized HTTP request with the body (in JSON format), providing object data (attributes, arrays and relationships), to</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;/</pre>
@@ -343,7 +373,7 @@
 }</pre>
 </div>
 </div></blockquote>
-<p>A full set of examples for all supported NEO object can be found here (<a class="reference internal" href="data_api/api_object_examples.html#api-object-examples"><em>G-Node API Object Examples</em></a>).</p>
+<p>A full set of examples for all supported NEO object can be found here (<a class="reference internal" href="api_object_examples.html#api-object-examples"><em>G-Node API Object Examples</em></a>).</p>
 <p><em>Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider Tables 2.1 - 2.4, as well as the NEO specification</em> (<a class="reference external" href="http://packages.python.org/electrophysiology/classes.html">http://packages.python.org/electrophysiology/classes.html</a>).</p>
 <p>To update the segment, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we&#8217;ve just created was assigned an ID = 213, send an HTTP POST to the &#8220;/electrophysiology/segment/213/&#8221; with the following body</p>
 <blockquote>
@@ -384,8 +414,8 @@
 }</pre>
 </div>
 </div></blockquote>
-<p>The NEO® model sugest object relationships, like a segment may be connected to a block. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. The full list of supported connections can be found in Tables 2.3 - 2.4. Please provide the relationships inside the POST request to save appropriate data structure of your recordings. Consider the examples page (<a class="reference internal" href="data_api/api_object_examples.html#api-object-examples"><em>G-Node API Object Examples</em></a>).</p>
-<p>Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (a signal data field of Analog Signal object typically has units &#8220;mV&#8221;, Event object has &#8220;time&#8221; in &#8220;ms&#8221; etc). To save or update the associated object data, provide object data in the request body under a corresponding parameter, as shown in examples page (<a class="reference internal" href="data_api/api_object_examples.html#api-object-examples"><em>G-Node API Object Examples</em></a>). You may find the whole list of data-related objects with corresponding parameters in the table 2.2 above.</p>
+<p>The NEO® model sugest object relationships, like a segment may be connected to a block. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. The full list of supported connections can be found in Tables 2.3 - 2.4. Please provide the relationships inside the POST request to save appropriate data structure of your recordings. Consider the examples page (<a class="reference internal" href="api_object_examples.html#api-object-examples"><em>G-Node API Object Examples</em></a>).</p>
+<p>Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (a signal data field of Analog Signal object typically has units &#8220;mV&#8221;, Event object has &#8220;time&#8221; in &#8220;ms&#8221; etc). To save or update the associated object data, provide object data in the request body under a corresponding parameter, as shown in examples page (<a class="reference internal" href="api_object_examples.html#api-object-examples"><em>G-Node API Object Examples</em></a>). You may find the whole list of data-related objects with corresponding parameters in the table 2.2 above.</p>
 <dl class="docutils">
 <dt><em>Note. For the moment, the following unit types are supported:</em></dt>
 <dd><ul class="first last simple">
@@ -397,7 +427,7 @@
 </dl>
 </div>
 <div class="section" id="getting-a-single-object">
-<h3>Getting a single object<a class="headerlink" href="#getting-a-single-object" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.2. Getting a single object<a class="headerlink" href="#getting-a-single-object" title="Permalink to this headline">¶</a></h3>
 <p>To get a NEO object with its attributes send a following GET request</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;obj_type&gt;/&lt;obj_id&gt;/</pre>
@@ -446,7 +476,7 @@
 <p>The response will contain full information about an object, including its attributes, data arrays, downstream and upstream relationships. In the following sections you&#8217;ll find how to query only part of the information (say, data or relationships, or a slice of the signal, when the signal is very long).</p>
 </div>
 <div class="section" id="partial-data-requests">
-<h3>Partial Data Requests<a class="headerlink" href="#partial-data-requests" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.3. Partial Data Requests<a class="headerlink" href="#partial-data-requests" title="Permalink to this headline">¶</a></h3>
 <p>You may want to request object data or relationaships only (see list of objects and their attributes, data fields and relationaships in the Tables 2.1 - 2.4), or even just get the overall information about an object (like object size) without getting any data or attributes. We support the following parameters for all GET requests for a single object</p>
 <blockquote>
 <div><ul class="simple">
@@ -516,7 +546,7 @@
 <p>Notice that the &#8220;t_start&#8221; data field in the response has a data value of 1.5, indicating the start of the retrieved signal.</p>
 </div>
 <div class="section" id="getting-a-list-of-objects">
-<h3>Getting a List of Objects<a class="headerlink" href="#getting-a-list-of-objects" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.4. Getting a List of Objects<a class="headerlink" href="#getting-a-list-of-objects" title="Permalink to this headline">¶</a></h3>
 <p>Use the following HTTP GET</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;object_type&gt;/?params</pre>
@@ -558,7 +588,7 @@
 <p>to get the rest of the objects.</p>
 </div>
 <div class="section" id="labeling-raw-data-objects-with-metadata-coming-soon">
-<h3>Labeling raw data objects with metadata (coming soon)<a class="headerlink" href="#labeling-raw-data-objects-with-metadata-coming-soon" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.5. Labeling raw data objects with metadata (coming soon)<a class="headerlink" href="#labeling-raw-data-objects-with-metadata-coming-soon" title="Permalink to this headline">¶</a></h3>
 <p>You may label several Raw Data objects with a particular value by using the following request:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>POST /labels/
@@ -576,7 +606,7 @@
 <p><em>Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate (or &#8216;group&#8217; them), which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, &#8220;StimulusColor&#8221; with values &#8220;red, green, blue&#8221;. In that case, you use this function to &#8220;label&#8221; all required Analog Signals with appropriate metadata value, assigning a &#8220;red&#8221; value to, let&#8217;s say, first five hundred Analog Signals, &#8220;green&#8221; - to the second five hundred time series etc.</em></p>
 </div>
 <div class="section" id="remove-labels-coming-soon">
-<h3>Remove labels (coming soon)<a class="headerlink" href="#remove-labels-coming-soon" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.6. Remove labels (coming soon)<a class="headerlink" href="#remove-labels-coming-soon" title="Permalink to this headline">¶</a></h3>
 <p>You may completely remove a particular label:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>DELETE /labels/&lt;label_id&gt;/</pre>
@@ -598,10 +628,10 @@
 </div>
 </div>
 <div class="section" id="metadata-management">
-<h2>METADATA MANAGEMENT<a class="headerlink" href="#metadata-management" title="Permalink to this headline">¶</a></h2>
+<h2>1.4. METADATA MANAGEMENT<a class="headerlink" href="#metadata-management" title="Permalink to this headline">¶</a></h2>
 <p>You may organize your experimental data using odML Sections and Properties. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Here are the actions available for you to manage your experimental metadata.</p>
 <div class="section" id="getting-list-of-sections">
-<h3>Getting list of sections<a class="headerlink" href="#getting-list-of-sections" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.1. Getting list of sections<a class="headerlink" href="#getting-list-of-sections" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /metadata/sections/</pre>
 </div>
@@ -625,7 +655,7 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="section-create-update-copy-or-move">
-<h3>Section: create, update, copy or move<a class="headerlink" href="#section-create-update-copy-or-move" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.2. Section: create, update, copy or move<a class="headerlink" href="#section-create-update-copy-or-move" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /metadata/sections/?params
 
@@ -667,7 +697,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="getting-section-details">
-<h3>Getting section details<a class="headerlink" href="#getting-section-details" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.3. Getting section details<a class="headerlink" href="#getting-section-details" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /metadata/sections/&lt;section_id&gt;</pre>
 </div>
@@ -677,7 +707,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="delete-section">
-<h3>Delete section<a class="headerlink" href="#delete-section" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.4. Delete section<a class="headerlink" href="#delete-section" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>DELETE /metadata/sections/&lt;section_id&gt;/?params</pre>
 </div>
@@ -694,7 +724,7 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="getting-list-of-properties">
-<h3>Getting list of properties<a class="headerlink" href="#getting-list-of-properties" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.5. Getting list of properties<a class="headerlink" href="#getting-list-of-properties" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /metadata/properties/</pre>
 </div>
@@ -713,7 +743,7 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="create-or-update-a-property">
-<h3>Create or update a property<a class="headerlink" href="#create-or-update-a-property" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.6. Create or update a property<a class="headerlink" href="#create-or-update-a-property" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /metadata/properties/&lt;property_id&gt;/
 
@@ -734,7 +764,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="getting-a-property">
-<h3>Getting a property<a class="headerlink" href="#getting-a-property" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.7. Getting a property<a class="headerlink" href="#getting-a-property" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /metadata/properties/&lt;property_id&gt;</pre>
 </div>
@@ -744,7 +774,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="delete-property">
-<h3>Delete property<a class="headerlink" href="#delete-property" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.8. Delete property<a class="headerlink" href="#delete-property" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>DELETE /metadata/properties/&lt;property_id&gt;</pre>
 </div>
@@ -755,9 +785,9 @@ TBD</pre>
 </div>
 </div>
 <div class="section" id="file-management">
-<h2>FILE MANAGEMENT<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h2>
+<h2>1.5. FILE MANAGEMENT<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="getting-list-of-datafiles">
-<h3>Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.1. Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/?params</pre>
 </div>
@@ -784,7 +814,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="getting-single-file-details">
-<h3>Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.2. Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;</pre>
 </div>
@@ -796,7 +826,7 @@ TBD</pre>
 (if convertable, provide additional statistics)</p>
 </div>
 <div class="section" id="upload-a-datafile-with-or-without-conversion">
-<h3>Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.3. Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /datafiles/?params
 
@@ -826,7 +856,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="modify-datafile-attributes">
-<h3>Modify datafile attributes<a class="headerlink" href="#modify-datafile-attributes" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.4. Modify datafile attributes<a class="headerlink" href="#modify-datafile-attributes" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /datafiles/&lt;datafile_id&gt;/?params
 
@@ -850,7 +880,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="export-datafile">
-<h3>Export datafile<a class="headerlink" href="#export-datafile" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.5. Export datafile<a class="headerlink" href="#export-datafile" title="Permalink to this headline">¶</a></h3>
 <p>When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/binary/?params</pre>
@@ -868,7 +898,7 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="delete-datafile">
-<h3>Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.6. Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: DELETE /datafiles/&lt;datafile_id&gt;/?params</pre>
 </div>
@@ -886,7 +916,7 @@ TBD</pre>
 </div>
 </div>
 <div class="section" id="manage-permissions">
-<h2>MANAGE PERMISSIONS<a class="headerlink" href="#manage-permissions" title="Permalink to this headline">¶</a></h2>
+<h2>1.6. MANAGE PERMISSIONS<a class="headerlink" href="#manage-permissions" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>There is a possibility to share your data with other users in the G-Node Portal. You may share a particular section, which means all resources inside the section become shared. You may share the section recursively, which implies all subsections in the selected section with all their contents will become shared. You may also share a single or multiple datafiles. Datafiles and sections sharing is controlled via the access control lists. Access control lists are just basic lists that show who has access to a given resource. In the ACLs, the following roles are available for a given document or folder:</dt>
 <dd><ul class="first last simple">
@@ -906,7 +936,7 @@ TBD</pre>
 <p>With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.</p>
 <p>By &lt;resource_type&gt; in this paragraph we assume either &#8220;sections&#8221;, either &#8220;datafiles&#8221;.</p>
 <div class="section" id="getting-resource-permissions">
-<h3>Getting resource permissions<a class="headerlink" href="#getting-resource-permissions" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.1. Getting resource permissions<a class="headerlink" href="#getting-resource-permissions" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /&lt;resource_type&gt;/&lt;resource_id&gt;/acl/</pre>
 </div>
@@ -916,7 +946,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="update-resource-acl-share-unshare">
-<h3>Update resource ACL (share/unshare)<a class="headerlink" href="#update-resource-acl-share-unshare" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.2. Update resource ACL (share/unshare)<a class="headerlink" href="#update-resource-acl-share-unshare" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>POST /&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
 
@@ -941,7 +971,7 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="bulk-acl-update-share-unshare">
-<h3>Bulk ACL update (share/unshare)<a class="headerlink" href="#bulk-acl-update-share-unshare" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.3. Bulk ACL update (share/unshare)<a class="headerlink" href="#bulk-acl-update-share-unshare" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>POST /acl/?params
 
@@ -974,15 +1004,15 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="remove-a-user-from-all-shares">
-<h3>Remove a user from ALL shares<a class="headerlink" href="#remove-a-user-from-all-shares" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.4. Remove a user from ALL shares<a class="headerlink" href="#remove-a-user-from-all-shares" title="Permalink to this headline">¶</a></h3>
 <p>Not implemented yet.</p>
 </div>
 </div>
 <div class="section" id="query-data-using-g-node-api">
-<h2>QUERY DATA USING G-NODE API<a class="headerlink" href="#query-data-using-g-node-api" title="Permalink to this headline">¶</a></h2>
+<h2>1.7. QUERY DATA USING G-NODE API<a class="headerlink" href="#query-data-using-g-node-api" title="Permalink to this headline">¶</a></h2>
 <p>You may select Raw Data objects (Segments, Analog Signals, Spike Trains) based on their attributes and labels and those of their parents and children. You may do that by creating Selections. Selections can be saved for future use.</p>
 <div class="section" id="create-selection">
-<h3>Create Selection<a class="headerlink" href="#create-selection" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.1. Create Selection<a class="headerlink" href="#create-selection" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>POST /selections/
 
@@ -1020,7 +1050,7 @@ TBD</pre>
 <p>If the &#8220;save_as&#8221; parameter was provided, the response will contain &#8220;selection_id&#8221; and &#8220;selection_name&#8221;. You may use this ID to get the contents of a particular selection later.</p>
 </div>
 <div class="section" id="get-list-of-saved-selections">
-<h3>Get list of saved Selections<a class="headerlink" href="#get-list-of-saved-selections" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.2. Get list of saved Selections<a class="headerlink" href="#get-list-of-saved-selections" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /selections/</pre>
 </div>
@@ -1033,7 +1063,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="get-saved-selection">
-<h3>Get saved Selection<a class="headerlink" href="#get-saved-selection" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.3. Get saved Selection<a class="headerlink" href="#get-saved-selection" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /selections/&lt;selection_id&gt;/</pre>
 </div>
@@ -1047,10 +1077,10 @@ TBD</pre>
 </div>
 </div>
 <div class="section" id="resource-action-history-draft">
-<h2>RESOURCE ACTION HISTORY (draft)<a class="headerlink" href="#resource-action-history-draft" title="Permalink to this headline">¶</a></h2>
+<h2>1.8. RESOURCE ACTION HISTORY (draft)<a class="headerlink" href="#resource-action-history-draft" title="Permalink to this headline">¶</a></h2>
 <p>In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.</p>
 <div class="section" id="get-object-action-history">
-<h3>Get object action history<a class="headerlink" href="#get-object-action-history" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.1. Get object action history<a class="headerlink" href="#get-object-action-history" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /&lt;resource_type&gt;/&lt;resource_id&gt;/history/?params</pre>
 </div>
@@ -1068,7 +1098,7 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="get-user-action-history">
-<h3>Get user action history<a class="headerlink" href="#get-user-action-history" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.2. Get user action history<a class="headerlink" href="#get-user-action-history" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /profiles/profile/&lt;user_id&gt;/history/?params</pre>
 </div>
@@ -1127,59 +1157,59 @@ TBD</pre>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">DATA API Specification</a><ul>
-<li><a class="reference internal" href="#terminology-used-in-this-specification">Terminology used in this specification</a></li>
-<li><a class="reference internal" href="#authentication">AUTHENTICATION</a><ul>
-<li><a class="reference internal" href="#id2">Authentication</a></li>
+<li><a class="reference internal" href="#">1. DATA API Specification</a><ul>
+<li><a class="reference internal" href="#terminology-used-in-this-specification">1.1. Terminology used in this specification</a></li>
+<li><a class="reference internal" href="#authentication">1.2. AUTHENTICATION</a><ul>
+<li><a class="reference internal" href="#id2">1.2.1. Authentication</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#data-management">DATA MANAGEMENT</a><ul>
-<li><a class="reference internal" href="#create-or-update-data-object">2.1 Create or update data object</a></li>
-<li><a class="reference internal" href="#getting-a-single-object">Getting a single object</a></li>
-<li><a class="reference internal" href="#partial-data-requests">Partial Data Requests</a></li>
-<li><a class="reference internal" href="#getting-a-list-of-objects">Getting a List of Objects</a></li>
-<li><a class="reference internal" href="#labeling-raw-data-objects-with-metadata-coming-soon">Labeling raw data objects with metadata (coming soon)</a></li>
-<li><a class="reference internal" href="#remove-labels-coming-soon">Remove labels (coming soon)</a></li>
+<li><a class="reference internal" href="#data-management">1.3. DATA MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#create-or-update-data-object">1.3.1. 2.1 Create or update data object</a></li>
+<li><a class="reference internal" href="#getting-a-single-object">1.3.2. Getting a single object</a></li>
+<li><a class="reference internal" href="#partial-data-requests">1.3.3. Partial Data Requests</a></li>
+<li><a class="reference internal" href="#getting-a-list-of-objects">1.3.4. Getting a List of Objects</a></li>
+<li><a class="reference internal" href="#labeling-raw-data-objects-with-metadata-coming-soon">1.3.5. Labeling raw data objects with metadata (coming soon)</a></li>
+<li><a class="reference internal" href="#remove-labels-coming-soon">1.3.6. Remove labels (coming soon)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#metadata-management">METADATA MANAGEMENT</a><ul>
-<li><a class="reference internal" href="#getting-list-of-sections">Getting list of sections</a></li>
-<li><a class="reference internal" href="#section-create-update-copy-or-move">Section: create, update, copy or move</a></li>
-<li><a class="reference internal" href="#getting-section-details">Getting section details</a></li>
-<li><a class="reference internal" href="#delete-section">Delete section</a></li>
-<li><a class="reference internal" href="#getting-list-of-properties">Getting list of properties</a></li>
-<li><a class="reference internal" href="#create-or-update-a-property">Create or update a property</a></li>
-<li><a class="reference internal" href="#getting-a-property">Getting a property</a></li>
-<li><a class="reference internal" href="#delete-property">Delete property</a></li>
+<li><a class="reference internal" href="#metadata-management">1.4. METADATA MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#getting-list-of-sections">1.4.1. Getting list of sections</a></li>
+<li><a class="reference internal" href="#section-create-update-copy-or-move">1.4.2. Section: create, update, copy or move</a></li>
+<li><a class="reference internal" href="#getting-section-details">1.4.3. Getting section details</a></li>
+<li><a class="reference internal" href="#delete-section">1.4.4. Delete section</a></li>
+<li><a class="reference internal" href="#getting-list-of-properties">1.4.5. Getting list of properties</a></li>
+<li><a class="reference internal" href="#create-or-update-a-property">1.4.6. Create or update a property</a></li>
+<li><a class="reference internal" href="#getting-a-property">1.4.7. Getting a property</a></li>
+<li><a class="reference internal" href="#delete-property">1.4.8. Delete property</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#file-management">FILE MANAGEMENT</a><ul>
-<li><a class="reference internal" href="#getting-list-of-datafiles">Getting list of datafiles</a></li>
-<li><a class="reference internal" href="#getting-single-file-details">Getting single file details</a></li>
-<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">Upload a datafile (with or without conversion)</a></li>
-<li><a class="reference internal" href="#modify-datafile-attributes">Modify datafile attributes</a></li>
-<li><a class="reference internal" href="#export-datafile">Export datafile</a></li>
-<li><a class="reference internal" href="#delete-datafile">Delete datafile</a></li>
+<li><a class="reference internal" href="#file-management">1.5. FILE MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#getting-list-of-datafiles">1.5.1. Getting list of datafiles</a></li>
+<li><a class="reference internal" href="#getting-single-file-details">1.5.2. Getting single file details</a></li>
+<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">1.5.3. Upload a datafile (with or without conversion)</a></li>
+<li><a class="reference internal" href="#modify-datafile-attributes">1.5.4. Modify datafile attributes</a></li>
+<li><a class="reference internal" href="#export-datafile">1.5.5. Export datafile</a></li>
+<li><a class="reference internal" href="#delete-datafile">1.5.6. Delete datafile</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#manage-permissions">MANAGE PERMISSIONS</a><ul>
-<li><a class="reference internal" href="#getting-resource-permissions">Getting resource permissions</a></li>
-<li><a class="reference internal" href="#update-resource-acl-share-unshare">Update resource ACL (share/unshare)</a></li>
-<li><a class="reference internal" href="#bulk-acl-update-share-unshare">Bulk ACL update (share/unshare)</a></li>
-<li><a class="reference internal" href="#remove-a-user-from-all-shares">Remove a user from ALL shares</a></li>
+<li><a class="reference internal" href="#manage-permissions">1.6. MANAGE PERMISSIONS</a><ul>
+<li><a class="reference internal" href="#getting-resource-permissions">1.6.1. Getting resource permissions</a></li>
+<li><a class="reference internal" href="#update-resource-acl-share-unshare">1.6.2. Update resource ACL (share/unshare)</a></li>
+<li><a class="reference internal" href="#bulk-acl-update-share-unshare">1.6.3. Bulk ACL update (share/unshare)</a></li>
+<li><a class="reference internal" href="#remove-a-user-from-all-shares">1.6.4. Remove a user from ALL shares</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#query-data-using-g-node-api">QUERY DATA USING G-NODE API</a><ul>
-<li><a class="reference internal" href="#create-selection">Create Selection</a></li>
-<li><a class="reference internal" href="#get-list-of-saved-selections">Get list of saved Selections</a></li>
-<li><a class="reference internal" href="#get-saved-selection">Get saved Selection</a></li>
+<li><a class="reference internal" href="#query-data-using-g-node-api">1.7. QUERY DATA USING G-NODE API</a><ul>
+<li><a class="reference internal" href="#create-selection">1.7.1. Create Selection</a></li>
+<li><a class="reference internal" href="#get-list-of-saved-selections">1.7.2. Get list of saved Selections</a></li>
+<li><a class="reference internal" href="#get-saved-selection">1.7.3. Get saved Selection</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#resource-action-history-draft">RESOURCE ACTION HISTORY (draft)</a><ul>
-<li><a class="reference internal" href="#get-object-action-history">Get object action history</a></li>
-<li><a class="reference internal" href="#get-user-action-history">Get user action history</a></li>
+<li><a class="reference internal" href="#resource-action-history-draft">1.8. RESOURCE ACTION HISTORY (draft)</a><ul>
+<li><a class="reference internal" href="#get-object-action-history">1.8.1. Get object action history</a></li>
+<li><a class="reference internal" href="#get-user-action-history">1.8.2. Get user action history</a></li>
 </ul>
 </li>
 </ul>
@@ -1187,17 +1217,21 @@ TBD</pre>
 </ul>
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="data_api_index.html">The G-Node DATA API</a><ul>
+      <li>Previous: <a href="data_api_index.html" title="previous chapter">The G-Node DATA API</a></li>
+      <li>Next: <a href="api_object_examples.html" title="next chapter">2. G-Node API Object Examples</a></li>
+  </ul></li>
   </ul></li>
 </ul>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/data_api_specification.txt"
+    <li><a href="../_sources/data_api/data_api_specification.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" size="18" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
