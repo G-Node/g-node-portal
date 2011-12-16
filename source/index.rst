@@ -14,12 +14,5 @@ Everything you need to know about G-Node Portal is listed here:
    :maxdepth: 3
 
    overview.rst
-   data_api_specification.rst
-   data_api_in_development.rst
-   api_object_examples.rst
-   tutorial_python.rst
-   tutorial_matlab.rst
-
-
-
-
+   tutorial/tutorial_index.rst
+   data_api/data_api_index.rst

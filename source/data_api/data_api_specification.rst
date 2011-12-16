@@ -37,15 +37,15 @@ Throughout this specification, it's refered to a series of terms like section or
 
 *Note. For all URLs, given later in this specification, you should add a G-Node prefix URL, which is* https://portal.g-node.org/data/
 
-=================
-1. AUTHENTICATION
-=================
+==============
+AUTHENTICATION
+==============
 
 To authentice at G-Node, please use the following methods:
 
-------------------
-1.1 Authentication
-------------------
+--------------
+Authentication
+--------------
 
  ::
 
@@ -62,9 +62,9 @@ A successful response will contain a cookie called *sessionid*. Use this cookie 
 .. _Advanced REST Client for Chrome: https://chrome.google.com/webstore/detail/ahdjpgllmllekelefacdedbjnjaplfjn/
 
 
-==================
-2. DATA MANAGEMENT
-==================
+===============
+DATA MANAGEMENT
+===============
 
 G-Node Data API provides a common set of objects for dealing with electro-physiological (in vivo and/or simulated) data. It is based on the NEO® data object model. NEO® approach provides common names and concepts to deal with electrophysiological data in an easy and well-structured way. It accounts for the trade-off between minimizing the data validation routine and at the same time keeping sufficient consistency. The NEO® data model concept is already used in several neuroscientific projects (OpenElectrophy, NeuroTools) and thus provides a promising opportunity to cooperate with other initiatives while not increasing the number of existing standards. On top of this data model we provide a set of core services (Data API). You may work with raw data objects - Spike Trains, Analog Signals, combining them in Segments, performing computations with analog signals and spike trains (sum, mean, fft etc.), and store new results back to the G-Node. The following types of raw data objects are supported:
 
@@ -275,9 +275,9 @@ Some objects have data fields - they are similar to normal attributes, however o
  * in signal domain: "v", "mv", "mcv"
  * sampling rate for signals: "hz", "khz", "mhz", "1/s"
 
----------------------------
-2.2 Getting a single object
----------------------------
+-----------------------
+Getting a single object
+-----------------------
 
 To get a NEO object with its attributes send a following GET request 
 
@@ -329,9 +329,9 @@ You'll get the response, similar to:
 
 The response will contain full information about an object, including its attributes, data arrays, downstream and upstream relationships. In the following sections you'll find how to query only part of the information (say, data or relationships, or a slice of the signal, when the signal is very long).
 
--------------------------
-2.3 Partial Data Requests
--------------------------
+---------------------
+Partial Data Requests
+---------------------
 
 You may want to request object data or relationaships only (see list of objects and their attributes, data fields and relationaships in the Tables 2.1 - 2.4), or even just get the overall information about an object (like object size) without getting any data or attributes. We support the following parameters for all GET requests for a single object 
 
@@ -401,9 +401,9 @@ to get the Analog Signal range with datapoints as of 30 to 100, downsampled from
 
 Notice that the "t_start" data field in the response has a data value of 1.5, indicating the start of the retrieved signal.
 
------------------------------
-2.4 Getting a List of Objects
------------------------------
+-------------------------
+Getting a List of Objects
+-------------------------
 
 Use the following HTTP GET 
 
@@ -416,7 +416,7 @@ to query NEO objects of a specific type. For example, if you want to get all Ana
 
  ::
     
-    Request: GET /electrophysiology/select/analogsignal/
+    GET /electrophysiology/analogsignal/
 
 
 You receive a list of Analog Signals IDs as a response:
@@ -448,24 +448,622 @@ By default the API will return the first 1000 data objects in the response. This
 
  ::
     
-    Request: GET /electrophysiology/select/analogsignals/?range_start=844
+    GET /electrophysiology/analogsignals/?range_start=844
 
 to get the rest of the objects.
 
 
---------------------------------------------------------
-2.5 Tagging raw data objects with metadata - COMING SOON
---------------------------------------------------------
+-----------------------------------------------------
+Labeling raw data objects with metadata (coming soon)
+-----------------------------------------------------
+
+You may label several Raw Data objects with a particular value by using the following request:
 
  ::
     
-    Request: POST /electrophysiology/metadata/link/
+    POST /labels/
+
+    {
+        "value_id": "value_1345", # some value, from properties
+        "selection_id": "selection_id", # you may apply a label to the selection
+        "apply_to": [
+            "segment_124",
+            "segment_125"
+        ]
+    }
+
+*Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate (or 'group' them), which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, "StimulusColor" with values "red, green, blue". In that case, you use this function to "label" all required Analog Signals with appropriate metadata value, assigning a "red" value to, let's say, first five hundred Analog Signals, "green" - to the second five hundred time series etc.*
+
+---------------------------
+Remove labels (coming soon)
+---------------------------
+
+You may completely remove a particular label:
+
+ ::
+
+    DELETE /labels/<label_id>/
+
+You may remove a particular label from one or several objects (providing a selection or a list of object IDs):
+
+ ::
+    
+    DELETE /labels/<label_id>/
+
+    {
+        "selection_id": "selection_id", # you may apply a label to the selection
+        "apply_to": [
+            "segment_124",
+            "segment_125"
+        ]
+    }
+
+
+===================
+METADATA MANAGEMENT
+===================
+
+You may organize your experimental data using odML Sections and Properties. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Here are the actions available for you to manage your experimental metadata.
+
+------------------------
+Getting list of sections
+------------------------
+
+ ::
+    
+    GET /metadata/sections/
+
+parameters:
+ * [recursive] - true, false (default) - do a recursive export
+ * [section_id] - sections in a specific section (root by default)
+ * [visibility] - private, public, shared, all (default) - which types of sections to return
+ * [owner] - filter by an owner of the file
+ * [created_min] - filters files older than created_min
+ * [created_max] - filters files younger than created_max
+ * [q] - full-text query string (also searches in parent section?)
+ * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
+
+ ::
+    
+    Response:
+    TBD
+
+-------------------------------------
+Section: create, update, copy or move
+-------------------------------------
+
+ ::
+    
+    Request: POST /metadata/sections/?params
+
+    { 
+        "title": "Stimuli",
+        "description": "This section describes the stimulus",
+        "type": "stimuli",
+        "link": "",
+        "repository": "",
+        "mapping": "",
+        "reference": "",
+        "parent_section": "section_1234",
+    }
+
+if you need to create a section from the template (or from other section), or you want to move the section to another place in the metadata tree - provide the parameters below:
+
+ * source_section_id - section to copy
+ * target_section_id - a section to copy into
+ * [mode] - move (default), copy - whether to move or copy
+ * [with_properties] - whether or not to copy properties, which belong to the section (in copy mode)
+ * [with_datafiles] - whether or not to copy links (!!) to datafiles, which belong to the section (in copy mode).
+ * [recursive] - true, false - copy all subsections recursively (in copy mode)
+
+*Note. Attributes of the section, provided in the request body, will be used as values for the newly created section. In case of copy/move, the request body can be empty or contain only required parameters.*
+
+*Note. Files, contained in the section, are never duplicated while using copy/move function. However, in the newly created section you will see the same files: these are only links to the files, which were successfully copied.*
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+
+*Note. ACL for the file is by default assigned as for the parent section.*
+
+ ::
+    
+    Response:
+    TBD
+
+
+-----------------------
+Getting section details
+-----------------------
+
+ ::
+    
+    GET /metadata/sections/<section_id>
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+--------------
+Delete section
+--------------
+
+ ::
+
+    DELETE /metadata/sections/<section_id>/?params
 
 
 parameters:
- * obj_id - an object to assign a tag (Section, AnaogSignal etc.)
- * value_id - a value from the values of properties, defined up the hierarchy of the section tree you work in.
-
-*Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate (or group them), which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, "StimulusColor" with values "red, green, blue". In that case, you use this function to "tag" all required Analog Signals with appropriate metadata value, assigning a "red" value to, let's say, first five hundred Analog Signals, "green" - to the second five hundred time series etc.*
+ * [force] - true, false (default) - use "true" to delete the file even if there are other users with collaboration role (able to write). If "false" or omitted, the file will not be deleted being in the state having collaborators.
 
 
+ ::
+    
+    Response:
+    TBD
+
+
+--------------------------
+Getting list of properties
+--------------------------
+
+ ::
+    
+    GET /metadata/properties/
+
+parameters:
+ * [section_id] - properties in a specific section (all by default)
+ * [q] - full-text query string (searches both properties and values)
+ * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+---------------------------
+Create or update a property
+---------------------------
+
+ ::
+    
+    Request: POST /metadata/properties/<property_id>/
+
+    { 
+        "section_id": "section_1234",
+        "description": "This section describes the stimulus",
+        "name": "stimuli colors",
+        "type": "experimental conditions",
+        "unit": "",
+        "definition": "",
+        "mapping": "",
+        "dependency": "",
+    }
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+------------------
+Getting a property
+------------------
+
+ ::
+    
+    GET /metadata/properties/<property_id>
+
+
+ ::
+    
+    Response:
+    TBD
+
+---------------
+Delete property
+---------------
+
+ ::
+    
+    DELETE /metadata/properties/<property_id>
+
+
+ ::
+    
+    Response:
+    TBD
+
+===============
+FILE MANAGEMENT
+===============
+
+-------------------------
+Getting list of datafiles
+-------------------------
+
+ ::
+
+    Request: GET /datafiles/?params
+
+parameters:
+ * [section_id] - return files only in a specific section (all files if not provided)
+ * [visibility] - private, public, shared, all (default) - which types of files to return
+ * [owner] - filter by an owner of the file
+ * [created_min] - filters files older than created_min
+ * [created_max] - filters files younger than created_max
+ * [q] - full-text query string (also searches in parent section?)
+ * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
+
+Typically you should get the following response:
+
+ ::
+
+    Response:
+
+    TBD
+
+---------------------------
+Getting single file details
+---------------------------
+ ::
+    
+    Request: GET /datafiles/<datafile_id>
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+(Conversion status (not able to convert, not converted, NEO))
+(if convertable, provide additional statistics)
+
+
+----------------------------------------------
+Upload a datafile (with or without conversion)
+----------------------------------------------
+
+ ::
+    
+    Request: POST /datafiles/?params
+
+    {
+        "name": "In-vivo single-channel recordings, V1",
+        "description": "Some description here",
+        "keywords": "monkey V1 single-channel"
+    }
+
+parameters:
+ * [section_id] - provide an ID of the section in which to store the file (recommended).
+ * [convert] - true (default), false - whether try to convert the file into native format, if possible. For the moment the following types are supported: TBD.
+
+*Note. If the file is uploaded into a specific section, the security settings for the new file will be assigned as for the parent section. When no section is specified, the file is private by default.*
+
+ ::
+    
+    Response:
+
+    HTTP CREATED (201)
+
+    TBD
+
+--------------------------
+Modify datafile attributes
+--------------------------
+
+ ::
+    
+    Request: POST /datafiles/<datafile_id>/?params
+
+    {
+        "description": "Some REAL description goes here..",
+    }
+
+parameters:
+ * [convert] - provide a convert=true parameter to initiate file conversion. The file should be convertible and never converted previously.
+
+*Note. The conversion operation is asynchronous, which means you'll not see the status of the conversion immediately in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.*
+
+ ::
+    
+    Response:
+    TBD
+
+---------------
+Export datafile
+---------------
+
+When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.
+
+ ::
+    
+    Request: GET /datafiles/<datafile_id>/binary/?params
+
+
+parameters:
+ * [format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.
+
+ ::
+    
+    Response:
+    TBD
+
+---------------
+Delete datafile
+---------------
+
+ ::
+    
+    Request: DELETE /datafiles/<datafile_id>/?params
+
+
+parameters:
+ * [force] - true, false (default) - use "true" to delete the file even if there are other users with access to the file. If "false" or omitted, the file will not be deleted being in the state having collaborators.
+
+ ::
+    
+    Response:
+    TBD
+
+
+==================
+MANAGE PERMISSIONS
+==================
+
+There is a possibility to share your data with other users in the G-Node Portal. You may share a particular section, which means all resources inside the section become shared. You may share the section recursively, which implies all subsections in the selected section with all their contents will become shared. You may also share a single or multiple datafiles. Datafiles and sections sharing is controlled via the access control lists. Access control lists are just basic lists that show who has access to a given resource. In the ACLs, the following roles are available for a given document or folder:
+ * owner — the owner of the resource (section or file). As an owner you have the ability to modify the ACL, delete the resource, etc.
+ * writer — a collaborator.
+ * reader — a viewer (equivalent to read-only access).
+
+A resource (datafile or section) by itself has also a sharing state, which can be
+ * public — all users may see the contents of the resource.
+ * friendly — all friends have a reader role, with no need to assign them for every resource.
+ * private — noone, except users, specified explicitly, may see the resource.
+
+With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.
+
+By <resource_type> in this paragraph we assume either "sections", either "datafiles".
+
+----------------------------
+Getting resource permissions
+----------------------------
+
+ ::
+    
+    GET /<resource_type>/<resource_id>/acl/
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+-----------------------------------
+Update resource ACL (share/unshare)
+-----------------------------------
+
+ ::
+    
+    POST /<resource_type>/<resource_id>/acl/?params
+
+    {
+        "state": "<access level>", # can be public, friendly, private - access level
+        "shared_with": {
+            "<iser_id>": "<user_role>", # a role can be "reader" or "collaborator"
+            "<iser_id>": "<user_role>"
+        }
+    }
+
+parameters:
+ * [recursive] - true, false (default) - apply to all resources recursivery (when <resource_type> = "sections"). Datafiles, found in subsections, will be also updated.
+
+ ::
+    
+    Response:
+    TBD
+
+-------------------------------
+Bulk ACL update (share/unshare)
+-------------------------------
+
+ ::
+    
+    POST /acl/?params
+
+    {
+        "resources": [
+            "section_1345",
+            "section_1346",
+            "datafile_1345"
+        ]
+        "state": "<access level>", # can be public, friendly, private - access level
+        "shared_with": {
+            "<iser_id>": "<user_role>", # a role can be "reader" or "collaborator"
+            "<iser_id>": "<user_role>"
+        }
+    }
+
+parameters:
+ * [recursive] - true, false (default) - apply to all resources recursivery. 
+
+*Note. The requested ACL changes will be applied to the resources in a sequence, as they were provided in the request.*
+
+ ::
+    
+    Response:
+    TBD
+
+-----------------------------
+Remove a user from ALL shares
+-----------------------------
+
+Not implemented yet.
+
+
+===========================
+QUERY DATA USING G-NODE API
+===========================
+
+You may select Raw Data objects (Segments, Analog Signals, Spike Trains) based on their attributes and labels and those of their parents and children. You may do that by creating Selections. Selections can be saved for future use.
+
+----------------
+Create Selection
+----------------
+
+ ::
+    
+    POST /selections/
+
+    {
+        "obj_type": "analogsignal", # <obj_type> should be of type NEO.
+        "querysets": [
+            {
+                "filter": {
+                    "name__contains": "V1",
+                    "date_created__gte": "2006-01-01"
+                },
+                "filter": {
+                    "segment__name__contains": "mice"
+                },
+                "exclude": {
+                    "label": "red",
+                    "date_created__gte": "2006-01-01"
+                }
+            },
+            {
+                "filter": {
+                    "sampling_rate": 20000,
+            }],
+        "save_as": "provide some name here.."
+    }
+
+The way to construct your query is similar to the way described here https://docs.djangoproject.com/en/dev/topics/db/queries/
+In the response you'll get selected objects:
+
+ ::
+    
+    Response:
+    TBD
+
+If the "save_as" parameter was provided, the response will contain "selection_id" and "selection_name". You may use this ID to get the contents of a particular selection later.
+
+----------------------------
+Get list of saved Selections
+----------------------------
+
+ ::
+    
+    GET /selections/
+
+In the response you'll get all saved selections:
+
+ ::
+    
+    Response:
+    TBD
+
+
+-------------------
+Get saved Selection
+-------------------
+
+ ::
+    
+    GET /selections/<selection_id>/
+
+
+In the response you'll get selected objects:
+
+ ::
+    
+    Response:
+    TBD
+
+
+===============================
+RESOURCE ACTION HISTORY (draft)
+===============================
+
+In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.
+
+-------------------------
+Get object action history
+-------------------------
+
+ ::
+    
+    GET /<resource_type>/<resource_id>/history/?params
+
+
+parameters:
+ * [start_date] - start date of the history
+ * [end_date] - start date of the history
+
+
+ ::
+    
+    Response:
+    TBD
+
+
+-----------------------
+Get user action history
+-----------------------
+
+ ::
+    
+    GET /profiles/profile/<user_id>/history/?params
+
+
+parameters:
+ * [start_date] - start date of the history
+ * [end_date] - start date of the history
+
+
+ ::
+    
+    Response:
+    TBD
+
+*Note. Usually you will deal with the following HTTP status codes:*
+
+ * 201 - "Created" - new object was successfully created.
+ * 200 - "OK" - the object was successfully updated or GET operation performed successfully.
+ * 404 - "Not Found" - you have provided an [obj_id], however, such an object does not exist. Or URL is wrond and not supported.
+ * 403 - "Forbidden" - you don't have access to create, modify or view an object.
+ * 400 - "Bad request" - some of the request parameters are not provided correctly. Consider the "message" contents.
+ * 401 - "Unauthorized" - authorization key not provided.
+
+
+----
+
+
+FUTURE:
+ * bulk sections/datafiles update. just add list of objects to update provided params.
+ * bulk NEO update. using selections / list of IDs
+ * archiving mechanisms
+ * include links in respresentations (http://www.infoq.com/articles/rest-anti-patterns)
+ * (SOLVED) caching!! see google + http://www.mnot.net/cache_docs/
+ * (SOLVED) etags???
+ * version management!!!
+ * computations with objects
+ * import / conversion using Google Refine technologies
+ * (SOLVED) NEO: /electrophysiology/info/<neo_id>/ - short info: think about what kind of info could there be, like number of segments/signals in a block, total data in MB etc.
+ * NEO: as above, in /electrophysiology/select/<obj_type>/ - provide short info about every object + a summary about all (total volume, for example)
+ * NEO: /electrophysiology/select/<obj_type>/ add query mechanism
+ * (SOLVED) NEO: if an array data is missing for data-related objects, should we throw an error? or just allow a user to create it? Throw an error
+ * (SOLVED) NEO: should we assign units by default, if not provided? NO
+ * NEO security: based on files? or not?
