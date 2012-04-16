@@ -126,11 +126,19 @@
 <div><div class="highlight-python"><pre>Request: GET /metadata/sections/</pre>
 </div>
 </div></blockquote>
-<p>You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=&lt;user_name&gt; or owner=&lt;user_ID&gt; parameters. Specify visibility=private or visibility=public or visibility=shared to get only private, public or shared objects respectively. To filter by attributes (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example</p>
+<p>You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=&lt;user_name&gt; or owner=&lt;user_ID&gt; parameters. Specify safety_level=3 or safety_level=1 to get only private or public objects respectively. That is basically applicable to any attribute: to filter by attribute (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?owner=alex&amp;visibility=public&amp;name__icontains=experiment</pre>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?owner=alex&amp;safety_level=1&amp;name__icontains=experiment</pre>
 </div>
 </div></blockquote>
+<p>filters alex&#8217;s publicly available metadata sections containing &#8216;experiment&#8217; in the name, or</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11</pre>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li>filters out all objects created before February, 23 2012</li>
+</ul>
 <dl class="docutils">
 <dt>The following lookups are supported:</dt>
 <dd><ul class="first last simple">
@@ -138,11 +146,6 @@
 <li>iexact</li>
 <li>contains</li>
 <li>icontains</li>
-</ul>
-</dd>
-<dt>The following lookups are coming soon:</dt>
-<dd><ul class="first last simple">
-<li>in</li>
 <li>gt</li>
 <li>gte</li>
 <li>lt</li>
@@ -156,15 +159,20 @@
 <li>day</li>
 <li>week_day</li>
 <li>isnull</li>
+</ul>
+</dd>
+<dt>The following lookups are coming soon:</dt>
+<dd><ul class="first last simple">
+<li>in</li>
 <li>search</li>
 <li>regex</li>
 <li>iregex</li>
 </ul>
 </dd>
 </dl>
-<p>DATA API limits the number objects to be retrieved in one request by 1000. If there are more than 1000 objects you should request them using start_index=1000 (start_index=2000 etc.). You may also limit the number of objects by max_objects=&lt;some_number&gt; parameter. The start / end indexes for the selected objects are usually contained in the response as &#8220;selected_range&#8221;. For example:</p>
+<p>DATA API limits the number objects to be retrieved in one request by 1000. If there are more than 1000 objects you should request them using offset=1000 (offset=2000 etc.). You may also limit the number of objects by max_results=&lt;some_number&gt; parameter. The start / end indexes for the selected objects are usually contained in the response as &#8220;selected_range&#8221;. For example:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?start_index=120&amp;max_objects=300</pre>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?offset=120&amp;max_results=300</pre>
 </div>
 </div></blockquote>
 <p>To get a single object you should specify its ID at the end of the URL:</p>
@@ -242,7 +250,7 @@
 </div></blockquote>
 <p>Bulk object update is also possible. To make changes to several objects at once, you need to provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that have to be changed. The following resuest moves all properties with name having &#8220;sampling&#8221; to the section with ID 146:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: POST /metadata/properties/2/?name__icontains=sampling
+<div><div class="highlight-python"><pre>Request: POST /metadata/properties/2/?name__icontains=sampling&amp;bulk_update=1
 
 {
     "section": 146
@@ -591,7 +599,7 @@
 <blockquote>
 <div><ul class="simple">
 <li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;beard&#8221;, &#8220;link&#8221;. The response will contain content varying from just generic object information (&#8220;link&#8221;, &#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
-<li>[cascade] - when set to &#8220;True&#8221; will recursively retrieve all the children objects (not only their IDs). Please be careful with such requests, requesting a big block in a &#8220;cascade&#8221; mode may result in several Gigobytes of data to download, and significant delays.</li>
+<li>[cascade] - when set to &#8220;True&#8221; will recursively retrieve all the children objects (not only their permalinks). Please be careful with such requests, requesting a big block in a &#8220;cascade&#8221; mode may result in several Gigobytes of data to download, and significant delays.</li>
 </ul>
 </div></blockquote>
 <p>Specifically for signal-based objects (Analog Signal, Irregularly Sampled Signal) the following GET request parameters are supported:</p>
@@ -698,18 +706,7 @@
 }</pre>
 </div>
 </div></blockquote>
-<p>By default the API will return the first 1000 data objects in the response. Use filters to refine the selection:</p>
-<blockquote>
-<div><ul class="simple">
-<li>[visibility] - private, public, shared, all (default) - which types of sections to return</li>
-<li>[owner] - filter by an owner of the file</li>
-<li>[created_min] - filters files older than created_min (format &#8220;YYYY-MM-DD HH:MM:SS&#8221;)</li>
-<li>[created_max] - filters files younger than created_max (format &#8220;YYYY-MM-DD HH:MM:SS&#8221;)</li>
-<li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;beard&#8221;, &#8220;link&#8221;. The response will contain content varying from just generic object information (&#8220;link&#8221;, &#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
-<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query less or more).</li>
-<li>[start-index] - 1-based index of the first result to be retrieved</li>
-</ul>
-</div></blockquote>
+<p>By default the API will return the first 1000 data objects in the response. Use standard filters to refine the selection.</p>
 </div>
 <div class="section" id="data-annotation">
 <h3>1.4.5. Data Annotation<a class="headerlink" href="#data-annotation" title="Permalink to this headline">¶</a></h3>
@@ -738,20 +735,12 @@
 <div><div class="highlight-python"><pre>GET /metadata/sections/?params</pre>
 </div>
 </div></blockquote>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[visibility] - private, public, shared, all (default) - which types of sections to return</li>
+<p>in addition to the usual filters, use the following parameters:</p>
+<blockquote>
+<div><ul class="simple">
 <li>[top] - owned (default), shared - return only top (no parent) sections, owned by the user or shared with the user</li>
-<li>[owner] - filter by an owner of the file</li>
-<li>[created_min] - filters files older than created_min (format &#8220;YYYY-MM-DD HH:MM:SS&#8221;)</li>
-<li>[created_max] - filters files younger than created_max (format &#8220;YYYY-MM-DD HH:MM:SS&#8221;)</li>
-<li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;beard&#8221;, &#8220;link&#8221;. The response will contain content varying from just generic object information (&#8220;link&#8221;, &#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
-<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query less or more).</li>
-<li>[start-index] - 1-based index of the first result to be retrieved</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <p>Example response:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>HTTP SUCCESS (200)
@@ -900,18 +889,9 @@ if you need to create a section from the template (or from other section) - like
 <div class="section" id="getting-list-of-properties">
 <h3>1.5.5. Getting list of properties<a class="headerlink" href="#getting-list-of-properties" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /metadata/properties/</pre>
+<div><div class="highlight-python"><pre>GET /metadata/properties/?params</pre>
 </div>
 </div></blockquote>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[section_id] - properties in a specific section (all by default)</li>
-<li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;beard&#8221;, &#8220;link&#8221;. The response will contain content varying from just generic object information (&#8220;link&#8221;, &#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
-<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
-</ul>
-</dd>
-</dl>
 <p>Response:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>HTTP SUCCESS (200)
@@ -1015,19 +995,6 @@ if you need to create a section from the template (or from other section) - like
 <div><div class="highlight-python"><pre>Request: GET /datafiles/?params</pre>
 </div>
 </div></blockquote>
-<dl class="docutils">
-<dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[section_id] - return files only in a specific section (all files if not provided)</li>
-<li>[visibility] - private, public, shared, all (default) - which types of files to return</li>
-<li>[owner] - filter by an owner of the file</li>
-<li>[created_min] - filters files older than created_min</li>
-<li>[created_max] - filters files younger than created_max</li>
-<li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;beard&#8221;, &#8220;link&#8221;. The response will contain content varying from just generic object information (&#8220;link&#8221;, &#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
-<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
-</ul>
-</dd>
-</dl>
 <p>Typically you should get the following response:</p>
 <p>Response:</p>
 <blockquote>
@@ -1135,7 +1102,7 @@ the file should be sent with "raw_file" key.</pre>
 </div>
 </div></blockquote>
 <p>New in development version.
-parameters:</p>
+in addition to the usual filters, use can use the following parameters:</p>
 <blockquote>
 <div><ul class="simple">
 <li>[format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.</li>
@@ -1149,7 +1116,7 @@ parameters:</p>
 </div>
 </div></blockquote>
 <dl class="docutils">
-<dt>parameters:</dt>
+<dt>in addition to the usual filters, use can use the following parameters:</dt>
 <dd><ul class="first last simple">
 <li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with access to the file. If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
 </ul>
