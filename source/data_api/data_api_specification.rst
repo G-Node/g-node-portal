@@ -65,20 +65,25 @@ or
 
     Request: GET /metadata/sections/
 
-You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=<user_name> or owner=<user_ID> parameters. Specify visibility=private or visibility=public or visibility=shared to get only private, public or shared objects respectively. To filter by attributes (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example 
+You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=<user_name> or owner=<user_ID> parameters. Specify safety_level=3 or safety_level=1 to get only private or public objects respectively. That is basically applicable to any attribute: to filter by attribute (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example 
 
  ::
 
-    Request: GET /metadata/sections/?owner=alex&visibility=public&name__icontains=experiment
+    Request: GET /metadata/sections/?owner=alex&safety_level=1&name__icontains=experiment
+
+filters alex's publicly available metadata sections containing 'experiment' in the name, or
+
+ ::
+
+    Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11
+
+- filters out all objects created before February, 23 2012
 
 The following lookups are supported:
  * exact
  * iexact
  * contains
  * icontains
-
-The following lookups are coming soon:
- * in
  * gt
  * gte
  * lt
@@ -92,15 +97,18 @@ The following lookups are coming soon:
  * day  
  * week_day
  * isnull
+
+The following lookups are coming soon:
+ * in
  * search
  * regex
  * iregex
 
-DATA API limits the number objects to be retrieved in one request by 1000. If there are more than 1000 objects you should request them using start_index=1000 (start_index=2000 etc.). You may also limit the number of objects by max_objects=<some_number> parameter. The start / end indexes for the selected objects are usually contained in the response as "selected_range". For example:
+DATA API limits the number objects to be retrieved in one request by 1000. If there are more than 1000 objects you should request them using offset=1000 (offset=2000 etc.). You may also limit the number of objects by max_results=<some_number> parameter. The start / end indexes for the selected objects are usually contained in the response as "selected_range". For example:
 
  ::
 
-    Request: GET /metadata/sections/?start_index=120&max_objects=300
+    Request: GET /metadata/sections/?offset=120&max_results=300
 
 To get a single object you should specify its ID at the end of the URL:
 
@@ -177,11 +185,11 @@ To update one or several attributes of an object send POST to the object permali
     }
 
 
-Bulk object update is also possible. To make changes to several objects at once, you need to provide bulk_update=1 parameter. Changes will be applied to oll objects in the selection; use filters so select only objects, that have to be changed. The following resuest moves all properties with name having "sampling" to the section with ID 146:
+Bulk object update is also possible. To make changes to several objects at once, you need to provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that have to be changed. The following resuest moves all properties with name having "sampling" to the section with ID 146:
 
  ::
 
-    Request: POST /metadata/properties/2/?name__icontains=sampling
+    Request: POST /metadata/properties/2/?name__icontains=sampling&bulk_update=1
 
     {
         "section": 146
@@ -337,7 +345,7 @@ to create a new segment. If the response status is 'Created' (201) a client rece
                 "date_created": "2012-04-10 13:38:23"
                 },
             "model": "neo_api.segment",
-            "permalink": "http://141.84.42.103:8003/electrophysiology/segment/1"
+            "permalink": "/electrophysiology/segment/1"
         }],
         "message": "Object created successfully.",
         "selected_range": [0, 0],
@@ -430,7 +438,7 @@ You'll get the response, similar to:
             "date_created": "2012-03-22 17:19:41"
         },
         "model": "neo_api.analogsignal",
-        "permalink": "http://141.84.42.103:8005/electrophysiology/analogsignal/952"
+        "permalink": "/electrophysiology/analogsignal/952"
     }],
     "message": "Here is the list of requested objects.",
     "selected_range": [0, 0],
@@ -447,7 +455,7 @@ Partial Data Requests
 You may want to request object data or relationaships only (see list of objects and their attributes, data fields and relationaships in the Tables 2.1 - 2.4), or even just get the overall information about an object (like object size) without getting any data or attributes. We support the following parameters for all GET requests for a single object 
 
  * [q] - can be one of "full", "info", "data", "beard", "link". The response will contain content varying from just generic object information ("link", "info") to the full response ("full").
- * [cascade] - when set to "True" will recursively retrieve all the children objects (not only their IDs). Please be careful with such requests, requesting a big block in a "cascade" mode may result in several Gigobytes of data to download, and significant delays.
+ * [cascade] - when set to "True" will recursively retrieve all the children objects (not only their permalinks). Please be careful with such requests, requesting a big block in a "cascade" mode may result in several Gigobytes of data to download, and significant delays.
 
 Specifically for signal-based objects (Analog Signal, Irregularly Sampled Signal) the following GET request parameters are supported:
 
@@ -565,15 +573,7 @@ You receive a list of Analog Signal permalinks as a response:
     }
 
 
-By default the API will return the first 1000 data objects in the response. Use filters to refine the selection:
-
- * [visibility] - private, public, shared, all (default) - which types of sections to return
- * [owner] - filter by an owner of the file
- * [created_min] - filters files older than created_min (format "YYYY-MM-DD HH:MM:SS")
- * [created_max] - filters files younger than created_max (format "YYYY-MM-DD HH:MM:SS")
- * [q] - can be one of "full", "info", "data", "beard", "link". The response will contain content varying from just generic object information ("link", "info") to the full response ("full").
- * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query less or more).
- * [start-index] - 1-based index of the first result to be retrieved
+By default the API will return the first 1000 data objects in the response. Use standard filters to refine the selection.
 
 
 ---------------
@@ -612,15 +612,9 @@ Getting list of sections
     
     GET /metadata/sections/?params
 
-parameters:
- * [visibility] - private, public, shared, all (default) - which types of sections to return
+in addition to the usual filters, use the following parameters:
+
  * [top] - owned (default), shared - return only top (no parent) sections, owned by the user or shared with the user
- * [owner] - filter by an owner of the file
- * [created_min] - filters files older than created_min (format "YYYY-MM-DD HH:MM:SS")
- * [created_max] - filters files younger than created_max (format "YYYY-MM-DD HH:MM:SS")
- * [q] - can be one of "full", "info", "data", "beard", "link". The response will contain content varying from just generic object information ("link", "info") to the full response ("full").
- * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query less or more).
- * [start-index] - 1-based index of the first result to be retrieved
 
 Example response:
 
@@ -778,12 +772,7 @@ Getting list of properties
 
  ::
     
-    GET /metadata/properties/
-
-parameters:
- * [section_id] - properties in a specific section (all by default)
- * [q] - can be one of "full", "info", "data", "beard", "link". The response will contain content varying from just generic object information ("link", "info") to the full response ("full").
- * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
+    GET /metadata/properties/?params
 
 
 Response:
@@ -900,15 +889,6 @@ Getting list of datafiles
  ::
 
     Request: GET /datafiles/?params
-
-parameters:
- * [section_id] - return files only in a specific section (all files if not provided)
- * [visibility] - private, public, shared, all (default) - which types of files to return
- * [owner] - filter by an owner of the file
- * [created_min] - filters files older than created_min
- * [created_max] - filters files younger than created_max
- * [q] - can be one of "full", "info", "data", "beard", "link". The response will contain content varying from just generic object information ("link", "info") to the full response ("full").
- * [max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).
 
 Typically you should get the following response:
 
@@ -1030,7 +1010,7 @@ When the file is not converted, you may get the originally uploaded file. When f
     Request: GET /datafiles/<datafile_id>/download/?params
 
 New in development version.
-parameters:
+in addition to the usual filters, use can use the following parameters:
  * [format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.
 
 
@@ -1043,7 +1023,7 @@ Delete datafile
     Request: DELETE /datafiles/<datafile_id>/?params
 
 
-parameters:
+in addition to the usual filters, use can use the following parameters:
  * [force] - true, false (default) - use "true" to delete the file even if there are other users with access to the file. If "false" or omitted, the file will not be deleted being in the state having collaborators.
 
 

@@ -4,9 +4,9 @@
 G-Node API Object Examples
 ==========================
 
-Here you may find a list of examples of HTTP request bodies for all supported NEO objects. All examples assume creating a new object. If some of the required parameters to create an object are missing, the system will respond with an error.
+Here you may find a list of examples of HTTP request bodies for all supported data- and metadata- objects. All examples assume creating a new object. If some of the required parameters to create an object are missing, the system will respond with an error.
 
-To perform an update, you need to provide an ID of an object (e.g. 12345 for "segment_12345") in the end of the URL, like "/electrophysiology/segment/12345/". While requesting an update, only parameters that are proposed for an update can be provided.
+To perform an update, you need to provide an ID of an object in the end of the URL, like "/electrophysiology/segment/12345/". While requesting an update, only parameters that are proposed for an update can be provided.
 
 ----------------
 Metadata objects
@@ -19,7 +19,6 @@ Send the following HTTP POST request to create a new section:
     HTTP POST /metadata/sections/
 
     {
-        #"parent_section": 2,
         "name": "Electrode",
         "tree_position": 1,
         "odml_type": 0,
