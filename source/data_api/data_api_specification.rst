@@ -834,7 +834,7 @@ A resource (datafile or section) by itself has also a sharing state, which can b
 
 With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.
 
-By <resource_type> in this paragraph we assume either "sections", either "datafiles".
+By <resource_type> in this paragraph we assume either "sections" or "datafiles".
 
 ----------------------------
 Getting resource permissions
