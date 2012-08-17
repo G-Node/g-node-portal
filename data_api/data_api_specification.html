@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -1147,7 +1146,7 @@ in addition to the usual filters, use can use the following parameters:</p>
 <div class="section" id="getting-resource-permissions">
 <h3>1.7.1. Getting resource permissions<a class="headerlink" href="#getting-resource-permissions" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /&lt;resource_type&gt;/&lt;resource_id&gt;/acl/</pre>
+<div><div class="highlight-python"><pre>GET /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/</pre>
 </div>
 </div></blockquote>
 <p>Response:</p>
@@ -1169,7 +1168,7 @@ in addition to the usual filters, use can use the following parameters:</p>
 <div class="section" id="update-resource-acl-share-unshare">
 <h3>1.7.2. Update resource ACL (share/unshare)<a class="headerlink" href="#update-resource-acl-share-unshare" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>POST /&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
+<div><div class="highlight-python"><pre>POST /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
 
 {
     "state": "&lt;access level&gt;", # can be public, friendly, private - access level
