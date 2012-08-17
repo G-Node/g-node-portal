@@ -842,7 +842,7 @@ Getting resource permissions
 
  ::
     
-    GET /<resource_type>/<resource_id>/acl/
+    GET /electrophysiology/<resource_type>/<resource_id>/acl/
 
 
  ::
@@ -857,7 +857,7 @@ Update resource ACL (share/unshare)
 
  ::
     
-    POST /<resource_type>/<resource_id>/acl/?params
+    POST /electrophysiology/<resource_type>/<resource_id>/acl/?params
 
     {
         "state": "<access level>", # can be public, friendly, private - access level
