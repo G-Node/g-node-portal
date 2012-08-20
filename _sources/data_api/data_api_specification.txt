@@ -11,7 +11,7 @@ Terminology used in this specification
 Throughout this specification, it's refered to a series of terms like section or datafile, which are intended to have specific meanings.
 
 **Datafile**
-    Any data item maintained by G-Node. It can be either a binary/ascii file or a data structure, hosted in the native G-Node format. This could include a PDF file, MP3 file, TXT file, or a raw data structure in the NEO (native G-Node) format (see http://packages.python.org/electrophysiology/classes.html). A datafile is created by uploading an ordinary file to G-Node, and possibly converting it to the native G-Node format. That is to say, when you upload something like a MultichannelSystems® file, you have an option to convert it to the native format, and then it is considered as a native (raw) data structure in this specification. If you do not convert it when you upload, then it is considered as just "file".
+    Any data item maintained by G-Node. It can be either a binary/ascii file or a data structure, hosted in the native G-Node format. This could include a PDF file, MP3 file, TXT file, or a raw data structure in the NEO (native G-Node) format (see http://packages.python.org/neo/api_reference.html). A datafile is created by uploading an ordinary file to G-Node, and possibly converting it to the native G-Node format. That is to say, when you upload something like a MultichannelSystems® file, you have an option to convert it to the native format, and then it is considered as a native (raw) data structure in this specification. If you do not convert it when you upload, then it is considered as just "file".
 
 **Section**
     A container of other sections, properties or datafiles. It could be also named folder. These are basically used to "label" your datafiles with a variety of tags (like in GMail), with a difference that you can manage sections (tags) to organize them in a tree-like structure. The Section® is a prototype of the odML section (see http://www.g-node.org/projects/odml) and is implemented inline with odML concepts and methodology.
@@ -20,7 +20,7 @@ Throughout this specification, it's refered to a series of terms like section or
     A property is a flexible way to annotate your data (implemented in line with odML). Within these could be a model of your recording device, duration of the stimulus, a layer of the cell you record from. Some properties are provided by default when you create a section of either type. You just need to set values, appropriate for your research.
 
 **NEO Raw Data Object**
-    NEO® objects are useful when working with the raw data. NEO objects include Segments, Analog Signals, Spike Trains etc. (see http://packages.python.org/electrophysiology/classes.html) It is a flexible data structure, compartible with several well-known data-formats, and useful for data analysis. You may convert your files to the NEO (native G-Node) structure using API, when the file is convertible (currently supported information extraction from neuroshare-compliant formats, http://neuroshare.sourceforge.net/index.shtml).
+    NEO® objects are useful when working with the raw data. NEO objects include Segments, Analog Signals, Spike Trains etc. (see http://packages.python.org/neo/api_reference.html) It is a flexible data structure, compartible with several well-known data-formats, and useful for data analysis. You may convert your files to the NEO (native G-Node) structure using API, when the file is convertible (currently supported information extraction from neuroshare-compliant formats, http://neuroshare.sourceforge.net/index.shtml).
 
 **Label**
     One of the most important concepts in this context. A Label links Raw Data Objects with Property values. For example, when I want to indicate that a specific set of Analog Signals was recorded when the stimuli, shown to the subject, had a specific color (e.g. red), I can create a Property called "Stimuli Colors" with color values ("red" and maybe some more) and then for every Analog Signal I create a label, which links the required value ("red") to the signal. Thus all selected signals become "labeled" with a specific stimuli color ("red"). This labeling can be done in bulk mode, please consider section 2.5 of this document.
@@ -87,7 +87,7 @@ Every object serves a specific purpose to organize your electrophysiological dat
 
 You may find more information and the original description of NEO® classes here `NEO classes`_.
 
-.. _NEO classes: http://packages.python.org/neo/classes.html
+.. _NEO classes: http://packages.python.org/neo/api_reference.html
 
 Every raw data object has a set of *attributes*, *data fields*, it may also have relationships, like *parents* and *children*. For example, a segment has to have an attribute 'name'. 'AnalogSignal' should have a 'sampling_rate' data field, which consists of the unit (say, Hz) and a value (say, 20000). A 'Block' consists of 'Segments', which means the 'Block' has a child 'Segment', and a 'Segment' has a parent 'Block'. In the following tables you may find object descriptions:
 
@@ -220,7 +220,7 @@ to create a new segment. If the response status is 'Created' (201) a client rece
 
 A full set of examples for all supported NEO object can be found here (:ref:`api_object_examples`). 
 
-*Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider Tables 2.1 - 2.4, as well as the NEO specification* (http://packages.python.org/electrophysiology/classes.html).
+*Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider Tables 2.1 - 2.4, as well as the NEO specification* (http://packages.python.org/neo/api_reference.html).
 
 To update the segment, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we've just created was assigned an ID = 213, send an HTTP POST to the "/electrophysiology/segment/213/" with the following body
 
@@ -834,7 +834,7 @@ A resource (datafile or section) by itself has also a sharing state, which can b
 
 With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.
 
-By <resource_type> in this paragraph we assume either "sections", either "datafiles".
+By <resource_type> in this paragraph we assume either "sections" or "datafiles".
 
 ----------------------------
 Getting resource permissions
