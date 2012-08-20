@@ -1,2 +1,12 @@
 Note:
-The themes needed for compilation of this documentation by Sphinx should be pulled from a different repository (https://github.com/apleonhardt/gnode-sphinx-themes) and stored in source/_themes/
+*The themes needed for compilation of this documentation by Sphinx should be pulled from a different repository (https://github.com/apleonhardt/gnode-sphinx-themes) and stored in source/_themes/
+*The compiled html files should be pushed to gh-pages branch of this repository
+
+
+Instructions:
+1) git clone https://github.com/G-Node/g-node-portal.git g-node-portal && cd g-node-portal
+2) mkdir source/_themes/ && git clone https://github.com/apleonhardt/gnode-sphinx-themes source/_themes
+3) mkdir build/html && git clone https://github.com/G-Node/g-node-portal.git build/html
+4) (cd build/html && git checkout gh-pages)
+5) make html
+6) (cd built/html && git add -A && git ci -m "message" && git pull)
