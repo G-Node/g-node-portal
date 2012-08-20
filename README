@@ -1,0 +1,2 @@
+Note:
+The themes needed for compilation of this documentation by Sphinx should be pulled from a different repository (https://github.com/apleonhardt/gnode-sphinx-themes) and stored in source/_themes/
