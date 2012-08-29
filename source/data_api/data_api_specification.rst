@@ -848,7 +848,16 @@ Getting resource permissions
  ::
     
     Response:
-    TBD
+    {
+        "message": "Here is the list of requested objects.",
+        "logged_in_as": "<user_id>",
+        "message_type": "object_selected",
+        "safety_level": <access_level>, # 1 = public, 2 = friendly, 3 = private
+        "shared_with": {
+            "<user_id>": <user_permissions>, # 1 = read, 2 = read and write
+            "<user_id>": <user_permissions>
+        }
+    }
 
 
 -----------------------------------
@@ -860,20 +869,29 @@ Update resource ACL (share/unshare)
     POST /electrophysiology/<resource_type>/<resource_id>/acl/?params
 
     {
-        "state": "<access level>", # can be public, friendly, private - access level
+        "safety_level": "<access level>", # integer specifying the access level: 1: public, 2: friendly, 3: private
         "shared_with": {
-            "<iser_id>": "<user_role>", # a role can be "reader" or "collaborator"
-            "<iser_id>": "<user_role>"
+            "<user_id>": "<user_permissions>", # integer specifying granted rights: 1: read, 2:read and write
+            "<user_id>": "<user_permissions>"
         }
     }
 
 parameters:
  * [recursive] - true, false (default) - apply to all resources recursivery (when <resource_type> = "sections"). Datafiles, found in subsections, will be also updated.
-
+ * [notify] - true, false (default?) - users will be notified per e-mail
  ::
     
     Response:
-    TBD
+    {
+        "message": "Here is the list of requested objects.",
+        "logged_in_as": "<user_id>",
+        "message_type": "object_selected",
+        "safety_level": <access_level>, # 1 = public, 2 = friendly, 3 = private
+        "shared_with": {
+            "<user_id>": <user_permissions>, # 1 = read, 2 = read and write
+            "<user_id>": <user_permissions>
+        }
+    }
 
 -------------------------------
 Bulk ACL update (share/unshare)
