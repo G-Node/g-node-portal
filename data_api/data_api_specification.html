@@ -924,7 +924,16 @@ TBD</pre>
 <div><div class="highlight-python"><pre>GET /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/</pre>
 </div>
 <div class="highlight-python"><pre>Response:
-TBD</pre>
+{
+    "message": "Here is the list of requested objects.",
+    "logged_in_as": "&lt;user_id&gt;",
+    "message_type": "object_selected",
+    "safety_level": &lt;access_level&gt;, # 1 = public, 2 = friendly, 3 = private
+    "shared_with": {
+        "&lt;user_id&gt;": &lt;user_permissions&gt;, # 1 = read, 2 = read and write
+        "&lt;user_id&gt;": &lt;user_permissions&gt;
+    }
+}</pre>
 </div>
 </div></blockquote>
 </div>
@@ -934,10 +943,10 @@ TBD</pre>
 <div><div class="highlight-python"><pre>POST /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
 
 {
-    "state": "&lt;access level&gt;", # can be public, friendly, private - access level
+    "safety_level": "&lt;access level&gt;", # integer specifying the access level: 1: public, 2: friendly, 3: private
     "shared_with": {
-        "&lt;iser_id&gt;": "&lt;user_role&gt;", # a role can be "reader" or "collaborator"
-        "&lt;iser_id&gt;": "&lt;user_role&gt;"
+        "&lt;user_id&gt;": "&lt;user_permissions&gt;", # integer specifying granted rights: 1: read, 2:read and write
+        "&lt;user_id&gt;": "&lt;user_permissions&gt;"
     }
 }</pre>
 </div>
@@ -946,9 +955,19 @@ TBD</pre>
 <dt>parameters:</dt>
 <dd><ul class="first simple">
 <li>[recursive] - true, false (default) - apply to all resources recursivery (when &lt;resource_type&gt; = &#8220;sections&#8221;). Datafiles, found in subsections, will be also updated.</li>
+<li>[notify] - true, false (default?) - users will be notified per e-mail</li>
 </ul>
 <div class="last highlight-python"><pre>Response:
-TBD</pre>
+{
+    "message": "Here is the list of requested objects.",
+    "logged_in_as": "&lt;user_id&gt;",
+    "message_type": "object_selected",
+    "safety_level": &lt;access_level&gt;, # 1 = public, 2 = friendly, 3 = private
+    "shared_with": {
+        "&lt;user_id&gt;": &lt;user_permissions&gt;, # 1 = read, 2 = read and write
+        "&lt;user_id&gt;": &lt;user_permissions&gt;
+    }
+}</pre>
 </div>
 </dd>
 </dl>
