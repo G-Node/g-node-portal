@@ -4,9 +4,9 @@ Note:
 
 
 Instructions:
-1) git clone https://github.com/G-Node/g-node-portal.git g-node-portal && cd g-node-portal
+1) git clone git@github.com:G-Node/g-node-portal.git g-node-portal && cd g-node-portal
 2) git clone https://github.com/apleonhardt/gnode-sphinx-themes source/_themes
-3) mkdir -p build/html && git clone -b gh-pages https://github.com/G-Node/g-node-portal.git build/html
+3) mkdir -p build/html && git clone -b gh-pages git@github.com:G-Node/g-node-portal.git build/html
 4) make html
-5) cd built/html
+5) cd build/html
 6) git add -A && git ci -m "commit message" && git push
