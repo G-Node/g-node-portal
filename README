@@ -8,5 +8,6 @@ Instructions:
 2) git clone https://github.com/apleonhardt/gnode-sphinx-themes source/_themes
 3) mkdir -p build/html && git clone -b gh-pages git@github.com:G-Node/g-node-portal.git build/html
 4) make html
-5) cd build/html
-6) git add -A && git ci -m "commit message" && git push
+5) git add -A && git ci -m "commit message" && git push #push changes to source code
+6) cd build/html
+7) git add -A && git ci -m "commit message" && git push #push changes to HMTL pages
