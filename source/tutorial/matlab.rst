@@ -1,4 +1,4 @@
-.. _tutorial_matlab:
+.. _matlab:
 
 =================
 Tutorial - Matlab

@@ -11,38 +11,59 @@ G-Node Portal is a platform for Neuroscientists to facilitate data access, data 
 
 Start by reading the G-Node Portal :doc:`overview <overview>`.
 
-You may sign up and instantly `try the platform <https://portal.g-node.org/data/>`_ using the web browser. If you are interested in using the platform from the Matlab or Python, consider our :doc:`tutorial <tutorial/tutorial_index>`. If you are interested in the common DATA API, please find the :doc:`complete reference here <data_api/data_api_index>`.
+You may sign up and instantly `try the platform <https://portal.g-node.org/data/>`_ using the web browser. If you are interested in using the platform from the Matlab or Python, consider our :doc:`tutorial <tutorial/index>`. If you are interested in the common DATA API, please find the :doc:`complete reference here <reference/api_specification>`.
 
 Everything you want to know about G-Node Platform:
 
 """"""""""""
 First steps:
 """""""""""" 
- * get started: :doc:`overview <overview>` | `sign up and try <https://portal.g-node.org/data/>`_
- * tutorial: :doc:`web access <tutorial/web_access>` | :doc:`tutorial for Matlab users <tutorial/tutorial_matlab>` | :doc:`tutorial for Python users <tutorial/tutorial_python>`
+ * get started: 
+
+   * :doc:`overview <overview>` | `sign up and try <https://portal.g-node.org/data/>`_
+
+ * tutorial: 
+
+   * :doc:`web access <tutorial/web_access>` | :doc:`tutorial for Matlab users <tutorial/matlab>` | :doc:`tutorial for Python users <tutorial/python>`
 
 """""""""""""""""""
 Download & Install:
 """""""""""""""""""
- * :doc:`client for Matlab <install/install_matlab>` | :doc:`client for Python <install/install_python>` | :doc:`back-end server <install/install_backend>`
+ * :doc:`client for Matlab <install/matlab>` | :doc:`client for Python <install/python>` | :doc:`back-end server <install/backend>`
 
 """"""""""""""
 Key functions:
 """"""""""""""
- * key principles: :doc:`terminology <basic/terminology>` | :doc:`basic Matlab features <basic/matlab>` | :doc:`basic Python features <basic/python>` | :doc:`REST API principles <basic/rest>`
- * data: :doc:`object model <neo_model>` | :doc:`working from Matlab <matlab/working_with_data>` | :doc:`working from Python <python/working_with_data>` | :doc:`access using API <data_api/working_with_data>`
- * metadata: :doc:`object model <data_api/odml_model>` | :doc:`working from Matlab <matlab/metadata_management>` | :doc:`working from Python <python/metadata_management>` | :doc:`manage metadata using API <data_api/metadata_management>` | :doc:`data annotation <data_api/data_annotation>`
- * files: :doc:`basic file operations <data_api/file_operations>` | :doc:`bulk file upload <data_api/bulk_upload>` | :doc:`array data <data_api/array_data_principles>` | :doc:`specs for Matlab <matlab/working_with_files>` | :doc:`specs for Python <python/working_with_files>` | :doc:`API reference <data_api/working_with_files>`
- * filtering and query: :doc:`data mining with Matlab <matlab/filter_and_search>` | :doc:`data mining with Python <python/filter_and_search>` | :doc:`API - filtering <data_api/filter_and_search>` | :doc:`full-text search with the API <data_api/ftext_search>` | :doc:`complex API query <data_api/objects_query>`
- * sharing: :doc:`access lists and data sharing <data_api/acl_generic>` | :doc:`Matlab <matlab/acl_and_sharing>` | :doc:`Python <python/acl_and_sharing>` | :doc:`Python <data_api/acl_and_sharing>`
- * change history: :doc:`getting changes for an object <data_api/history>` | :doc:`going back in time <data_api/back_in_time>`
+ * Introduction: 
+
+   * :doc:`terminology <key_functions/terminology>` | :doc:`object model <key_functions/object_model>`
+
+ * Matlab:
+
+   * :doc:`getting started <key_functions/matlab/getting_started>` | :doc:`general <key_functions/matlab/general>` | :doc:`retrieval <key_functions/matlab/retrieval>` | :doc:`upload <key_functions/matlab/upload>` | :doc:`utilities <key_functions/matlab/utilities>`
+
+ * Python: 
+
+   * :doc:`basic features <key_functions/python/basic>` | :doc:`working with data <key_functions/python/data>` | :doc:`metadata and data annotation <key_functions/python/metadata>` | :doc:`file operations <key_functions/python/file>` | :doc:`search and query <key_functions/python/query>` | :doc:`permissions <key_functions/python/permissions>` | :doc:`history <key_functions/python/history>`
+
+ * DATA API: 
+
+   * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`data <key_functions/data_api/data>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>`
 
 """""""""""""""""""
 Complete reference:
 """""""""""""""""""
- * Matlab Client: :doc:`Client reference <matlab/api_reference>` | :doc:`dummy object examples <matlab/examples>`
- * Python Client: :doc:`Client reference <python/api_reference>`
- * DATA API: :doc:`API reference <data_api/data_api_index>` | :doc:`object examples <data_api/object_examples>`
+ * Matlab: 
+
+   * :doc:`Client reference <reference/matlab>` | :doc:`dummy object examples <reference/matlab_examples>`
+
+ * Python: 
+
+   * :doc:`Client reference <reference/python>`
+
+ * DATA API: 
+
+   * :doc:`API reference <reference/api_specification>` | :doc:`object examples <reference/api_object_examples>`
 
 """"""""""""""""""
 Labs using G-Node:
