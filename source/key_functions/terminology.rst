@@ -10,21 +10,12 @@ Throughout this specification, it's refered to a series of terms like Section_ o
 **Datafile**
     Datafile represents an arbitrary file, uploaded by a user. Some data or metadata can be extracted from the Datafile if it is in one of the supported formats (`NEO I/O <http://neo.readthedocs.org/en/latest/io.html>`_, `Neuroshare <http://neuroshare.sourceforge.net/index.shtml>`_, `odML <http://www.g-node.org/projects/odml>`_). All data-related objects, like AnalogSignal_ or Spike_, have their data part also stored as HDF5 files (`what is HDF5? <http://www.hdfgroup.org/HDF5/whatishdf5.html>`_), having array in the file root.
 
-.. _Section:
+.. _`ePhys Objects`:
 
-**Section**
-    An element used to group and organize your metadata in a tree structure. Intuitively it's like a folder in a usual file system. A Section can contain other Sections, `Properties with Values`_, Datafile_ or Block_. The Section® is a prototype of the `odML <http://www.g-node.org/projects/odml>`_ section and is implemented inline with odML concepts and methodology.
+**ePhys Objects**
+    ePhys Objects should be used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. An original concept is described `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we provide all descriptions down below for convenience. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.).
 
-.. _`Properties with Values`:
-
-**Properties and Values**
-    Inspired by the "key-value pairs" concept, Properties and Values used similarly as a flexible way to annotate your data (implemented in line with `odML <http://www.g-node.org/projects/odml>`_) within any metadata Section_. Some good examples could be a model of your recording device, duration of the stimulus, a layer of the cell you've recorded from. Properties and Values can be used to "label" your `Data objects`_ (AnalogSignal_, SpikeTrain_ etc.) to indicate certain metadata for them. 
-
-Below you will find descriptions of the NEO objects, which are used to represent the recorded (raw) data in a flexible, but consistent way. An original description of the NEO objects is given `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we still provide all these descriptions down below for your convenience.
-
-.. _`Data objects`:
-
-Here we describe *Data objects*. These objects directly represent data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.).
+`ePhys Objects`_ consist of:
 
 .. _AnalogSignal:
 
@@ -59,14 +50,14 @@ There is also a simple hierarchy of containers:
 .. _Segment:
 
 **Segment**
-    A container for heterogeneous discrete or continous data sharing a common clock (time basis) but not necessarily the same sampling rate, start time or end time. A Segment can be considered as equivalent to a “trial”, “episode”, “run”, “recording”, etc., depending on the experimental context. May contain any of the `Data objects`_.
+    A container for heterogeneous discrete or continous data sharing a common clock (time basis) but not necessarily the same sampling rate, start time or end time. A Segment can be considered as equivalent to a “trial”, “episode”, “run”, “recording”, etc., depending on the experimental context. May contain any of the `ePhys Objects`_.
 
 .. _Block:
 
 **Block**
     The top-level container gathering all of the data, discrete and continuous, for a given recording session. Contains Segment_ and RecordingChannelGroup_ objects.
 
-We support also *Grouping objects*. These objects express the relationships between data items, such as which signals were recorded on which electrodes, which spike trains were obtained from which membrane potential signals, etc. They contain references to data objects that cut across the simple container hierarchy.
+`ePhys Objects`_ also include *Grouping objects*. These objects express the relationships between data items, such as which signals were recorded on which electrodes, which spike trains were obtained from which membrane potential signals, etc. They contain references to data objects that cut across the simple container hierarchy.
 
 .. _RecordingChannel:
 
@@ -79,8 +70,52 @@ We support also *Grouping objects*. These objects express the relationships betw
 .. _Unit:
 
 **Unit**
-    A Unit gathers all the SpikeTrain objects within a common Block, possibly across several Segments, that have been emitted by the same cell. A Unit is linked to RecordingChannelGroup objects from which it was detected. This replaces the Neuron class in the previous version of Neo (v0.1).
+    A Unit gathers all the `SpikeTrain`_ objects within a common Block_, possibly across several Segments, that have been emitted by the same cell. A Unit is linked to RecordingChannelGroup_ objects from which it was detected.
 
-    Our system support data conversion from files to the data and metadata objects, listed above, if the Datafile_ is compartible with supported formats (see Datafile_ above).
+Intuitively, these objects can be all drawn on this diagram:
+
+.. image:: ../_static/ephys_basic.png
+    :align: center
+
+So the overall `ePhys Objects`_ model looks like
+
+.. image:: ../_static/ephys_om.png
+    :width: 800 px
+    :align: center
+
+However, having `ePhys Objects`_ is usually not enough to describe the whole experiment. For other information, like the description of an Animal or a Stimuli, we use Metadata_.
+
+.. _Metadata:
+
+**Metadata**
+    In this context metadata is any information about an experiment, excluding the information, described using `ePhys Objects`_. Work with metadata is essentially is a flexible way to describe your experimental parameters using Section_ (simple container) tree with `Properties with Values`_ (key-value pairs). For example, it may look like this:
+
+.. image:: ../_static/metadata_example.png
+    :align: center
+
+So in general, the metadata object model looks like:
+
+.. image:: ../_static/metadata_om.png
+    :align: center
+
+which is implemented inline with `odML <http://www.g-node.org/projects/odml>`_ concept and consists of objects like Section_, `Properties with Values`_.
+
+.. _Section:
+
+**Section**
+    An element used to group and organize your metadata in a tree structure. Intuitively it's like a folder in a usual file system. A Section can contain other Sections, `Properties with Values`_, Datafile_ or Block_. The Section is a prototype of the `odML <http://www.g-node.org/projects/odml>`_® section and is implemented inline with odML concepts and methodology.
+
+.. _`Properties with Values`:
+
+**Properties and Values**
+    Inspired by the "key-value pairs" concept, Properties and Values used similarly as a flexible way to annotate your data (implemented in line with `odML <http://www.g-node.org/projects/odml>`_) within any metadata Section_. Some good examples could be a model of your recording device, duration of the stimulus, a layer of the cell you've recorded from. Properties and Values can be used to "label" your `ePhys Objects`_ (AnalogSignal_, SpikeTrain_ etc.) to indicate certain metadata for them. 
+
+The system supports data conversion from files to the data and metadata objects, listed above, if the Datafile_ is compartible with supported formats (see Datafile_ above).
+
+.. _Data annotation:
+
+**Data annotation**
+    Data annotation is the process of assinging metadata to the data, when some special connection is required. It is needed basically in order to establish a connection between data and metadata for easy search and generic access. An example could be a case when you, say, described the color of your Stimuli as a property in a Stimuli section, and after you acquire the data you need to indicate, which particular signals were recorded at which particular color frequency. In this case, data annotation means establishing a link between particular signals and particular values of the color property.
+
 
 
