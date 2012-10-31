@@ -48,7 +48,7 @@ Key functions:
 
  * DATA API: 
 
-   * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`data <key_functions/data_api/data>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>`
+   * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`data <key_functions/data_api/data>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>`
 
 """""""""""""""""""
 Complete reference:

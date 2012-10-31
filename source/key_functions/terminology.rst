@@ -4,6 +4,15 @@ Key concepts and Object model
 
 Throughout this entire documentation, it's refered to a series of terms like Section_ or Datafile_, which are intended to have specific meanings.
 
+.. _common_terms:
+
+------------
+Common Terms
+------------
+
+**permalink**
+    A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a Datafile_ could have a permalink like https://portal.g-node.org/data/datafiles/15
+
 
 .. _`ePhys Objects`:
 
@@ -11,7 +20,7 @@ Throughout this entire documentation, it's refered to a series of terms like Sec
 Electrophysiology ( ePhys Objects )
 -----------------------------------
 
-    ePhys Objects should be used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. An original concept is described `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we provide all descriptions down below for convenience. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). A good example :ref:`is described in the overview <overview_ephys>`. The overall data model for electrophysiology looks like this:
+    ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). An original concept is described `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we provide all descriptions down below for convenience. A good example :ref:`is described in the overview <overview_ephys>`. The overall data model for electrophysiology looks like this:
 
 .. image:: ../_static/ephys_om.png
     :width: 800 px
