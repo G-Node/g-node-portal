@@ -8,7 +8,7 @@ The DATA API is designed in a RESTful way, e.g. to have similar routines for cre
 Request and Response
 --------------------
 
-All operations are made using HTTP requests with JSON as a main request and response format. The API supports GET, POST and DELETE request types. POST requests are used to create or update RESTful objects, in short, the following matrix summarizes which example URLs you should use to request a certain operation:
+All operations are made using HTTP requests with JSON as a main request and response format. The API supports GET, POST and DELETE request types. Generally, GET requests are used to query objects and related data, POST requests create or update RESTful objects, DELETE requests move objects to the archive. Specifically, the following matrix summarizes which example URLs you should use to request a certain operation:
 
 .. image:: ../../_static/api_principles_crud.svg
     :align: center
@@ -27,7 +27,9 @@ for example,
 
     Request: GET /electrophysiology/spiketrain/1546/
 
-When you need to create or update object(s), a data sent together with the POST requests should be in a JSON format, for example:
+returns the spiketrain object with an ID = 1546 in JSON format.
+
+When you need to create or update object(s), you send a POST request with the same URL syntax. Data, sent together with the POST request should be in a JSON format, for example:
 
  ::
 
@@ -37,6 +39,8 @@ When you need to create or update object(s), a data sent together with the POST 
         "name": "SP-1546",
         "comment": "spiketrain computed using Quiroga et al."
     }
+
+will make an update fields "name" and "comment" in the spiketrain object with an ID = 1546.
 
 A typical response will look like this:
 
@@ -76,9 +80,7 @@ A typical response will look like this:
         "message_type": "object_selected"
     }
 
-There are several response codes supported:
-...
-Use "message" and "message_type" parameters to learn about the exceptions happened.
+There are several response codes supported (200, 201, 400, etc.), please refer to :ref:`HTTP messages <HTTP_Messages>`. Use "message" and "message_type" parameters to learn about the exceptions happened.
 
 Almost every response has parameters like
  * "logged_in_as" - a name of the user currently logged in
@@ -87,7 +89,7 @@ Almost every response has parameters like
  * "selected_range" has the first and the last index of the selected objects
  * "message" and "message_type" used to provide details about an action made
 
-A typical structure of the object contains:
+A typical structure of a single object contains:
  * "permalink" - a :ref:`permanent object URL <common_terms>`
  * "model" - a reference to the object model in a form <namespace>.<object_type>
  * "fields" - a list of actual object attributes and relationships
@@ -100,9 +102,11 @@ In "fields" you will always find:
  * "owner" - a :ref:`permalink <common_terms>` to the owner of an object
  * "date_created" is obviously an object creation date.
 
-If an object has a parent (one-to-many relationship), an appropriate field will contain a permalink to this parent object or null, if empty. An example would be the "block" key in the response above.
+plus some other attributes, specific to the current object.
 
-If an object has children (many-to-one relationship), you should be able to find a list containing children permalinks under the key named "<child_type>_set". An example would be the "analogsignal_set" key in the response above.
+If an object has a parent (many-to-one relationship), an appropriate field will contain a permalink to this parent object or null, if empty. An example would be the "block" key in the response above.
+
+If an object has children (one-to-many relationship), you should be able to find a list containing children permalinks under the key named "<child_type>_set". An example would be the "analogsignal_set" key in the response above, which contains :ref:`AnalogSignal <AnalogSignal>` objects belonging to a certain :ref:`Segment <Segment>`.
 
 Some attributes, especially the ones having units, are presented in a special form like
 
@@ -122,14 +126,16 @@ Headers and Caching
 
 When requesting single object, the response header will contain ETag and Last-Modified parameters. They could be useful to implement some sort of for caching on the API Client side. A typical response header should look like this:
 
-Content-Language:en
-Content-Length:0
-Content-Type:text/html; charset=utf-8
-Date:Wed, 31 Oct 2012 14:10:20 GMT
-ETag:"88aa2089cfc73e9279231c5518702222e5b8bb0d"
-Last-Modified:Thu, 26 Jul 2012 17:16:07 GMT
-Server:WSGIServer/0.1 Python/2.6.6
-Vary:Accept-Language, Cookie
+::
+
+    Content-Language:en
+    Content-Length:0
+    Content-Type:text/html; charset=utf-8
+    Date:Wed, 31 Oct 2012 14:10:20 GMT
+    ETag:"88aa2089cfc73e9279231c5518702222e5b8bb0d"
+    Last-Modified:Thu, 26 Jul 2012 17:16:07 GMT
+    Server:WSGIServer/0.1 Python/2.6.6
+    Vary:Accept-Language, Cookie
 
 
 
@@ -139,7 +145,7 @@ Vary:Accept-Language, Cookie
 Requesting object(s)
 --------------------
 
-To get the list of available objects of a specific type (e.g. AnalogSignal_, or a Section_, or a Datafile_) you need to send a GET request to the URL, ending with the name of this type, for example:
+To get the list of available objects of a specific type (e.g. :ref:`AnalogSignal <AnalogSignal>`, or a :ref:`Section <Section>`, or a :ref:`Datafile <Datafile>`) you need to send a GET request to the URL, ending with the name of this type, for example:
 
  ::
 
@@ -157,13 +163,13 @@ You may filter the list of objects by owner, permissions or specific conditions 
 
     Request: GET /metadata/sections/?owner=alex&safety_level=1&name__icontains=experiment
 
-filters alex's publicly available metadata sections containing 'experiment' in the name, or
+filters Alex's publicly available metadata :ref:`sections <Section>` containing 'experiment' in the name, or
 
  ::
 
     Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11
 
-- filters out all objects created before February, 23 2012. For more information on filtering consider :doc:`search and query <query>` section.
+filters out all objects created before February, 23 2012. For more information on filtering consider :doc:`search and query <query>` section.
 
 DATA API limits the number objects to be retrieved in one request by 100. If there are more than a 100 objects you should request them using offset=100 (offset=200 etc.). You may also limit the number of objects by max_results=<some_number> parameter. The start / end indexes for the selected objects are usually contained in the response as "selected_range". For example, in case there are more than 500 objects, the following request:
 
@@ -247,7 +253,7 @@ To update one or several attributes of an object send POST to the object permali
     }
 
 
-Bulk object update is also possible. To make changes to several objects at once, you need to provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all properties with name having "sampling" to the section with ID 146:
+Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /<namespace>/<object_type>/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all properties with name having "sampling" to the section with ID 146:
 
  ::
 
@@ -262,7 +268,7 @@ Bulk object update is also possible. To make changes to several objects at once,
 Creating new object
 -------------------
 
-Use the POST request to the object type (like when you get an object list) to create new object. The POST data request should contain a JSON object with at least mandatory fields, required to create a new object. For example, to create a new :ref:`event <Event>` labeled "stimulus onset" in the :ref:`segment <Segment>` with id = 1 supply the following:
+Send the POST request to the object type URL (like /<namespace>/<object_type>/) to create new object. The POST data request should contain a JSON object with at least mandatory fields, required to create a new object. For example, to create a new :ref:`event <Event>` labeled "stimulus onset" in the :ref:`segment <Segment>` with ID = 1 supply the following:
 
  ::
 
@@ -345,11 +351,13 @@ A typical ACL looks like
     }
 
 where "safety_level" defines a general object access level with
- * (1) - public
- * (2) - friendly, and
- * (3) - private (default)
-state, and a "shared_with" key handles a list of users, having access to the object (1 - read-only and 2 - edit). See more about permissions in :ref:`permissions <permissions>` section.
+ 1 public
+ 2 friendly, and
+ 3 private (default)
+state, and a "shared_with" key handles a list of users, having access to the object (with 1 - "read-only" and 2 - "edit" roles). See more about permissions in :ref:`permissions <permissions>` section.
 
+
+.. _HTTP_Messages:
 
 -------------
 HTTP Messages
@@ -362,7 +370,7 @@ Response        Code    Information
 ============    ====    ===============
 Success         200     successful operation, typically GET or DELETE
 Created         201     object was created successfuly
-BadRequest      400     an exception occured. It could happen if a non-existing object is referenced, or any index for a list was incorrect. Any parsing error of the incoming JSON will lead to this Response. Any validation exception will return this response too.
+BadRequest      400     an exception occured. It could happen if a non-existing object is referenced, or any index for a list was incorrect. Any parsing error of the incoming JSON will lead to this response type. Any validation exception will return this response too.
 Unauthorized    401     user is not logged in
 Forbidden       403     a currently logged-in user has no permissions to access or modify an object
 NotFound        404     a wrong URL or object was not found

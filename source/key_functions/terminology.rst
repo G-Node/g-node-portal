@@ -246,12 +246,45 @@ Section
 ^^^^^^^
     An element used to group and organize your metadata in a tree structure. Intuitively it's like a folder in a usual file system. A Section can contain other Sections, `Properties with Values`_, Datafile_ or Block_. The Section is a prototype of the `odML <http://www.g-node.org/projects/odml>`_® section and is implemented inline with odML concepts and methodology.
 
+================   ==========================
+Attr Type          Name
+================   ==========================
+Attribute          'name'\*, 'description', 'odml_type', 'tree_position'
+Data Field         
+Parent             'parent_section'
+Child              'section'
+================   ==========================
+
+
 .. _`Properties with Values`:
 
 ^^^^^^^^^^^^^^^^^^^^^
 Properties and Values
 ^^^^^^^^^^^^^^^^^^^^^
     Inspired by the "key-value pairs" concept, Properties and Values used similarly as a flexible way to annotate your data (implemented in line with `odML <http://www.g-node.org/projects/odml>`_) within any metadata Section_. Some good examples could be a model of your recording device, duration of the stimulus, a layer of the cell you've recorded from. Properties and Values can be used to "label" your `ePhys Objects`_ (AnalogSignal_, SpikeTrain_ etc.) to indicate certain metadata for them. 
+
+Property:
+
+================   ==========================
+Attr Type          Name
+================   ==========================
+Attribute          'name'\*, 'definition', 'dependency', 'dependency_value', 'mapping', 'unit', 'dtype', 'uncertainty', 'comment'
+Data Field         
+Parent             'section'\*
+Child              'value'
+================   ==========================
+
+Value:
+
+================   ==========================
+Attr Type          Name
+================   ==========================
+Attribute          'data'\*
+Data Field         
+Parent             'parent_property'\*
+Child              
+================   ==========================
+
 
 .. _Data annotation:
 
@@ -270,6 +303,15 @@ Files
 Datafile
 ^^^^^^^^
     Datafile represents an arbitrary file, uploaded by a user. Some data or metadata can be extracted from the Datafile if it is in one of the supported formats (`NEO I/O <http://neo.readthedocs.org/en/latest/io.html>`_, `Neuroshare <http://neuroshare.sourceforge.net/index.shtml>`_, `odML <http://www.g-node.org/projects/odml>`_). All data-related objects, like AnalogSignal_ or Spike_, have their data part also stored as HDF5 files (`what is HDF5? <http://www.hdfgroup.org/HDF5/whatishdf5.html>`_), having array in the file root.
+
+================   ==========================
+Attr Type          Name
+================   ==========================
+Attribute          'name'\*, 'caption', 'file_type', 'tags', 'size', 'extracted_info', 'operations_log'
+Data Field         
+Parent             'section'
+Child              
+================   ==========================
 
 The system supports data conversion from files to the data and metadata objects, listed above, if the Datafile_ is compartible with supported formats (see Datafile_ above).
 

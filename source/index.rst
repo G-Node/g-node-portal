@@ -15,9 +15,9 @@ You may sign up and instantly `try the platform <https://portal.g-node.org/data/
 
 Everything you want to know about G-Node Platform:
 
-""""""""""""
-First steps:
-"""""""""""" 
+"""""""""""
+First steps
+""""""""""" 
  * get started: 
 
    * :doc:`overview <overview>` | `sign up and try <https://portal.g-node.org/data/>`_
@@ -26,14 +26,14 @@ First steps:
 
    * :doc:`web access <tutorial/web_access>` | :doc:`tutorial for Matlab users <tutorial/matlab>` | :doc:`tutorial for Python users <tutorial/python>`
 
-"""""""""""""""""""
-Download & Install:
-"""""""""""""""""""
+""""""""""""""""""
+Download & Install
+""""""""""""""""""
  * :doc:`client for Matlab <install/matlab>` | :doc:`client for Python <install/python>` | :doc:`back-end server <install/backend>`
 
-""""""""""""""
-Key functions:
-""""""""""""""
+"""""""""""""
+Key functions
+"""""""""""""
  * Introduction: 
 
    * :doc:`Key concepts and data model <key_functions/terminology>`
@@ -50,9 +50,9 @@ Key functions:
 
    * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`data <key_functions/data_api/data>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>`
 
-"""""""""""""""""""
-Complete reference:
-"""""""""""""""""""
+""""""""""""""""""
+Complete reference
+""""""""""""""""""
  * Matlab: 
 
    * :doc:`Client reference <reference/matlab>` | :doc:`dummy object examples <reference/matlab_examples>`
@@ -65,9 +65,9 @@ Complete reference:
 
    * :doc:`API reference <reference/api_specification>` | :doc:`object examples <reference/api_object_examples>`
 
-""""""""""""""""""
-Labs using G-Node:
-""""""""""""""""""
+"""""""""""""""""
+Labs using G-Node
+"""""""""""""""""
  * `Laboratoire de Physiologie Cérébrale UMR8118 <http://www.biomedicale.univ-paris5.fr/physcerv/>`_
  * `Neural processing in sensory systems, LMU München <http://neuro.bio.lmu.de/research_groups/res-benda_j/index.html>`_
 
