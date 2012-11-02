@@ -6,11 +6,10 @@ Throughout this entire documentation, it's refered to a series of terms like Sec
 
 .. _common_terms:
 
-------------
-Common Terms
-------------
+---------
+permalink
+---------
 
-**permalink**
     A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a Datafile_ could have a permalink like https://portal.g-node.org/data/datafiles/15
 
 
@@ -20,13 +19,34 @@ Common Terms
 Electrophysiology ( ePhys Objects )
 -----------------------------------
 
-    ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). An original concept is described `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we provide all descriptions down below for convenience. A good example :ref:`is described in the overview <overview_ephys>`. The overall data model for electrophysiology looks like this:
+    ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). An original concept is described `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we provide all descriptions down below for convenience. A good example :ref:`is described in the overview <overview_ephys>`. The following raw data objects are supported:
+
+ * block
+ * segment
+ * event
+ * eventarray
+ * epoch
+ * epocharray
+ * unit
+ * spiketrain
+ * analogsignal
+ * analogsignalarray
+ * irsaanalogsignal
+ * spike
+ * recordingchannelgroup
+ * recordingchannel  
+
+Every object serves a specific purpose to organize your electrophysiological data. 'Block's mainly represent one experiment (or the whole data, recorded within one experiment). 'Segment' represents an experimental trial, a "time frame" within an experiment with unique experimental conditions. Blocks may contain several segments, like an experiment consists of several trials. A 'Segment' may contain 'AnalogSignal's, 'Event's or 'Epoch's, which are used to organize recorded signals, single time events, or events with duration inside one experimental time-frame. Segment may also contain 'SpikeTrain' objects to accommodate the spike data. For every 'Block' one may define a set of 'RecordingChannel's according to the experimental setup. These channels can be organized under a 'RecordingChannelGroup', to keep track of tethrodes. 'AnalogSignals' can be linked to the appropriate 'RecordingChannel's to make the dataset consistent.
+
+The overall data model for electrophysiology looks like this:
 
 .. image:: ../_static/ephys_om.png
     :width: 800 px
     :align: center
 
-Below for each object you can find its definition, as well as the detailed listing of its attributes and relationships.
+Every object in this context has a set of *attributes* and *data fields*, it may also have relationships, like *parents* and *children*. For example, a segment has to have an attribute 'name'. 'AnalogSignal' should have a 'sampling_rate' data field, which consists of the unit (like Hz or KHz) and a value (like 20000). A 'Block' consists of 'Segments', which means the 'Block' has a child 'Segment', and a 'Segment' has a parent 'Block'. Below for each object you can find its definition, as well as the detailed listing of its attributes and relationships.
+
+*Note. Attributes with \* asterisk are mandatory.*
 
 `ePhys Objects`_ consist of:
 

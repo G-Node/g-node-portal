@@ -171,6 +171,8 @@ filters Alex's publicly available metadata :ref:`sections <Section>` containing 
 
 filters out all objects created before February, 23 2012. For more information on filtering consider :doc:`search and query <query>` section.
 
+.. _offset_parameter:
+
 DATA API limits the number objects to be retrieved in one request by 100. If there are more than a 100 objects you should request them using offset=100 (offset=200 etc.). You may also limit the number of objects by max_results=<some_number> parameter. The start / end indexes for the selected objects are usually contained in the response as "selected_range". For example, in case there are more than 500 objects, the following request:
 
  ::
@@ -184,6 +186,8 @@ To get a single object you should specify its ID at the end of the URL:
  ::
 
     Request: GET /metadata/sections/10/
+
+.. _q_parameter:
 
 You may also control the amount of the information about avery object you receive using the 'q' parameter. You may provide q=
     - 'link' - just permalink and some basic fields
