@@ -2,11 +2,6 @@
 Working with Arrays
 ===================
 
-You may want to request object data or relationships only (see list of objects and their attributes, data fields and relationaships in the Tables 2.1 - 2.4), or even just get the overall information about an object (like object size) without getting any data or attributes. We support the following parameters for all GET requests for a single object 
-
- * [q] - can be one of "full", "info", "data", "beard", "link". The response will contain content varying from just generic object information ("link", "info") to the full response ("full").
- * [cascade] - when set to "True" will recursively retrieve all the children objects (not only their permalinks). Please be careful with such requests, requesting a big block in a "cascade" mode may result in several Gigobytes of data to download, and significant delays.
-
 Specifically for signal-based objects (Analog Signal, Irregularly Sampled Signal) the following GET request parameters are supported:
 
  * [start_time] - start time of the required range (calculated using the same time unit as the t_start of the signal)
