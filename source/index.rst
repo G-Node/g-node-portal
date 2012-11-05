@@ -11,7 +11,7 @@ G-Node Portal is a platform for Neuroscientists to facilitate data access, data 
 
 Start by reading the G-Node Portal :doc:`overview <overview>`.
 
-You may sign up and instantly `try the platform <https://portal.g-node.org/data/>`_ using the web browser. If you are interested in using the platform from the Matlab or Python, consider our :doc:`tutorial <tutorial/index>`. If you are interested in the common DATA API, please find the :doc:`complete reference here <reference/api_specification>`.
+You may sign up and instantly `try the platform <https://portal.g-node.org/data/>`_ using the web browser. If you are interested in using the platform from the Matlab or Python, consider our :doc:`tutorial <tutorial/index>`. If you are interested in the common DATA API, please start exploring :doc:`the principles here <key_functions/data_api/principles>`.
 
 Everything you want to know about G-Node Platform:
 
