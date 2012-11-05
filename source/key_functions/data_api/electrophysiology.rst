@@ -2,7 +2,7 @@
 Electrophysiology
 =================
 
-The Data API provides a :ref:`common set of objects <ePhys Objects>` for dealing with electro-physiological (in vivo and/or simulated) data. It supports a number of functions to manage these objects, and the following sections will give an overview.
+The Data API provides a :ref:`common set of objects <ePhys Objects>` for dealing with electro-physiological (in vivo and/or simulated) data. It supports a number of functions to manage these objects, and the following sections will explain them in detail. To understand the concept of our model for electrophysiology please consider a nice example in the :ref:`overview <overview_ephys>` and :ref:`object specification <ePhys Objects>`.
 
 ----------------------------
 Create or update data object
