@@ -1,6 +1,6 @@
-===============
-DATA MANAGEMENT
-===============
+=================
+Electrophysiology
+=================
 
 The Data API provides a :ref:`common set of objects <ePhys Objects>` for dealing with electro-physiological (in vivo and/or simulated) data. It supports a number of functions to manage these objects, and the following sections will give an overview.
 
@@ -222,6 +222,6 @@ You receive a list of Analog Signal permalinks as a response:
 
 By default the API will return the first 100 data objects in the response. Use :ref:`offset parameter <offset_parameter>` and/or :doc:`standard filters <query>` to refine the selection.
 
-All :ref:`ePhys objects <ePhys Objects>` support changing permissions. To learn more about sharing objects please refer to :doc:`permissions <permissions>`.
+All :ref:`ePhys objects <ePhys Objects>` support sharing with other users by managing permissions. To learn more about sharing objects please refer to :doc:`permissions <permissions>`.
 
 
