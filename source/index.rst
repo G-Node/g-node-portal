@@ -48,7 +48,13 @@ Key functions
 
  * DATA API: 
 
-   * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`electrophysiology <key_functions/data_api/electrophysiology>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>`
+   * current version 0.2: 
+
+     * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`electrophysiology <key_functions/data_api/electrophysiology>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>` | :doc:`JSON object examples <key_functions/data_api/object_examples>`
+
+   * version 0.1: 
+
+     * :doc:`API reference <key_functions/data_api/0.1/api_specification>` | :doc:`JSON object examples <key_functions/data_api/0.1/api_object_examples>`
 
 """"""""""""""""""
 Complete reference
@@ -61,9 +67,6 @@ Complete reference
 
    * :doc:`Client reference <reference/python>`
 
- * DATA API: 
-
-   * :doc:`API reference <reference/api_specification>` | :doc:`object examples <reference/api_object_examples>`
 
 """""""""""""""""
 Labs using G-Node
