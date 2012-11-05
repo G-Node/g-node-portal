@@ -82,6 +82,8 @@ A typical response will look like this:
 
 There are several response codes supported (200, 201, 400, etc.), please refer to :ref:`HTTP messages <HTTP_Messages>`. Use "message" and "message_type" parameters to learn about the exceptions happened.
 
+.. _common_parameters:
+
 Almost every response has parameters like
  * "logged_in_as" - a name of the user currently logged in
  * "objects_selected" - a number of the objects selected as a result of the request
@@ -181,6 +183,8 @@ DATA API limits the number objects to be retrieved in one request by 100. If the
 
 will retrieve 300 objects, indexed from 120 to 419 respectively.
 
+.. _get_single_object:
+
 To get a single object you should specify its ID at the end of the URL:
 
  ::
@@ -268,6 +272,8 @@ Bulk object update is also possible. To make changes to several objects at once,
     }
 
 
+.. _common_create:
+
 -------------------
 Creating new object
 -------------------
@@ -319,6 +325,7 @@ The response should look like this:
     ...
     }
 
+Objects, having data associated with them (like :ref:`AnalogSignal <AnalogSignal>` or :ref:`SpikeTrain <SpikeTrain>`), require one additional step for creation. It was found optimal to handle large data in files, thus associated data must be uploaded to the server in file prior to the object creation. Please find the rules and detailed explanations for such cases in the section :doc:`Working with arrays <array_data>`.
 
 ----------------
 Delete object(s)

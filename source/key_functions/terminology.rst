@@ -12,6 +12,12 @@ permalink
 
     A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a Datafile_ could have a permalink like https://portal.g-node.org/data/datafiles/15
 
+-----------------
+Object Identifier
+-----------------
+
+    Every object has two IDs: a "local" ID - an integer number, unique within the object type namespace (like there is only one Event_ with ID 15 but there could be other objects, say, a Segment_ with id 15 too), which is used in permalinks to access an object, and a global ID (guid) - a 40 symbols hash code (like c30fb5dee94e44930abc572e1b3e4847a0f51dd3), unique across all objects.
+
 
 .. _`ePhys Objects`:
 
