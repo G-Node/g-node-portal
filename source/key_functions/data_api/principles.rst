@@ -17,13 +17,13 @@ All URLs must have a host prefix, e.g. https://portal.g-node.org/data/. These op
 
 A typical GET request should have a form like
 
- ::
+::
 
     Request: GET /<namespace>/<object_type>/[<object_id>]/[?<params>]
 
 for example, 
 
- ::
+::
 
     Request: GET /electrophysiology/spiketrain/1546/
 
@@ -31,7 +31,7 @@ returns the spiketrain object with an ID = 1546 in JSON format.
 
 When you need to create or update object(s), you send a POST request with the same URL syntax. Data, sent together with the POST request should be in a JSON format, for example:
 
- ::
+::
 
     Request: POST /electrophysiology/spiketrain/1546/
 
@@ -58,18 +58,18 @@ A typical response will look like this:
                     "guid": "88aa2089cfc73e9279231c5518702222e5b8bb0d",
                     "name": "V1 FIX signals, trial 1",
                     "analogsignal_set": [
-                        "http://141.84.42.103:8010/electrophysiology/analogsignal/2",
-                        "http://141.84.42.103:8010/electrophysiology/analogsignal/178",
+                        "/electrophysiology/analogsignal/2",
+                        "/electrophysiology/analogsignal/178",
                     ],
                     "current_state": 10,
                     "safety_level": 3,
-                    "owner": "http://141.84.42.103:8010/profiles/profile/5",
+                    "owner": "/profiles/profile/5",
                     "date_created": "2012-07-26T17:16:07",
-                    "block": "http://141.84.42.103:8010/electrophysiology/block/1",
+                    "block": "/electrophysiology/block/1",
                     "metadata": []
                 },
                 "model": "neo_api.segment",
-                "permalink": "http://141.84.42.103:8010/electrophysiology/segment/2"
+                "permalink": "/electrophysiology/segment/2"
             },
             {
                 ...
@@ -147,27 +147,110 @@ When requesting single object, the response header will contain ETag and Last-Mo
 Requesting object(s)
 --------------------
 
+^^^^^^^^^^^^^^^^^^^
+Getting object list
+^^^^^^^^^^^^^^^^^^^
+
 To get the list of available objects of a specific type (e.g. :ref:`AnalogSignal <AnalogSignal>`, or a :ref:`Section <Section>`, or a :ref:`Datafile <Datafile>`) you need to send a GET request to the URL, ending with the name of this type, for example:
 
- ::
+::
 
     Request: GET /electrophysiology/analogsignal/
 
 or
 
- ::
+::
 
-    Request: GET /metadata/sections/
+    Request: GET /metadata/section/
+
+You'll get a JSON response having a list of objects under "selected" key:
+
+::
+
+    {
+    "logged_in_as": "jeff",
+    "objects_selected": 4,
+    "selected": [
+        {
+        "fields": {
+            "parent_section": null,
+            "tree_position": 0,
+            "odml_type": 0,
+            "name": "bla",
+            "datafile_set": [
+                "/datafiles/4",
+                "/datafiles/10"
+            ],
+            "property_set": [(0)],
+            "current_state": 10,
+            "is_template": false,
+            "local_id": 1,
+            "safety_level": 3,
+            "block_set": [
+                "/electrophysiology/block/2",
+                "/electrophysiology/block/3"
+            ],
+            "owner": "/profiles/profile/5",
+            "date_created": "2012-08-30T16:18:02",
+            "section_set": [
+                "/metadata/section/2"
+            ],
+            "guid": "bef93665387c2702f8eff6302e9ac83d600ae56b",
+            "user_custom": null,
+            "description": ""
+        },
+        "model": "metadata.section",
+        "permalink": "/metadata/section/1"
+        },
+        ...
+        {
+        "fields": {
+            "parent_section": "/metadata/section/1",
+            "tree_position": 0,
+            "odml_type": 0,
+            "name": "fre",
+            "datafile_set": [],
+            "property_set": [
+                "/metadata/property/1"
+            ],
+            "current_state": 10,
+            "is_template": false,
+            "local_id": 2,
+            "safety_level": 3,
+            "block_set": [(0)],
+            "owner": "/profiles/profile/5",
+            "date_created": "2012-09-17T18:08:15",
+            "section_set": [],
+            "guid": "e4fc6f8ba4fe72537d8820ba14b4ff93f509d313",
+            "user_custom": null,
+            "description": ""
+        },
+        "model": "metadata.section",
+        "permalink": "/metadata/section/2"
+        }
+    ],
+    "message": "Here is the list of requested objects.",
+    "selected_range": [
+    0,
+    3
+    ],
+    "message_type": "object_selected"
+    }
+
+
+^^^^^^^^^^^^^^
+Filter results
+^^^^^^^^^^^^^^
 
 You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=<user_name> or owner=<user_ID> parameters. Specify safety_level=3 or safety_level=1 to get only private or public objects respectively. That is basically applicable to any attribute: to filter by attribute (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example 
 
- ::
+::
 
     Request: GET /metadata/sections/?owner=alex&safety_level=1&name__icontains=experiment
 
 filters Alex's publicly available metadata :ref:`sections <Section>` containing 'experiment' in the name, or
 
- ::
+::
 
     Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11
 
@@ -177,7 +260,7 @@ filters out all objects created before February, 23 2012. For more information o
 
 DATA API limits the number objects to be retrieved in one request by 100. If there are more than a 100 objects you should request them using offset=100 (offset=200 etc.). You may also limit the number of objects by max_results=<some_number> parameter. The start / end indexes for the selected objects are usually contained in the response as "selected_range". For example, in case there are more than 500 objects, the following request:
 
- ::
+::
 
     Request: GET /metadata/sections/?offset=120&max_results=300
 
@@ -185,9 +268,13 @@ will retrieve 300 objects, indexed from 120 to 419 respectively.
 
 .. _get_single_object:
 
+^^^^^^^^^^^^^^^^^^^^
+Access single object
+^^^^^^^^^^^^^^^^^^^^
+
 To get a single object you should specify its ID at the end of the URL:
 
- ::
+::
 
     Request: GET /metadata/sections/10/
 
@@ -195,16 +282,16 @@ To get a single object you should specify its ID at the end of the URL:
 
 You may also control the amount of the information about avery object you receive using the 'q' parameter. You may provide q=
     - 'link' - just permalink and some basic fields
-    - 'full' - everything: all attributes plus up- and down- stream relations
+    - 'full' - everything: all attributes plus direct and reverse relations
 This works with both list of objects and single objects. For example
 
- ::
+::
 
     Request: GET /metadata/sections/2/?q=full
 
 will retrieve the full information about the section:
 
- ::
+::
 
     HTTP SUCCESS (200)
 
@@ -245,13 +332,47 @@ will retrieve the full information about the section:
         "message_type": "object_selected"
     }
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Access direct and reverse relationships
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Direct (foreign key) relationships are represented in the response as object permalink:
+
+::
+
+    {
+        ...
+        "block": "/electrophysiology/block/1",
+        ...
+    }
+
+so you can directly access parent objects and go up the hierarchy. Besides object parents, the :ref:`full <q_parameter>` response typically contains reversed relations, e.g. permalinks to the objects that reference the requested object. In the response they are usually represented in as a list of permalinks within object fields, having a key like "<reversed_object_type>_set":
+
+::
+
+    {
+        ...
+        "property_set": [
+            "metadata/properties/10",
+            "metadata/properties/11",
+            "metadata/properties/15"
+        ],
+        ...
+    }
+
+You can browse our :doc:`data model <../terminology>` to find the full specification of object relationships.
+
 ----------------------------------------
 Updating an object or making bulk update
 ----------------------------------------
 
+^^^^^^^^^^^^^^^^^
+Attribute updates
+^^^^^^^^^^^^^^^^^
+
 To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2:
 
- ::
+::
 
     Request: POST /metadata/properties/2/
 
@@ -261,15 +382,62 @@ To update one or several attributes of an object send POST to the object permali
     }
 
 
+^^^^^^^^^^^
+Bulk update
+^^^^^^^^^^^
+
 Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /<namespace>/<object_type>/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all properties with name having "sampling" to the section with ID 146:
 
- ::
+::
 
     Request: POST /metadata/properties/2/?name__icontains=sampling&bulk_update=1
 
     {
         "section": 146
     }
+
+A good use case is nicely illustrated in the paragraph below.
+
+^^^^^^^^^^^^^^^^^^^^
+Manage relationships
+^^^^^^^^^^^^^^^^^^^^
+
+Standard one-to-many relationships (like (one) :ref:`recording channel <RecordingChannel>` contains (many) :ref:`analog signals <AnalogSignal>` from different experimental trials) are managed by updating the foreign key field of the "child" object. For that you send the usual POST request to update the foreign key attribute:
+
+::
+
+    Request: POST /metadata/properties/2/
+
+    {
+        "section": "metadata/sections/2"
+    }
+
+There are 2 options to update a foreing key: you may provide a permalink (shown above), or just an ID (2 in this example).
+
+Important to mention, updating the reverse relationship is not supported. That means, request like:
+
+::
+
+    Request: POST /metadata/section/2/
+
+    {
+        "property_set": [
+            "metadata/properties/10",
+            "metadata/properties/11",
+            "metadata/properties/15"
+        ]
+    }
+
+will not work, instead it is better to do something like:
+
+::
+
+    Request: POST /metadata/properties/?id__in=[10,11,15]&bulk_update=1
+
+    {
+        "section": "metadata/sections/2"
+    }
+
 
 
 .. _common_create:
@@ -278,9 +446,9 @@ Bulk object update is also possible. To make changes to several objects at once,
 Creating new object
 -------------------
 
-Send the POST request to the object type URL (like /<namespace>/<object_type>/) to create new object. The POST data request should contain a JSON object with at least mandatory fields, required to create a new object. For example, to create a new :ref:`event <Event>` labeled "stimulus onset" in the :ref:`segment <Segment>` with ID = 1 supply the following:
+Send the POST request to the object type URL (like /<namespace>/<object_type>/) to create new object. The POST data request should contain a JSON object with at least :doc:`mandatory fields <../terminology>`, required to create a new object. For example, to create a new :ref:`event <Event>` labeled "stimulus onset" in the :ref:`segment <Segment>` with ID = 1 supply the following:
 
- ::
+::
 
     Request: POST /electrophysiology/event/
 
@@ -295,7 +463,7 @@ Send the POST request to the object type URL (like /<namespace>/<object_type>/) 
 
 The response should look like this:
 
- ::
+::
 
     201 CREATED
 
@@ -315,17 +483,17 @@ The response should look like this:
             },
             "date_created": "2012-10-31T13:29:28",
             "guid": "b5aeacbcbbe19bc52ce71d0501b3b2cea3e89c0e",
-            "segment": "http://141.84.42.103:8010/electrophysiology/segment/1",
+            "segment": "/electrophysiology/segment/1",
             ...
         },
         "model": "neo_api.event",
-        "permalink": "http://141.84.42.103:8010/electrophysiology/event/2"
+        "permalink": "/electrophysiology/event/2"
     }
     ],
     ...
     }
 
-Objects, having data associated with them (like :ref:`AnalogSignal <AnalogSignal>` or :ref:`SpikeTrain <SpikeTrain>`), require one additional step for creation. It was found optimal to handle large data in files, thus associated data must be uploaded to the server in file prior to the object creation. Please find the rules and detailed explanations for such cases in the section :doc:`Working with arrays <array_data>`.
+Objects, having ARRAY DATA  associated with them (like :ref:`AnalogSignal <AnalogSignal>` or :ref:`SpikeTrain <SpikeTrain>`), require one additional step for creation. It was found optimal to handle large data in files, thus associated data must be uploaded to the server in file prior to the object creation. Please find the rules and detailed explanations for such cases in the section :doc:`Working with arrays <array_data>`.
 
 ----------------
 Delete object(s)
@@ -333,7 +501,7 @@ Delete object(s)
 
 Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a :ref:`list <api_principles_list>` will archive all objects within the list. For example, to remove all :ref:`events <Event>` from a particular :ref:`segment <Segment>` with ID = 12 send
 
- ::
+::
 
     Request: DELETE /electrophysiology/event/?segment=12
 
@@ -341,15 +509,15 @@ Send the DELETE request to an object permalink to permanently archive it. A DELE
 Permissions
 -----------
 
-Almost all object in the system can have different permissions assigned via so-called Access Lists (ACL). To get an access list for a particular object use
+By default all objects in the system are private and belong to the author. At the same time almost all objects can have different permissions assigned via so-called Access Lists (ACL). To get an access list for a particular object use
 
- ::
+::
 
     Request: GET /electrophysiology/event/1345/acl/
 
 A typical ACL looks like
 
- ::
+::
 
     {
         ...

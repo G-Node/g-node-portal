@@ -28,9 +28,23 @@ Create your metadata structure
 .. image:: _static/metadata_example.png
     :align: center
 
+
+.. _annotation_example:
+
 -----------------
 Annotate datasets
 -----------------
+
+
+Imagine you have an experiment with stimulus which changes its color across experimental trials. The "color" is an arbitrary parameter, we cannot predict the exact setup of your experimental study. In your future research you want to indicate, which signals were recorded under which stimulus color, to be able to perform some valueable data analysis. Essentially this is a need to connect recorded signal data with arbitrary metadata; we call this "data annotation" process. In this section we describe how it works.
+
+The idea is that you use objects in electrophysiology ...
+
+
+Assume you want to group channels by some spatial property, and later compare the results from this group to the results from all channels. Bla..
+
+
+Assume in the experiment section tree you already defined a property, say, "Stimulus Color" with values "red, green and blue". In that case, annotate all required Analog Signals with appropriate metadata values, assigning a "red" value to the signals recorded when the Stimulius was red etc.
 
 
 ----------------------

@@ -13,7 +13,7 @@ permalink
     A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a Datafile_ could have a permalink like https://portal.g-node.org/data/datafiles/15
 
 -----------------
-Object Identifier
+object identifier
 -----------------
 
     Every object has two IDs: a "local" ID - an integer number, unique within the object type namespace (like there is only one Event_ with ID 15 but there could be other objects, say, a Segment_ with id 15 too), which is used in permalinks to access an object, and a global ID (guid) - a 40 symbols hash code (like c30fb5dee94e44930abc572e1b3e4847a0f51dd3), unique across all objects.
@@ -22,7 +22,7 @@ Object Identifier
 .. _`ePhys Objects`:
 
 -----------------------------------
-Electrophysiology ( ePhys Objects )
+electrophysiology ( ePhys Objects )
 -----------------------------------
 
     ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). An original concept is described `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we provide all descriptions down below for convenience. A good example :ref:`is described in the overview <overview_ephys>`. The following raw data objects are supported:
@@ -61,50 +61,86 @@ Every object in this context has a set of *attributes* and *data fields*, it may
 ^^^^^^^^^^^^
 AnalogSignal
 ^^^^^^^^^^^^
+
     A regular sampling of a continuous, analog signal.
 
-================   ==========================
-Parameter Type     Name
-================   ==========================
-Attribute          'name'\*
-Data Field         'sampling_rate', 't_start', 'signal'
-Parent             'segment', 'recordingchannel'
-Child              
-================   ==========================
+==================   ==========================
+Parameter            Type
+==================   ==========================
+name\*               string
+sampling_rate\*      float + units
+t_start\*            float + units
+signal\*             array of floats 1D + units
+segment              foreign key to Segment_
+recordingchannel     foreign key to RecordingChannel_
+==================   ==========================
 
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+ 
+
+.. _IrSaAnalogSignal:
+
+^^^^^^^^^^^^^^^^
+IrSaAnalogSignal
+^^^^^^^^^^^^^^^^
+
+    An analog signal with non-regular sampling.
+
+==================   ==========================
+Parameter            Type
+==================   ==========================
+name\*               string
+t_start\*            float + units
+signal\*             array of floats 1D + units
+times\*              array of floats 1D + units
+segment              foreign key to Segment_
+recordingchannel     foreign key to RecordingChannel_
+==================   ==========================
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+ 
 
 .. _AnalogSignalArray:
 
 ^^^^^^^^^^^^^^^^^
 AnalogSignalArray
 ^^^^^^^^^^^^^^^^^
+
     A regular sampling of a multichannel continuous analog signal. This representation (as a 2D array) may be more efficient for subsequent analysis than the equivalent list of individual AnalogSignal objects.
 
-================   ==========================
-Parameter Type     Name
-================   ==========================
-Attribute          
-Data Field         'sampling_rate', 't_start', 'signal'
-Parent             'segment', 'recordingchannelgroup'
-Child              
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+t_start\*               float + units
+sampling_rate\*         float + units
+signal\*                array of floats 1D + units
+segment                 foreign key to Segment_
+recordingchannelgroup   foreign key to RecordingChannelGroup_
+=====================   ==========================
 
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+ 
 
 .. _Spike:
 
 ^^^^^
 Spike
 ^^^^^
+
     One action potential characterized by its time and waveform.
 
-================   ==========================
-Parameter Type     Name
-================   ==========================
-Attribute          
-Data Field         'left_sweep', 'time', 'sampling_rate', 'waveform'
-Parent             'segment', 'unit'
-Child              
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+time\*                  float + units
+sampling_rate\*         float + units
+left_sweep              float + units
+waveform\*              array of floats 1D + units
+segment                 foreign key to Segment_
+unit                    foreign key to Unit_
+=====================   ==========================
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _SpikeTrain:
@@ -112,16 +148,21 @@ Child
 ^^^^^^^^^^
 SpikeTrain
 ^^^^^^^^^^
+
     A set of action potentials (spikes) emitted by the same unit in a period of time (with optional waveforms).
 
-================   ==========================
-Parameter Type     Name
-================   ==========================
-Attribute          
-Data Field         't_start', 't_stop', 'times', 'waveforms'
-Parent             'segment', 'unit'
-Child              
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+t_start\*               float + units
+t_stop\*                float + units
+times\*                 array of floats 1D + units
+waveforms               array of floats 3D + units
+segment                 foreign key to Segment_
+unit                    foreign key to Unit_
+=====================   ==========================
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _Event:
@@ -129,16 +170,18 @@ Child
 ^^^^^^^^^^^^^^^^^^^^
 Event and EventArray
 ^^^^^^^^^^^^^^^^^^^^
+
     A time point representng an event in the data, or an array of such time points.
 
-================   ==========================
-Parameter Type     Name
-================   ==========================
-Attribute          'label(s)'\*
-Data Field         'time(s)'
-Parent             'segment'
-Child              
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+label(s)\*              string/array of strings 1D
+time(s)\*               float/array of floats 1D + units
+segment                 foreign key to Segment_
+=====================   ==========================
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _Epoch:
@@ -148,14 +191,16 @@ Epoch and EpochArray
 ^^^^^^^^^^^^^^^^^^^^
     An interval of time representing a period of time in the data, or an array of such intervals.
 
-================   ==========================
-Parameter Type     Name
-================   ==========================
-Attribute          'label(s)'\*
-Data Field         'time(s)', 'duration(s)'
-Parent             'segment'
-Child              
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+label(s)\*              string/array of strings 1D
+time(s)\*               float/array of floats 1D + units
+duration(s)\*           float/array of floats 1D + units
+segment                 foreign key to Segment_
+=====================   ==========================
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 `ePhys Objects`_ comprise a simple hierarchy of containers:
@@ -165,33 +210,52 @@ Child
 ^^^^^^^
 Segment
 ^^^^^^^
+
     A container for heterogeneous discrete or continous data sharing a common clock (time basis) but not necessarily the same sampling rate, start time or end time. A Segment can be considered as equivalent to a “trial”, “episode”, “run”, “recording”, etc., depending on the experimental context. May contain any of the `ePhys Objects`_.
 
-================   ==========================
-Parameter Type     Name
-================   ==========================
-Attribute          'name'\*, 'filedatetime', 'index'
-Data Field         'time(s)', 'duration(s)'
-Parent             'block'
-Child              'analogsignal', 'irsaanalogsignal', 'analogsignalarray', 'spiketrain', 'spike', 'event', 'eventarray', 'epoch', 'epocharray'
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+filedatetime            datetime
+index                   int
+block                   foreign key to Block_
+=====================   ==========================
 
+Segment can contain objects of the following types:
+ * AnalogSignal_
+ * IrSaAnalogSignal_
+ * AnalogSignalArray_
+ * SpikeTrain_
+ * Spike_
+ * Event_
+ * EventArray_
+ * Epoch_
+ * EpochArray_
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 .. _Block:
 
 ^^^^^
 Block
 ^^^^^
+
     The top-level container gathering all of the data, discrete and continuous, for a given recording session. Contains Segment_ and RecordingChannelGroup_ objects.
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'name'\*, 'filedatetime', 'index'
-Data Field         
-Parent             
-Child              'segment', 'recordingchannelgroup'
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+filedatetime            datetime
+index                   int
+=====================   ==========================
+
+Block can contain objects of the following types:
+ * Segment_
+ * RecordingChannelGroup_
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 `ePhys Objects`_ also include *Grouping objects*. These objects express the relationships between data items, such as which signals were recorded on which electrodes, which spike trains were obtained from which membrane potential signals, etc. They contain references to data objects that cut across the simple container hierarchy.
@@ -201,16 +265,23 @@ Child              'segment', 'recordingchannelgroup'
 ^^^^^^^^^^^^^^^^
 RecordingChannel
 ^^^^^^^^^^^^^^^^
+
     Links AnalogSignal_ and/or SpikeTrain_ objects that come from the same logical and/or physical channel inside a Block_, possibly across several Segment_ objects.
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'name'\*, 'index'
-Data Field         
-Parent             'recordingchannelgroup'
-Child              'unit', 'analogsignal', 'irsaanalogsignal'
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+index                   int
+recordingchannelgroup   foreign key to RecordingChannelGroup_ 
+=====================   ==========================
+
+RecordingChannel can contain objects of the following types:
+ * Unit_
+ * AnalogSignal_
+ * IrSaAnalogSignal_
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _RecordingChannelGroup:
@@ -220,14 +291,18 @@ RecordingChannelGroup
 ^^^^^^^^^^^^^^^^^^^^^
     A group for associated RecordingChannel objects. This has several possible uses: for linking several AnalogSignalArray objects across several Segment objects inside a Block, for multielectrode arrays, where spikes may be recorded on more than one recording channel, and so the RecordingChannelGroup can be used to associate each Unit with the group of recording channels from which it was calculated, as well as for grouping several RecordingChannel objects. There are many use cases for this. For instance, for intracellular recording, it is common to record both membrane potentials and currents at the same time, so each RecordingChannelGroup may correspond to the particular property that is being recorded. For multielectrode arrays, RecordingChannelGroup is used to gather all RecordingChannel objects of the same array.
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'name'\*
-Data Field         
-Parent             'block'
-Child              'recordingchannel', 'analogsignalarray'
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+block                   foreign key to Block_ 
+=====================   ==========================
+
+RecordingChannelGroup can contain objects of the following types:
+ * RecordingChannel_
+ * AnalogSignalArray_
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _Unit:
@@ -235,16 +310,22 @@ Child              'recordingchannel', 'analogsignalarray'
 ^^^^
 Unit
 ^^^^
+
     A Unit gathers all the `SpikeTrain`_ objects within a common Block_, possibly across several Segments, that have been emitted by the same cell. A Unit is linked to RecordingChannelGroup_ objects from which it was detected.
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'name'\*
-Data Field         
-Parent             'recordingchannel'
-Child              'spiketrain','spike'
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+recordingchannel        foreign key to RecordingChannel_ 
+=====================   ==========================
+
+Unit can contain objects of the following types:
+ * SpikeTrain_
+ * Spike_
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+
 
 
 --------
@@ -256,7 +337,7 @@ Having `ePhys Objects`_ is usually not enough to describe the experiment or even
 .. _Metadata:
 
 **Metadata**
-    In this context metadata is any information about an experiment, excluding the information, described using `ePhys Objects`_. Work with metadata is essentially is a flexible way to describe your experimental parameters using Section_ (simple container) tree with `Properties with Values`_ (key-value pairs). Take a look on the :ref:`example <overview_metadata>` in the overview.
+    In this context metadata is any information about an experiment, EXcluding the information, described using `ePhys Objects`_. Our metadata concept is based on `odML <http://www.g-node.org/projects/odml>`_, which is essentially a flexible way to describe your experimental parameters using Section_ (simple container) tree with `Properties with Values`_ (key-value pairs). Take a look on the :ref:`example <overview_metadata>` in the overview.
 
 The general metadata object model looks like:
 
@@ -270,16 +351,25 @@ it is implemented inline with `odML <http://www.g-node.org/projects/odml>`_ conc
 ^^^^^^^
 Section
 ^^^^^^^
+
     An element used to group and organize your metadata in a tree structure. Intuitively it's like a folder in a usual file system. A Section can contain other Sections, `Properties with Values`_, Datafile_ or Block_. The Section is a prototype of the `odML <http://www.g-node.org/projects/odml>`_® section and is implemented inline with odML concepts and methodology.
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'name'\*, 'description', 'odml_type', 'tree_position'
-Data Field         
-Parent             'parent_section'
-Child              'section'
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+description             string
+odml_type               int (0-99)
+tree_position           int
+parent_section          foreign key to Section_ 
+=====================   ==========================
+
+Section can contain objects of the following types:
+ * Section_
+ * Block_
+ * Datafile_
+
+See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _`Properties with Values`:
@@ -287,29 +377,39 @@ Child              'section'
 ^^^^^^^^^^^^^^^^^^^^^
 Properties and Values
 ^^^^^^^^^^^^^^^^^^^^^
+
     Inspired by the "key-value pairs" concept, Properties and Values used similarly as a flexible way to annotate your data (implemented in line with `odML <http://www.g-node.org/projects/odml>`_) within any metadata Section_. Some good examples could be a model of your recording device, duration of the stimulus, a layer of the cell you've recorded from. Properties and Values can be used to "label" your `ePhys Objects`_ (AnalogSignal_, SpikeTrain_ etc.) to indicate certain metadata for them. 
 
 Property:
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'name'\*, 'definition', 'dependency', 'dependency_value', 'mapping', 'unit', 'dtype', 'uncertainty', 'comment'
-Data Field         
-Parent             'section'\*
-Child              'value'
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+definition              string
+dependency              string
+dependency_value        string
+mapping                 string
+unit                    string
+dtype                   string
+uncertainty             string
+comment                 string
+section\*               foreign key to Section_ 
+=====================   ==========================
+
+Property can contain one or several Value_ objects:
+
 
 Value:
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'data'\*
-Data Field         
-Parent             'parent_property'\*
-Child              
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+data\*                  string
+parent_property\*       foreign key to Section_ 
+=====================   ==========================
+
+See exact objects representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _Data annotation:
@@ -328,18 +428,18 @@ Files
 ^^^^^^^^
 Datafile
 ^^^^^^^^
+
     Datafile represents an arbitrary file, uploaded by a user. Some data or metadata can be extracted from the Datafile if it is in one of the supported formats (`NEO I/O <http://neo.readthedocs.org/en/latest/io.html>`_, `Neuroshare <http://neuroshare.sourceforge.net/index.shtml>`_, `odML <http://www.g-node.org/projects/odml>`_). All data-related objects, like AnalogSignal_ or Spike_, have their data part also stored as HDF5 files (`what is HDF5? <http://www.hdfgroup.org/HDF5/whatishdf5.html>`_), having array in the file root.
 
-================   ==========================
-Attr Type          Name
-================   ==========================
-Attribute          'name'\*, 'caption', 'file_type', 'tags', 'size', 'extracted_info', 'operations_log'
-Data Field         
-Parent             'section'
-Child              
-================   ==========================
+=====================   ==========================
+Parameter               Type
+=====================   ==========================
+name\*                  string
+caption                 string
+section\*               foreign key to Section_
+=====================   ==========================
 
-The system supports data conversion from files to the data and metadata objects, listed above, if the Datafile_ is compartible with supported formats (see Datafile_ above).
+The system supports data conversion from files to the :ref:`ePhys <ePhys Objects>` and Metadata_ objects, listed above, if the Datafile_ is compartible with supported formats (see Datafile_ above).
 
 -------
 Summary
