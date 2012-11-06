@@ -1,0 +1,324 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DATA MANAGEMENT &mdash; g-node-portal v0.6 documentation</title>
+    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="g-node-portal v0.6 documentation" href="../../index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+
+<div id="tabhead">
+	<div class="logo">
+
+	<!-- HEADER -->
+	<div id="header">
+		
+		<!-- LOGO -->
+		<div id="logo">
+			<a href="/"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
+		</div>
+		
+		<!-- LOGO PARTNER -->
+		<div id="logo_partner">
+			<a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+		</div>
+
+		<!-- KEYVISUAL -->
+		<div id="keyvisual">
+			<img src="../../_static/default.jpg" alt="" border="0" />
+		</div>
+    </div>
+    </div>
+</div>
+
+  
+  
+
+    <div id="right_tabs">
+        <div class="seitenbreite">
+        <ul class="tabs">
+          <li><a href="http://www.g-node.org">G-Node Website</a></li>
+          <li class="last">
+            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+          </li>
+        </ul>
+        </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="data-management">
+<h1>DATA MANAGEMENT<a class="headerlink" href="#data-management" title="Permalink to this headline">¶</a></h1>
+<p>The Data API provides a <a class="reference internal" href="../terminology.html#ephys-objects"><em>common set of objects</em></a> for dealing with electro-physiological (in vivo and/or simulated) data. It supports a number of functions to manage these objects, and the following sections will give an overview.</p>
+<div class="section" id="create-or-update-data-object">
+<h2>Create or update data object<a class="headerlink" href="#create-or-update-data-object" title="Permalink to this headline">¶</a></h2>
+<p>Send an authorized HTTP request with the body (in JSON format), providing object data (attributes, arrays and relationships), to</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;/</pre>
+</div>
+</div></blockquote>
+<p>in order to create a new object (except data-containing objects, like <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../terminology.html#spiketrain"><em>SpikeTrain</em></a>, for which <a class="reference internal" href="#array-upload-note"><em>you have to upload data first</em></a>), you should specify object attributes, data fields (if exist), and relationships in the request body as a JSON object. For example, send an authorized HTTP POST request to the &#8220;/electrophysiology/segment/&#8221; with the following body</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/
+
+{
+    "name": "Trial 12, Saccade, Stim. 45 grad color red",
+    "filedatetime": "2012-04-10 10:00:00",
+    "index": 12
+}</pre>
+</div>
+</div></blockquote>
+<p>to create a new <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a>. If the response status is &#8216;Created&#8217; (201) a client receives a new ID of a segment from the response. Here is the response example:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP CREATED (201)
+
+{
+    "logged_in_as": "bob",
+    "objects_selected": 1,
+    "selected": [{
+                "fields": {
+                "index": 12,
+                "name": "Trial 12, Saccade, Stim. 45 grad color red",
+                "current_state": 10,
+                "filedatetime": null,
+                "last_modified": "2012-04-10 13:38:23",
+                "safety_level": 3,
+                "date_created": "2012-04-10 13:38:23"
+            },
+        "model": "neo_api.segment",
+        "permalink": "/electrophysiology/segment/213"
+    }],
+    "message": "Object created successfully.",
+    "selected_range": [0, 0],
+    "message_type": "object_created"
+}</pre>
+</div>
+</div></blockquote>
+<p>A full set of examples for all supported ePhys objects can be found in <a class="reference internal" href="../../reference/api_object_examples.html"><em>object examples</em></a>.</p>
+<p><em>Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider the</em> <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys specification</em></a>.</p>
+<p>To update the <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a>, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we&#8217;ve just created was assigned an ID = 213, send an HTTP POST to the &#8220;/electrophysiology/segment/213/&#8221; with the following body</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/213/
+
+{
+    "name": "Trial 12, Saccade, Stim. 45 grad color green",
+    "block": 1
+}</pre>
+</div>
+</div></blockquote>
+<p>to change the name of the segment and link it to the <a class="reference internal" href="../terminology.html#block"><em>Block</em></a> with ID 1. When update is required, you may specify only those parameters that you want to update. All other attributes, arrays and relationships will stay as they were.</p>
+<p>A response should look similar to this:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+
+{
+"logged_in_as": "bob",
+"objects_selected": 1,
+"selected": [{
+    "fields": {
+        "index": 12,
+        "block": "/electrophysiology/block/1",
+        "name": "Trial 12, Saccade, Stim. 45 grad color green",
+        "current_state": 10,
+        "filedatetime": null,
+        "last_modified": "2012-04-10 13:38:23",
+        "safety_level": 3,
+        "date_created": "2012-04-10 13:38:23"
+    },
+    "model": "neo_api.segment",
+    "permalink": "/electrophysiology/segment/213"
+}],
+"message": "Here is the list of requested objects.",
+"selected_range": [0, 0],
+"message_type": "object_selected"
+}</pre>
+</div>
+</div></blockquote>
+<p>Our model for electrophysiology, based on the NEO® model, suggests particular object relationships: a segment (timeframe) is a part of a block (experiment), events happen within a segment etc. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. Relationships are updated in a similar way as normal attributes: provide relationships inside the POST request to save appropriate data structure of your recordings. The full list of supported connections can be found in the <a class="reference internal" href="../terminology.html#ephys-objects"><em>key concepts</em></a> in attribute/relationaship tables, given for every object. Also consider the <a class="reference internal" href="../../reference/api_object_examples.html"><em>object examples page</em></a>.</p>
+<p>Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (the &#8216;sampling_rate&#8217; data field of <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> object typically has units &#8220;Hz&#8221; or &#8220;KHz&#8221;, <a class="reference internal" href="../terminology.html#event"><em>Event</em></a> object has &#8220;time&#8221; in &#8220;ms&#8221; etc). Use a dict with &#8220;data&#8221; and &#8220;units&#8221; keys while updating these fields:</p>
+<div class="highlight-python"><pre>"time": {
+    "units": "ms",
+    "data": 65
+}</pre>
+</div>
+<dl class="docutils">
+<dt><em>Note. For the moment, the following unit types are supported:</em></dt>
+<dd><ul class="first last simple">
+<li>in time domain: &#8220;s&#8221;, &#8220;ms&#8221;, &#8220;mcs&#8221;</li>
+<li>in signal domain: &#8220;v&#8221;, &#8220;mv&#8221;, &#8220;mcv&#8221;</li>
+<li>sampling rate for signals: &#8220;hz&#8221;, &#8220;khz&#8221;, &#8220;mhz&#8221;, &#8220;1/s&#8221;</li>
+</ul>
+</dd>
+</dl>
+<dl class="docutils" id="array-upload-note">
+<dt>Objects, containing data arrays (data-containing objects), require special processing. These objects include:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a></li>
+<li><a class="reference internal" href="../terminology.html#analogsignalarray"><em>AnalogSignalArray</em></a></li>
+<li><a class="reference internal" href="../terminology.html#spiketrain"><em>SpikeTrain</em></a></li>
+<li><a class="reference internal" href="../terminology.html#spike"><em>Spike</em></a></li>
+</ul>
+</dd>
+</dl>
+<p>To save or update a data-containing object you have to upload a file containing corresponding data first, and then create (update) an object with the usual HTTP POST request as shown above. This is done for performance reasons, huge amounts of data are poorly handled in JSON format together with the rest of the request body. In order to know how to upload the data please consider our description of the <a class="reference internal" href="array_data.html"><em>array management</em></a>. After you successfully uploaded a file with the data, you should use it&#8217;s permalink in the POST request to connect a data-containing object with the actual data.</p>
+</div>
+<div class="section" id="getting-a-single-object">
+<h2>Getting a single object<a class="headerlink" href="#getting-a-single-object" title="Permalink to this headline">¶</a></h2>
+<p>To get a NEO object with its attributes send a following GET request</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;obj_type&gt;/&lt;obj_id&gt;/</pre>
+</div>
+</div></blockquote>
+<p>You&#8217;ll get the response, similar to:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+
+{
+"logged_in_as": "bob",
+"objects_selected": 1,
+"selected": [{
+    "fields": {
+        "name": "From File: data_in_csv.txt, #952",
+        "signal_size": 12000,
+        "current_state": 10,
+        "last_modified": "2012-03-22 17:19:41",
+        "safety_level": 3,
+        "date_created": "2012-03-22 17:19:41"
+    },
+    "model": "neo_api.analogsignal",
+    "permalink": "/electrophysiology/analogsignal/952"
+}],
+"message": "Here is the list of requested objects.",
+"selected_range": [0, 0],
+"message_type": "object_selected"
+}</pre>
+</div>
+</div></blockquote>
+<p>Play with the <a class="reference internal" href="principles.html#q-parameter"><em>q request GET parameter</em></a> to get different information about an object, including its attributes, data arrays, downstream and upstream relationships. In <a class="reference internal" href="array_data.html"><em>array management</em></a> section you&#8217;ll also find how to request a slice of the signal(s) or request it&#8217;s downsampling, which is useful when signal is very long.</p>
+</div>
+<div class="section" id="getting-a-list-of-objects">
+<h2>Getting a List of Objects<a class="headerlink" href="#getting-a-list-of-objects" title="Permalink to this headline">¶</a></h2>
+<p>Use the following HTTP GET</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;object_type&gt;/?params</pre>
+</div>
+</div></blockquote>
+<p>to query multiple <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys objects</em></a> of a specific type. For example, if you want to get all Analog Signals available for a specific user, send the following request</p>
+<blockquote>
+<div><div class="highlight-python"><pre>GET /electrophysiology/analogsignal/?q=link</pre>
+</div>
+</div></blockquote>
+<p>You receive a list of Analog Signal permalinks as a response:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+
+{
+"logged_in_as": "bob",
+"objects_selected": 3,
+"selected": [
+    {
+    "fields": {},
+    "model": "neo_api.analogsignal",
+    "permalink": "/electrophysiology/analogsignal/1"
+    },
+    {
+    "fields": {},
+    "model": "neo_api.analogsignal",
+    "permalink": "/electrophysiology/analogsignal/2"
+    },
+    {
+    "fields": {},
+    "model": "neo_api.analogsignal",
+    "permalink": "/electrophysiology/analogsignal/3"
+    }
+],
+"message": "Here is the list of requested objects.",
+"selected_range": [0, 0],
+"message_type": "object_selected"
+}</pre>
+</div>
+</div></blockquote>
+<p>By default the API will return the first 100 data objects in the response. Use <a class="reference internal" href="principles.html#offset-parameter"><em>offset parameter</em></a> and/or <a class="reference internal" href="query.html"><em>standard filters</em></a> to refine the selection.</p>
+<p>All <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys objects</em></a> support changing permissions. To learn more about sharing objects please refer to <a class="reference internal" href="permissions.html"><em>permissions</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DATA MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#create-or-update-data-object">Create or update data object</a></li>
+<li><a class="reference internal" href="#getting-a-single-object">Getting a single object</a></li>
+<li><a class="reference internal" href="#getting-a-list-of-objects">Getting a List of Objects</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/key_functions/data_api/data.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    <h2>Questions/Feedback</h2>
+    <p>Having any questions? Got an idea how to improve a service? You're welcome to contact us!<br> Please send your questions/feedback to support-at-g-node.org , we are happy to help!</p>
+  </div>
+  <div class="footer">
+    &copy; Copyright 2011, asobolev.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>

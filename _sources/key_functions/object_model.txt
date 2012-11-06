@@ -1,0 +1,19 @@
+============
+Object model
+============
+
+This section provides a full reference for all objects with their optional and mandatory attributes, child and parent relationships.
+
+.. _Electrophysiology:
+
+--------------------------------------------------
+Electrophysiology ( :ref:`definition <ePhys Objects>` )
+--------------------------------------------------
+
+
+
+
+
+
+
+All :doc:`objects <key_functions/terminology>`, supported by the system, are interconnected. In principal, it is suggested one uses Sections with Properties and Values to describe ad-hoc and experiment-specific metadata (not data-related metadata, like sampling rate for signals or number of channels) and 

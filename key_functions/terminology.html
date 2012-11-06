@@ -1,0 +1,670 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Key concepts and Object model &mdash; g-node-portal v0.6 documentation</title>
+    <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+
+<div id="tabhead">
+	<div class="logo">
+
+	<!-- HEADER -->
+	<div id="header">
+		
+		<!-- LOGO -->
+		<div id="logo">
+			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
+		</div>
+		
+		<!-- LOGO PARTNER -->
+		<div id="logo_partner">
+			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
+		</div>
+
+		<!-- KEYVISUAL -->
+		<div id="keyvisual">
+			<img src="../_static/default.jpg" alt="" border="0" />
+		</div>
+    </div>
+    </div>
+</div>
+
+  
+  
+
+    <div id="right_tabs">
+        <div class="seitenbreite">
+        <ul class="tabs">
+          <li><a href="http://www.g-node.org">G-Node Website</a></li>
+          <li class="last">
+            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+          </li>
+        </ul>
+        </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="key-concepts-and-object-model">
+<h1>Key concepts and Object model<a class="headerlink" href="#key-concepts-and-object-model" title="Permalink to this headline">¶</a></h1>
+<p>Throughout this entire documentation, it&#8217;s refered to a series of terms like <a class="reference internal" href="#section">Section</a> or <a class="reference internal" href="#datafile">Datafile</a>, which are intended to have specific meanings.</p>
+<div class="section" id="permalink">
+<span id="common-terms"></span><h2>permalink<a class="headerlink" href="#permalink" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a <a class="reference internal" href="#datafile">Datafile</a> could have a permalink like <a class="reference external" href="https://portal.g-node.org/data/datafiles/15">https://portal.g-node.org/data/datafiles/15</a></div></blockquote>
+</div>
+<div class="section" id="object-identifier">
+<h2>Object Identifier<a class="headerlink" href="#object-identifier" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Every object has two IDs: a &#8220;local&#8221; ID - an integer number, unique within the object type namespace (like there is only one <a class="reference internal" href="#event">Event</a> with ID 15 but there could be other objects, say, a <a class="reference internal" href="#segment">Segment</a> with id 15 too), which is used in permalinks to access an object, and a global ID (guid) - a 40 symbols hash code (like c30fb5dee94e44930abc572e1b3e4847a0f51dd3), unique across all objects.</div></blockquote>
+</div>
+<div class="section" id="electrophysiology-ephys-objects">
+<span id="ephys-objects"></span><h2>Electrophysiology ( ePhys Objects )<a class="headerlink" href="#electrophysiology-ephys-objects" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><blockquote>
+<div>ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). An original concept is described <a class="reference external" href="http://neo.readthedocs.org/en/latest/core.html">here</a>, however we provide all descriptions down below for convenience. A good example <a class="reference internal" href="../overview.html#overview-ephys"><em>is described in the overview</em></a>. The following raw data objects are supported:</div></blockquote>
+<ul class="simple">
+<li>block</li>
+<li>segment</li>
+<li>event</li>
+<li>eventarray</li>
+<li>epoch</li>
+<li>epocharray</li>
+<li>unit</li>
+<li>spiketrain</li>
+<li>analogsignal</li>
+<li>analogsignalarray</li>
+<li>irsaanalogsignal</li>
+<li>spike</li>
+<li>recordingchannelgroup</li>
+<li>recordingchannel</li>
+</ul>
+</div></blockquote>
+<p>Every object serves a specific purpose to organize your electrophysiological data. &#8216;Block&#8217;s mainly represent one experiment (or the whole data, recorded within one experiment). &#8216;Segment&#8217; represents an experimental trial, a &#8220;time frame&#8221; within an experiment with unique experimental conditions. Blocks may contain several segments, like an experiment consists of several trials. A &#8216;Segment&#8217; may contain &#8216;AnalogSignal&#8217;s, &#8216;Event&#8217;s or &#8216;Epoch&#8217;s, which are used to organize recorded signals, single time events, or events with duration inside one experimental time-frame. Segment may also contain &#8216;SpikeTrain&#8217; objects to accommodate the spike data. For every &#8216;Block&#8217; one may define a set of &#8216;RecordingChannel&#8217;s according to the experimental setup. These channels can be organized under a &#8216;RecordingChannelGroup&#8217;, to keep track of tethrodes. &#8216;AnalogSignals&#8217; can be linked to the appropriate &#8216;RecordingChannel&#8217;s to make the dataset consistent.</p>
+<p>The overall data model for electrophysiology looks like this:</p>
+<div align="center" class="align-center"><img alt="../_images/ephys_om23.png" class="align-center" src="../_images/ephys_om23.png" style="width: 800px;" /></div>
+<p>Every object in this context has a set of <em>attributes</em> and <em>data fields</em>, it may also have relationships, like <em>parents</em> and <em>children</em>. For example, a segment has to have an attribute &#8216;name&#8217;. &#8216;AnalogSignal&#8217; should have a &#8216;sampling_rate&#8217; data field, which consists of the unit (like Hz or KHz) and a value (like 20000). A &#8216;Block&#8217; consists of &#8216;Segments&#8217;, which means the &#8216;Block&#8217; has a child &#8216;Segment&#8217;, and a &#8216;Segment&#8217; has a parent &#8216;Block&#8217;. Below for each object you can find its definition, as well as the detailed listing of its attributes and relationships.</p>
+<p><em>Note. Attributes with * asterisk are mandatory.</em></p>
+<p><a class="reference internal" href="#ephys-objects">ePhys Objects</a> consist of:</p>
+<div class="section" id="analogsignal">
+<span id="id1"></span><h3>AnalogSignal<a class="headerlink" href="#analogsignal" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A regular sampling of a continuous, analog signal.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&#8216;sampling_rate&#8217;, &#8216;t_start&#8217;, &#8216;signal&#8217;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;segment&#8217;, &#8216;recordingchannel&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="analogsignalarray">
+<span id="id2"></span><h3>AnalogSignalArray<a class="headerlink" href="#analogsignalarray" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A regular sampling of a multichannel continuous analog signal. This representation (as a 2D array) may be more efficient for subsequent analysis than the equivalent list of individual AnalogSignal objects.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&#8216;sampling_rate&#8217;, &#8216;t_start&#8217;, &#8216;signal&#8217;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;segment&#8217;, &#8216;recordingchannelgroup&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="spike">
+<span id="id3"></span><h3>Spike<a class="headerlink" href="#spike" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>One action potential characterized by its time and waveform.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&#8216;left_sweep&#8217;, &#8216;time&#8217;, &#8216;sampling_rate&#8217;, &#8216;waveform&#8217;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="spiketrain">
+<span id="id4"></span><h3>SpikeTrain<a class="headerlink" href="#spiketrain" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A set of action potentials (spikes) emitted by the same unit in a period of time (with optional waveforms).</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&#8216;t_start&#8217;, &#8216;t_stop&#8217;, &#8216;times&#8217;, &#8216;waveforms&#8217;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="event-and-eventarray">
+<span id="event"></span><h3>Event and EventArray<a class="headerlink" href="#event-and-eventarray" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A time point representng an event in the data, or an array of such time points.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;label(s)&#8217;*</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&#8216;time(s)&#8217;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;segment&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="epoch-and-epocharray">
+<span id="epoch"></span><h3>Epoch and EpochArray<a class="headerlink" href="#epoch-and-epocharray" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>An interval of time representing a period of time in the data, or an array of such intervals.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;label(s)&#8217;*</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&#8216;time(s)&#8217;, &#8216;duration(s)&#8217;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;segment&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#ephys-objects">ePhys Objects</a> comprise a simple hierarchy of containers:</p>
+</div>
+<div class="section" id="segment">
+<span id="id5"></span><h3>Segment<a class="headerlink" href="#segment" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A container for heterogeneous discrete or continous data sharing a common clock (time basis) but not necessarily the same sampling rate, start time or end time. A Segment can be considered as equivalent to a “trial”, “episode”, “run”, “recording”, etc., depending on the experimental context. May contain any of the <a class="reference internal" href="#ephys-objects">ePhys Objects</a>.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&#8216;time(s)&#8217;, &#8216;duration(s)&#8217;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;block&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;, &#8216;analogsignalarray&#8217;, &#8216;spiketrain&#8217;, &#8216;spike&#8217;, &#8216;event&#8217;, &#8216;eventarray&#8217;, &#8216;epoch&#8217;, &#8216;epocharray&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="block">
+<span id="id6"></span><h3>Block<a class="headerlink" href="#block" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>The top-level container gathering all of the data, discrete and continuous, for a given recording session. Contains <a class="reference internal" href="#segment">Segment</a> and <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a> objects.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Child</td>
+<td>&#8216;segment&#8217;, &#8216;recordingchannelgroup&#8217;</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#ephys-objects">ePhys Objects</a> also include <em>Grouping objects</em>. These objects express the relationships between data items, such as which signals were recorded on which electrodes, which spike trains were obtained from which membrane potential signals, etc. They contain references to data objects that cut across the simple container hierarchy.</p>
+</div>
+<div class="section" id="recordingchannel">
+<span id="id7"></span><h3>RecordingChannel<a class="headerlink" href="#recordingchannel" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Links <a class="reference internal" href="#analogsignal">AnalogSignal</a> and/or <a class="reference internal" href="#spiketrain">SpikeTrain</a> objects that come from the same logical and/or physical channel inside a <a class="reference internal" href="#block">Block</a>, possibly across several <a class="reference internal" href="#segment">Segment</a> objects.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*, &#8216;index&#8217;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;recordingchannelgroup&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&#8216;unit&#8217;, &#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="recordingchannelgroup">
+<span id="id8"></span><h3>RecordingChannelGroup<a class="headerlink" href="#recordingchannelgroup" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A group for associated RecordingChannel objects. This has several possible uses: for linking several AnalogSignalArray objects across several Segment objects inside a Block, for multielectrode arrays, where spikes may be recorded on more than one recording channel, and so the RecordingChannelGroup can be used to associate each Unit with the group of recording channels from which it was calculated, as well as for grouping several RecordingChannel objects. There are many use cases for this. For instance, for intracellular recording, it is common to record both membrane potentials and currents at the same time, so each RecordingChannelGroup may correspond to the particular property that is being recorded. For multielectrode arrays, RecordingChannelGroup is used to gather all RecordingChannel objects of the same array.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;block&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&#8216;recordingchannel&#8217;, &#8216;analogsignalarray&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="unit">
+<span id="id9"></span><h3>Unit<a class="headerlink" href="#unit" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A Unit gathers all the <a class="reference internal" href="#spiketrain">SpikeTrain</a> objects within a common <a class="reference internal" href="#block">Block</a>, possibly across several Segments, that have been emitted by the same cell. A Unit is linked to <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a> objects from which it was detected.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;recordingchannel&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&#8216;spiketrain&#8217;,&#8217;spike&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<p>Having <a class="reference internal" href="#ephys-objects">ePhys Objects</a> is usually not enough to describe the experiment or evenmore the whole project. For other information, like the description of an Animal or a Stimuli, we use <a class="reference internal" href="#id10">Metadata</a>.</p>
+<dl class="docutils" id="id10">
+<dt><strong>Metadata</strong></dt>
+<dd>In this context metadata is any information about an experiment, excluding the information, described using <a class="reference internal" href="#ephys-objects">ePhys Objects</a>. Work with metadata is essentially is a flexible way to describe your experimental parameters using <a class="reference internal" href="#section">Section</a> (simple container) tree with <a class="reference internal" href="#properties-with-values">Properties with Values</a> (key-value pairs). Take a look on the <a class="reference internal" href="../overview.html#overview-metadata"><em>example</em></a> in the overview.</dd>
+</dl>
+<p>The general metadata object model looks like:</p>
+<div align="center" class="align-center"><img alt="../_images/metadata_om25.png" class="align-center" src="../_images/metadata_om25.png" /></div>
+<p>it is implemented inline with <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a> concept and consists of objects like <a class="reference internal" href="#section">Section</a>, <a class="reference internal" href="#properties-with-values">Properties with Values</a>.  Here goes the complete metadata objects specification.</p>
+<div class="section" id="section">
+<span id="id11"></span><h3>Section<a class="headerlink" href="#section" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>An element used to group and organize your metadata in a tree structure. Intuitively it&#8217;s like a folder in a usual file system. A Section can contain other Sections, <a class="reference internal" href="#properties-with-values">Properties with Values</a>, <a class="reference internal" href="#datafile">Datafile</a> or <a class="reference internal" href="#block">Block</a>. The Section is a prototype of the <a href="#id12"><span class="problematic" id="id13">`</span></a>odML &lt;<a class="reference external" href="http://www.g-node.org/projects/odml">http://www.g-node.org/projects/odml</a>&gt;`_® section and is implemented inline with odML concepts and methodology.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*, &#8216;description&#8217;, &#8216;odml_type&#8217;, &#8216;tree_position&#8217;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;parent_section&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&#8216;section&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="properties-and-values">
+<span id="properties-with-values"></span><h3>Properties and Values<a class="headerlink" href="#properties-and-values" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Inspired by the &#8220;key-value pairs&#8221; concept, Properties and Values used similarly as a flexible way to annotate your data (implemented in line with <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>) within any metadata <a class="reference internal" href="#section">Section</a>. Some good examples could be a model of your recording device, duration of the stimulus, a layer of the cell you&#8217;ve recorded from. Properties and Values can be used to &#8220;label&#8221; your <a class="reference internal" href="#ephys-objects">ePhys Objects</a> (<a class="reference internal" href="#analogsignal">AnalogSignal</a>, <a class="reference internal" href="#spiketrain">SpikeTrain</a> etc.) to indicate certain metadata for them.</div></blockquote>
+<p>Property:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*, &#8216;definition&#8217;, &#8216;dependency&#8217;, &#8216;dependency_value&#8217;, &#8216;mapping&#8217;, &#8216;unit&#8217;, &#8216;dtype&#8217;, &#8216;uncertainty&#8217;, &#8216;comment&#8217;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;section&#8217;*</td>
+</tr>
+<tr><td>Child</td>
+<td>&#8216;value&#8217;</td>
+</tr>
+</tbody>
+</table>
+<p>Value:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;data&#8217;*</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;parent_property&#8217;*</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="data-annotation">
+<span id="id15"></span><h3>Data annotation<a class="headerlink" href="#data-annotation" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Data annotation is the process of assinging metadata to the data, when some special connection is required. It is needed basically in order to establish a connection between data and metadata for easy search and generic access. An example could be a case when you, say, described the color of your Stimuli as a property in a Stimuli section, and after you acquire the data you need to indicate, which particular signals were recorded at which particular color frequency. In this case, data annotation means establishing a link between particular signals and particular values of the color property.</div></blockquote>
+</div>
+</div>
+<div class="section" id="files">
+<span id="datafile"></span><h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id16">
+<h3>Datafile<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Datafile represents an arbitrary file, uploaded by a user. Some data or metadata can be extracted from the Datafile if it is in one of the supported formats (<a class="reference external" href="http://neo.readthedocs.org/en/latest/io.html">NEO I/O</a>, <a class="reference external" href="http://neuroshare.sourceforge.net/index.shtml">Neuroshare</a>, <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>). All data-related objects, like <a class="reference internal" href="#analogsignal">AnalogSignal</a> or <a class="reference internal" href="#spike">Spike</a>, have their data part also stored as HDF5 files (<a class="reference external" href="http://www.hdfgroup.org/HDF5/whatishdf5.html">what is HDF5?</a>), having array in the file root.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Attr Type</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Attribute</td>
+<td>&#8216;name&#8217;*, &#8216;caption&#8217;, &#8216;file_type&#8217;, &#8216;tags&#8217;, &#8216;size&#8217;, &#8216;extracted_info&#8217;, &#8216;operations_log&#8217;</td>
+</tr>
+<tr><td>Data Field</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Parent</td>
+<td>&#8216;section&#8217;</td>
+</tr>
+<tr><td>Child</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>The system supports data conversion from files to the data and metadata objects, listed above, if the <a class="reference internal" href="#datafile">Datafile</a> is compartible with supported formats (see <a class="reference internal" href="#datafile">Datafile</a> above).</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Just to summarize this document, the data model for the whole system looks like:</p>
+<div align="center" class="align-center"><img alt="../_images/common_om16.png" class="align-center" src="../_images/common_om16.png" style="width: 800px;" /></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Key concepts and Object model</a><ul>
+<li><a class="reference internal" href="#permalink">permalink</a></li>
+<li><a class="reference internal" href="#object-identifier">Object Identifier</a></li>
+<li><a class="reference internal" href="#electrophysiology-ephys-objects">Electrophysiology ( ePhys Objects )</a><ul>
+<li><a class="reference internal" href="#analogsignal">AnalogSignal</a></li>
+<li><a class="reference internal" href="#analogsignalarray">AnalogSignalArray</a></li>
+<li><a class="reference internal" href="#spike">Spike</a></li>
+<li><a class="reference internal" href="#spiketrain">SpikeTrain</a></li>
+<li><a class="reference internal" href="#event-and-eventarray">Event and EventArray</a></li>
+<li><a class="reference internal" href="#epoch-and-epocharray">Epoch and EpochArray</a></li>
+<li><a class="reference internal" href="#segment">Segment</a></li>
+<li><a class="reference internal" href="#block">Block</a></li>
+<li><a class="reference internal" href="#recordingchannel">RecordingChannel</a></li>
+<li><a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a></li>
+<li><a class="reference internal" href="#unit">Unit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#metadata">Metadata</a><ul>
+<li><a class="reference internal" href="#section">Section</a></li>
+<li><a class="reference internal" href="#properties-and-values">Properties and Values</a></li>
+<li><a class="reference internal" href="#data-annotation">Data annotation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#files">Files</a><ul>
+<li><a class="reference internal" href="#id16">Datafile</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/key_functions/terminology.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    <h2>Questions/Feedback</h2>
+    <p>Having any questions? Got an idea how to improve a service? You're welcome to contact us!<br> Please send your questions/feedback to support-at-g-node.org , we are happy to help!</p>
+  </div>
+  <div class="footer">
+    &copy; Copyright 2011, asobolev.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>

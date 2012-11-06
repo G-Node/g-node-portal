@@ -1,0 +1,498 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>KEY API PRINCIPLES &mdash; g-node-portal v0.6 documentation</title>
+    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="g-node-portal v0.6 documentation" href="../../index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+
+<div id="tabhead">
+	<div class="logo">
+
+	<!-- HEADER -->
+	<div id="header">
+		
+		<!-- LOGO -->
+		<div id="logo">
+			<a href="/"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
+		</div>
+		
+		<!-- LOGO PARTNER -->
+		<div id="logo_partner">
+			<a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+		</div>
+
+		<!-- KEYVISUAL -->
+		<div id="keyvisual">
+			<img src="../../_static/default.jpg" alt="" border="0" />
+		</div>
+    </div>
+    </div>
+</div>
+
+  
+  
+
+    <div id="right_tabs">
+        <div class="seitenbreite">
+        <ul class="tabs">
+          <li><a href="http://www.g-node.org">G-Node Website</a></li>
+          <li class="last">
+            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+          </li>
+        </ul>
+        </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="key-api-principles">
+<h1>KEY API PRINCIPLES<a class="headerlink" href="#key-api-principles" title="Permalink to this headline">¶</a></h1>
+<p>The DATA API is designed in a RESTful way, e.g. to have similar routines for creating, updating and selecting different objects that API supports.</p>
+<div class="section" id="request-and-response">
+<h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
+<p>All operations are made using HTTP requests with JSON as a main request and response format. The API supports GET, POST and DELETE request types. Generally, GET requests are used to query objects and related data, POST requests create or update RESTful objects, DELETE requests move objects to the archive. Specifically, the following matrix summarizes which example URLs you should use to request a certain operation:</p>
+<div align="center" class="align-center"><object data="../../_images/api_principles_crud12.svg" type="image/svg+xml"><embed src="../../_images/api_principles_crud12.svg" type="image/svg+xml" /></object>
+</div>
+<p>All URLs must have a host prefix, e.g. <a class="reference external" href="https://portal.g-node.org/data/">https://portal.g-node.org/data/</a>. These operations are described in detail within document sections below.</p>
+<p>A typical GET request should have a form like</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /&lt;namespace&gt;/&lt;object_type&gt;/[&lt;object_id&gt;]/[?&lt;params&gt;]</pre>
+</div>
+</div></blockquote>
+<p>for example,</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/spiketrain/1546/</pre>
+</div>
+</div></blockquote>
+<p>returns the spiketrain object with an ID = 1546 in JSON format.</p>
+<p>When you need to create or update object(s), you send a POST request with the same URL syntax. Data, sent together with the POST request should be in a JSON format, for example:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /electrophysiology/spiketrain/1546/
+
+{
+    "name": "SP-1546",
+    "comment": "spiketrain computed using Quiroga et al."
+}</pre>
+</div>
+</div></blockquote>
+<p>will make an update fields &#8220;name&#8221; and &#8220;comment&#8221; in the spiketrain object with an ID = 1546.</p>
+<p>A typical response will look like this:</p>
+<div class="highlight-python"><pre>HTTP SUCCESS (200)
+
+{
+    "logged_in_as": "jeff",
+    "objects_selected": 1,
+    "selected": [
+        {
+            "fields": {
+                "id": 2,
+                "guid": "88aa2089cfc73e9279231c5518702222e5b8bb0d",
+                "name": "V1 FIX signals, trial 1",
+                "analogsignal_set": [
+                    "http://141.84.42.103:8010/electrophysiology/analogsignal/2",
+                    "http://141.84.42.103:8010/electrophysiology/analogsignal/178",
+                ],
+                "current_state": 10,
+                "safety_level": 3,
+                "owner": "http://141.84.42.103:8010/profiles/profile/5",
+                "date_created": "2012-07-26T17:16:07",
+                "block": "http://141.84.42.103:8010/electrophysiology/block/1",
+                "metadata": []
+            },
+            "model": "neo_api.segment",
+            "permalink": "http://141.84.42.103:8010/electrophysiology/segment/2"
+        },
+        {
+            ...
+        }
+    ],
+    "selected_range": [ 0, 5 ],
+    "message": "Here is the list of requested objects.",
+    "message_type": "object_selected"
+}</pre>
+</div>
+<p>There are several response codes supported (200, 201, 400, etc.), please refer to <a class="reference internal" href="#http-messages"><em>HTTP messages</em></a>. Use &#8220;message&#8221; and &#8220;message_type&#8221; parameters to learn about the exceptions happened.</p>
+<dl class="docutils" id="common-parameters">
+<dt>Almost every response has parameters like</dt>
+<dd><ul class="first last simple">
+<li>&#8220;logged_in_as&#8221; - a name of the user currently logged in</li>
+<li>&#8220;objects_selected&#8221; - a number of the objects selected as a result of the request</li>
+<li>&#8220;selected&#8221; - is always a list containing JSON structures of the resulting objects</li>
+<li>&#8220;selected_range&#8221; has the first and the last index of the selected objects</li>
+<li>&#8220;message&#8221; and &#8220;message_type&#8221; used to provide details about an action made</li>
+</ul>
+</dd>
+<dt>A typical structure of a single object contains:</dt>
+<dd><ul class="first last simple">
+<li>&#8220;permalink&#8221; - a <a class="reference internal" href="../terminology.html#common-terms"><em>permanent object URL</em></a></li>
+<li>&#8220;model&#8221; - a reference to the object model in a form &lt;namespace&gt;.&lt;object_type&gt;</li>
+<li>&#8220;fields&#8221; - a list of actual object attributes and relationships</li>
+</ul>
+</dd>
+<dt>In &#8220;fields&#8221; you will always find:</dt>
+<dd><ul class="first last simple">
+<li>&#8220;id&#8221; - an integer ID of an object</li>
+<li>&#8220;guid&#8221; - a unique object identifier (changes if any attribute of an object changes)</li>
+<li>&#8220;current_state&#8221; indicates an active (10) or deleted (20) object</li>
+<li>&#8220;safety_level&#8221; defines a general object access level, like (1) - public, (2) - friendly, (3) - private (default). See more about permissions in <em class="xref std std-ref">permissions</em> section.</li>
+<li>&#8220;owner&#8221; - a <a class="reference internal" href="../terminology.html#common-terms"><em>permalink</em></a> to the owner of an object</li>
+<li>&#8220;date_created&#8221; is obviously an object creation date.</li>
+</ul>
+</dd>
+</dl>
+<p>plus some other attributes, specific to the current object.</p>
+<p>If an object has a parent (many-to-one relationship), an appropriate field will contain a permalink to this parent object or null, if empty. An example would be the &#8220;block&#8221; key in the response above.</p>
+<p>If an object has children (one-to-many relationship), you should be able to find a list containing children permalinks under the key named &#8220;&lt;child_type&gt;_set&#8221;. An example would be the &#8220;analogsignal_set&#8221; key in the response above, which contains <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> objects belonging to a certain <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a>.</p>
+<p>Some attributes, especially the ones having units, are presented in a special form like</p>
+<div class="highlight-python"><pre>"time": {
+    data: 35,
+    units: ms
+}</pre>
+</div>
+<p>You may find them as &#8220;data&#8221; fields for every object described in <a class="reference internal" href="../terminology.html"><em>Object model</em></a>.</p>
+</div>
+<div class="section" id="headers-and-caching">
+<h2>Headers and Caching<a class="headerlink" href="#headers-and-caching" title="Permalink to this headline">¶</a></h2>
+<p>When requesting single object, the response header will contain ETag and Last-Modified parameters. They could be useful to implement some sort of for caching on the API Client side. A typical response header should look like this:</p>
+<div class="highlight-python"><pre>Content-Language:en
+Content-Length:0
+Content-Type:text/html; charset=utf-8
+Date:Wed, 31 Oct 2012 14:10:20 GMT
+ETag:"88aa2089cfc73e9279231c5518702222e5b8bb0d"
+Last-Modified:Thu, 26 Jul 2012 17:16:07 GMT
+Server:WSGIServer/0.1 Python/2.6.6
+Vary:Accept-Language, Cookie</pre>
+</div>
+</div>
+<div class="section" id="requesting-object-s">
+<h2>Requesting object(s)<a class="headerlink" href="#requesting-object-s" title="Permalink to this headline">¶</a></h2>
+<p>To get the list of available objects of a specific type (e.g. <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a>, or a <a class="reference internal" href="../terminology.html#section"><em>Section</em></a>, or a <a class="reference internal" href="../terminology.html#datafile"><em>Datafile</em></a>) you need to send a GET request to the URL, ending with the name of this type, for example:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/</pre>
+</div>
+</div></blockquote>
+<p>or</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/</pre>
+</div>
+</div></blockquote>
+<p>You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=&lt;user_name&gt; or owner=&lt;user_ID&gt; parameters. Specify safety_level=3 or safety_level=1 to get only private or public objects respectively. That is basically applicable to any attribute: to filter by attribute (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?owner=alex&amp;safety_level=1&amp;name__icontains=experiment</pre>
+</div>
+</div></blockquote>
+<p>filters Alex&#8217;s publicly available metadata <a class="reference internal" href="../terminology.html#section"><em>sections</em></a> containing &#8216;experiment&#8217; in the name, or</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11</pre>
+</div>
+</div></blockquote>
+<p>filters out all objects created before February, 23 2012. For more information on filtering consider <a class="reference internal" href="query.html"><em>search and query</em></a> section.</p>
+<p id="offset-parameter">DATA API limits the number objects to be retrieved in one request by 100. If there are more than a 100 objects you should request them using offset=100 (offset=200 etc.). You may also limit the number of objects by max_results=&lt;some_number&gt; parameter. The start / end indexes for the selected objects are usually contained in the response as &#8220;selected_range&#8221;. For example, in case there are more than 500 objects, the following request:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?offset=120&amp;max_results=300</pre>
+</div>
+</div></blockquote>
+<p>will retrieve 300 objects, indexed from 120 to 419 respectively.</p>
+<p id="get-single-object">To get a single object you should specify its ID at the end of the URL:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/10/</pre>
+</div>
+</div></blockquote>
+<dl class="docutils" id="q-parameter">
+<dt>You may also control the amount of the information about avery object you receive using the &#8216;q&#8217; parameter. You may provide q=</dt>
+<dd><ul class="first last simple">
+<li>&#8216;link&#8217; - just permalink and some basic fields</li>
+<li>&#8216;full&#8217; - everything: all attributes plus up- and down- stream relations</li>
+</ul>
+</dd>
+</dl>
+<p>This works with both list of objects and single objects. For example</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /metadata/sections/2/?q=full</pre>
+</div>
+</div></blockquote>
+<p>will retrieve the full information about the section:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+
+{
+    "logged_in_as": "bob",
+    "objects_selected": 1,
+    "selected": [{
+        "fields": {
+            "parent_section": null,
+            "tree_position": 1,
+            "odml_type": 20,
+            "name": "stimulus",
+            "datafile_set": [],
+            "property_set": [
+                "metadata/properties/10",
+                "metadata/properties/11",
+                "metadata/properties/15"
+            ],
+            "current_state": 10,
+            "is_template": false,
+            "last_modified": "2012-03-05 16:45:26",
+            "safety_level": 2,
+            "block_set": [],
+            "owner": 2,
+            "date_created": "2012-02-23 18:19:53",
+            "section_set": [
+                "metadata/sections/4",
+                "metadata/sections/6"
+            ],
+            "user_custom": null,
+            "description": ""
+        },
+        "model": "metadata.section",
+        "permalink": "metadata/sections/2"
+    }],
+    "message": "Here is the list of requested objects.",
+    "selected_range": [0, 0],
+    "message_type": "object_selected"
+}</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="updating-an-object-or-making-bulk-update">
+<h2>Updating an object or making bulk update<a class="headerlink" href="#updating-an-object-or-making-bulk-update" title="Permalink to this headline">¶</a></h2>
+<p>To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /metadata/properties/2/
+
+{
+    "name": "15 - here is new name",
+    "comment": "We just changed the property name"
+}</pre>
+</div>
+</div></blockquote>
+<p>Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all properties with name having &#8220;sampling&#8221; to the section with ID 146:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /metadata/properties/2/?name__icontains=sampling&amp;bulk_update=1
+
+{
+    "section": 146
+}</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="creating-new-object">
+<span id="common-create"></span><h2>Creating new object<a class="headerlink" href="#creating-new-object" title="Permalink to this headline">¶</a></h2>
+<p>Send the POST request to the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) to create new object. The POST data request should contain a JSON object with at least mandatory fields, required to create a new object. For example, to create a new <a class="reference internal" href="../terminology.html#event"><em>event</em></a> labeled &#8220;stimulus onset&#8221; in the <a class="reference internal" href="../terminology.html#segment"><em>segment</em></a> with ID = 1 supply the following:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /electrophysiology/event/
+
+{
+    "label": "stimulus onset",
+    "time": {
+        "units": "ms",
+        "data": 65
+    },
+    "segment": 1
+}</pre>
+</div>
+</div></blockquote>
+<p>The response should look like this:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>201 CREATED
+
+{
+"logged_in_as": "jeff",
+"objects_selected": 1,
+"selected": [(1)
+{
+    "fields": {
+        "id": 2,
+        "current_state": 10,
+        "label": "stimulus onset",
+        "safety_level": 3,
+        "time": {
+            "units": "ms",
+            "data": 65
+        },
+        "date_created": "2012-10-31T13:29:28",
+        "guid": "b5aeacbcbbe19bc52ce71d0501b3b2cea3e89c0e",
+        "segment": "http://141.84.42.103:8010/electrophysiology/segment/1",
+        ...
+    },
+    "model": "neo_api.event",
+    "permalink": "http://141.84.42.103:8010/electrophysiology/event/2"
+}
+],
+...
+}</pre>
+</div>
+</div></blockquote>
+<p>Objects, having data associated with them (like <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../terminology.html#spiketrain"><em>SpikeTrain</em></a>), require one additional step for creation. It was found optimal to handle large data in files, thus associated data must be uploaded to the server in file prior to the object creation. Please find the rules and detailed explanations for such cases in the section <a class="reference internal" href="array_data.html"><em>Working with arrays</em></a>.</p>
+</div>
+<div class="section" id="delete-object-s">
+<h2>Delete object(s)<a class="headerlink" href="#delete-object-s" title="Permalink to this headline">¶</a></h2>
+<p>Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a <em class="xref std std-ref">list</em> will archive all objects within the list. For example, to remove all <a class="reference internal" href="../terminology.html#event"><em>events</em></a> from a particular <a class="reference internal" href="../terminology.html#segment"><em>segment</em></a> with ID = 12 send</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: DELETE /electrophysiology/event/?segment=12</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="permissions">
+<h2>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h2>
+<p>Almost all object in the system can have different permissions assigned via so-called Access Lists (ACL). To get an access list for a particular object use</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/event/1345/acl/</pre>
+</div>
+</div></blockquote>
+<p>A typical ACL looks like</p>
+<blockquote>
+<div><div class="highlight-python"><pre>{
+    ...
+    "safety_level": 3,
+    "shared_with": {
+        "jeff": 1,
+        "bob": 2,
+        "rachel": 1,
+    }
+}</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>where &#8220;safety_level&#8221; defines a general object access level with</dt>
+<dd>1 public
+2 friendly, and
+3 private (default)</dd>
+</dl>
+<p>state, and a &#8220;shared_with&#8221; key handles a list of users, having access to the object (with 1 - &#8220;read-only&#8221; and 2 - &#8220;edit&#8221; roles). See more about permissions in <em class="xref std std-ref">permissions</em> section.</p>
+</div>
+<div class="section" id="http-messages">
+<span id="id1"></span><h2>HTTP Messages<a class="headerlink" href="#http-messages" title="Permalink to this headline">¶</a></h2>
+<p>Here is the list of typical HTTP response status codes and a brief explanation of their meaning.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="2%" />
+<col width="94%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Response</th>
+<th class="head">Code</th>
+<th class="head">Information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Success</td>
+<td>200</td>
+<td>successful operation, typically GET or DELETE</td>
+</tr>
+<tr><td>Created</td>
+<td>201</td>
+<td>object was created successfuly</td>
+</tr>
+<tr><td>BadRequest</td>
+<td>400</td>
+<td>an exception occured. It could happen if a non-existing object is referenced, or any index for a list was incorrect. Any parsing error of the incoming JSON will lead to this response type. Any validation exception will return this response too.</td>
+</tr>
+<tr><td>Unauthorized</td>
+<td>401</td>
+<td>user is not logged in</td>
+</tr>
+<tr><td>Forbidden</td>
+<td>403</td>
+<td>a currently logged-in user has no permissions to access or modify an object</td>
+</tr>
+<tr><td>NotFound</td>
+<td>404</td>
+<td>a wrong URL or object was not found</td>
+</tr>
+<tr><td>NotSupported</td>
+<td>405</td>
+<td>this type of HTTP request is not supported</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">KEY API PRINCIPLES</a><ul>
+<li><a class="reference internal" href="#request-and-response">Request and Response</a></li>
+<li><a class="reference internal" href="#headers-and-caching">Headers and Caching</a></li>
+<li><a class="reference internal" href="#requesting-object-s">Requesting object(s)</a></li>
+<li><a class="reference internal" href="#updating-an-object-or-making-bulk-update">Updating an object or making bulk update</a></li>
+<li><a class="reference internal" href="#creating-new-object">Creating new object</a></li>
+<li><a class="reference internal" href="#delete-object-s">Delete object(s)</a></li>
+<li><a class="reference internal" href="#permissions">Permissions</a></li>
+<li><a class="reference internal" href="#http-messages">HTTP Messages</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/key_functions/data_api/principles.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    <h2>Questions/Feedback</h2>
+    <p>Having any questions? Got an idea how to improve a service? You're welcome to contact us!<br> Please send your questions/feedback to support-at-g-node.org , we are happy to help!</p>
+  </div>
+  <div class="footer">
+    &copy; Copyright 2011, asobolev.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  
+  </body>
+</html>
