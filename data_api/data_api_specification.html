@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. DATA API Specification &mdash; g-node-portal v0.6 documentation</title>
+    <title>1. DATA API Specification &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../index.html" />
     <link rel="up" title="The G-Node DATA API" href="data_api_index.html" />
     <link rel="next" title="2. G-Node API Object Examples" href="api_object_examples.html" />
     <link rel="prev" title="The G-Node DATA API" href="data_api_index.html" />
@@ -31,45 +34,25 @@
 
   </head>
   <body>
-
-<div id="tabhead">
-	<div class="logo">
-
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
-
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../_static/default.jpg" alt="" border="0" />
-		</div>
-    </div>
-    </div>
-</div>
-
   
   
 
-    <div id="right_tabs">
-        <div class="seitenbreite">
-        <ul class="tabs">
-          <li><a href="http://www.g-node.org">G-Node Website</a></li>
-          <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
-          </li>
-        </ul>
-        </div>
-    </div>
-  
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api_object_examples.html" title="2. G-Node API Object Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="data_api_index.html" title="The G-Node DATA API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">g-node-portal 0.6 documentation</a> &raquo;</li>
+          <li><a href="data_api_index.html" accesskey="U">The G-Node DATA API</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -84,12 +67,29 @@
 <dl class="docutils">
 <dt><strong>Datafile</strong></dt>
 <dd>Any data item maintained by G-Node. It can be either a binary/ascii file or a data structure, hosted in the native G-Node format. This could include a PDF file, MP3 file, TXT file, or a raw data structure in the NEO (native G-Node) format (see <a class="reference external" href="http://packages.python.org/neo/api_reference.html">http://packages.python.org/neo/api_reference.html</a>). A datafile is created by uploading an ordinary file to G-Node, and possibly converting it to the native G-Node format. That is to say, when you upload something like a MultichannelSystems® file, you have an option to convert it to the native format, and then it is considered as a native (raw) data structure in this specification. If you do not convert it when you upload, then it is considered as just &#8220;file&#8221;.</dd>
+<<<<<<< HEAD
 <dt><strong>Sections</strong></dt>
 <dd>A container of other sections, properties or datafiles. Intuitively it&#8217;s like a folder in a usual file system. The Section® is a prototype of the odML section (see <a class="reference external" href="http://www.g-node.org/projects/odml">http://www.g-node.org/projects/odml</a>) and is implemented inline with odML concepts and methodology.</dd>
 <dt><strong>Properties and Values</strong></dt>
 <dd>A property is a flexible way to annotate your data (implemented in line with odML). Within these could be a model of your recording device, duration of the stimulus, a layer of the cell you record from. Some properties are provided by default when you create a section of either type. You just need to set values, appropriate for your research. Importantly, properties and values are also used to &#8220;label&#8221; your data objects (segments, analog signals, spiketrains etc.), so you can access data from different perspectives using metadata.</dd>
 <dt><strong>NEO Raw Data Object</strong></dt>
 <dd>NEO® objects are useful when working with the raw data. NEO objects include Segments, Analog Signals, Spike Trains etc. (see <a class="reference external" href="http://packages.python.org/neo/api_reference.html">http://packages.python.org/neo/api_reference.html</a>) It is a flexible data structure, compartible with several well-known data-formats, and useful for data analysis. You may convert your files to the NEO (native G-Node) structure using API, when the file is convertible (currently supported information extraction from neuroshare-compliant formats, <a class="reference external" href="http://neuroshare.sourceforge.net/index.shtml">http://neuroshare.sourceforge.net/index.shtml</a>).</dd>
+=======
+<dt><strong>Section</strong></dt>
+<dd>A container of other sections, properties or datafiles. It could be also named folder. These are basically used to &#8220;label&#8221; your datafiles with a variety of tags (like in GMail), with a difference that you can manage sections (tags) to organize them in a tree-like structure. The Section® is a prototype of the odML section (see <a class="reference external" href="http://www.g-node.org/projects/odml">http://www.g-node.org/projects/odml</a>) and is implemented inline with odML concepts and methodology.</dd>
+<dt><strong>Property</strong></dt>
+<dd>A property is a flexible way to annotate your data (implemented in line with odML). Within these could be a model of your recording device, duration of the stimulus, a layer of the cell you record from. Some properties are provided by default when you create a section of either type. You just need to set values, appropriate for your research.</dd>
+<dt><strong>NEO Raw Data Object</strong></dt>
+<dd>NEO® objects are useful when working with the raw data. NEO objects include Segments, Analog Signals, Spike Trains etc. (see <a class="reference external" href="http://packages.python.org/neo/api_reference.html">http://packages.python.org/neo/api_reference.html</a>) It is a flexible data structure, compartible with several well-known data-formats, and useful for data analysis. You may convert your files to the NEO (native G-Node) structure using API, when the file is convertible (currently supported information extraction from neuroshare-compliant formats, <a class="reference external" href="http://neuroshare.sourceforge.net/index.shtml">http://neuroshare.sourceforge.net/index.shtml</a>).</dd>
+<dt><strong>Label</strong></dt>
+<dd>One of the most important concepts in this context. A Label links Raw Data Objects with Property values. For example, when I want to indicate that a specific set of Analog Signals was recorded when the stimuli, shown to the subject, had a specific color (e.g. red), I can create a Property called &#8220;Stimuli Colors&#8221; with color values (&#8220;red&#8221; and maybe some more) and then for every Analog Signal I create a label, which links the required value (&#8220;red&#8221;) to the signal. Thus all selected signals become &#8220;labeled&#8221; with a specific stimuli color (&#8220;red&#8221;). This labeling can be done in bulk mode, please consider section 2.5 of this document.</dd>
+<dt><strong>Resource</strong></dt>
+<dd>Any item maintained by the API, including sections, datafiles, and NEO objects.</dd>
+<dt><strong>Resource ID</strong></dt>
+<dd>A unique identifier for each resource. This is usually of the format &lt;type&gt;_&lt;id&gt;, e.g. section_12345. Throughout this specification, if not specified, a typed resource ID should be assumed.</dd>
+<dt><strong>Untyped resource ID</strong></dt>
+<dd>A resource ID, without the type prefix. Given the previous example, an untyped resource ID would be 12345.</dd>
+>>>>>>> 5dad70825b0ef820deed9daada64431c469a03a4
 </dl>
 <p><em>Note. For all URLs, given later in this specification, you should add a G-Node prefix URL, which is</em> <a class="reference external" href="https://portal.g-node.org/data/">https://portal.g-node.org/data/</a></p>
 </div>
@@ -111,156 +111,11 @@
 </dd>
 </dl>
 <p>A successful response will contain a cookie called <em>sessionid</em>. Use this cookie within every request to work with G-Node API.</p>
-<p><em>Note. If you want to just TRY the API from the usual web-browser (like Firefox, Chrome, Safari etc.), just go to the login page (</em> /account/login/ <em>), fill in the login form and subnit it to authenticate. After successful authentication sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example</em> <a class="reference external" href="https://chrome.google.com/webstore/detail/ahdjpgllmllekelefacdedbjnjaplfjn/">Advanced REST Client for Chrome</a> <em>) to query the API.</em></p>
+<p><em>Note. If you want to just TRY the API from the usual web-browser (like Firefox, Chrome, Safari etc.), just go to the login page (</em> <a class="reference external" href="https://portal.g-node.org/data/account/login/">https://portal.g-node.org/data/account/login/</a> <em>), fill in the login form and subnit it to authenticate. After successful authentication sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example</em> <a class="reference external" href="https://chrome.google.com/webstore/detail/ahdjpgllmllekelefacdedbjnjaplfjn/">Advanced REST Client for Chrome</a> <em>) to query the API.</em></p>
 </div>
-</div>
-<div class="section" id="key-api-principles">
-<h2>1.3. KEY API PRINCIPLES<a class="headerlink" href="#key-api-principles" title="Permalink to this headline">¶</a></h2>
-<p>The DATA API is designed in a RESTful way, e.g. to have similar routines for creating, updating and selecting different objects that API supports. To get the list of available objects of a specific type (e.g. Analog signal, or a Section, or a Datafile) you need to send a GET request to the URL, ending with the name of this type, for example:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/</pre>
-</div>
-</div></blockquote>
-<p>or</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/</pre>
-</div>
-</div></blockquote>
-<p>You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=&lt;user_name&gt; or owner=&lt;user_ID&gt; parameters. Specify safety_level=3 or safety_level=1 to get only private or public objects respectively. That is basically applicable to any attribute: to filter by attribute (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?owner=alex&amp;safety_level=1&amp;name__icontains=experiment</pre>
-</div>
-</div></blockquote>
-<p>filters alex&#8217;s publicly available metadata sections containing &#8216;experiment&#8217; in the name, or</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11</pre>
-</div>
-</div></blockquote>
-<ul class="simple">
-<li>filters out all objects created before February, 23 2012</li>
-</ul>
-<dl class="docutils">
-<dt>The following lookups are supported:</dt>
-<dd><ul class="first last simple">
-<li>exact</li>
-<li>iexact</li>
-<li>contains</li>
-<li>icontains</li>
-<li>gt</li>
-<li>gte</li>
-<li>lt</li>
-<li>lte</li>
-<li>startswith</li>
-<li>istartswith</li>
-<li>endswith</li>
-<li>iendswith</li>
-<li>year</li>
-<li>month</li>
-<li>day</li>
-<li>week_day</li>
-<li>isnull</li>
-</ul>
-</dd>
-<dt>The following lookups are coming soon:</dt>
-<dd><ul class="first last simple">
-<li>in</li>
-<li>search</li>
-<li>regex</li>
-<li>iregex</li>
-</ul>
-</dd>
-</dl>
-<p>DATA API limits the number objects to be retrieved in one request by 1000. If there are more than 1000 objects you should request them using offset=1000 (offset=2000 etc.). You may also limit the number of objects by max_results=&lt;some_number&gt; parameter. The start / end indexes for the selected objects are usually contained in the response as &#8220;selected_range&#8221;. For example:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/?offset=120&amp;max_results=300</pre>
-</div>
-</div></blockquote>
-<p>To get a single object you should specify its ID at the end of the URL:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/10/</pre>
-</div>
-</div></blockquote>
-<dl class="docutils">
-<dt>You may also control the amount of the information about avery object you receive using the q parameter. Supported values are:</dt>
-<dd><ul class="first last simple">
-<li>&#8216;link&#8217; - just permalink</li>
-<li>&#8216;info&#8217; - object with local attributes</li>
-<li>&#8216;beard&#8217; - object with local attributes AND foreign keys resolved</li>
-<li>&#8216;data&#8217; - data-arrays or any high-volume data associated</li>
-<li>&#8216;full&#8217; - everything mentioned above</li>
-</ul>
-</dd>
-</dl>
-<p>This works with both list of objects and single objects. For example</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /metadata/sections/2/?q=full</pre>
-</div>
-</div></blockquote>
-<p>will retrieve the full information about the section:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
-
-{
-    "logged_in_as": "bob",
-    "objects_selected": 1,
-    "selected": [{
-        "fields": {
-            "parent_section": null,
-            "tree_position": 1,
-            "odml_type": 20,
-            "name": "stimulus",
-            "datafile_set": [],
-            "property_set": [
-                "metadata/properties/10",
-                "metadata/properties/11",
-                "metadata/properties/15"
-            ],
-            "current_state": 10,
-            "is_template": false,
-            "last_modified": "2012-03-05 16:45:26",
-            "safety_level": 2,
-            "block_set": [],
-            "owner": 2,
-            "date_created": "2012-02-23 18:19:53",
-            "section_set": [
-                "metadata/sections/4",
-                "metadata/sections/6"
-            ],
-            "user_custom": null,
-            "description": ""
-        },
-        "model": "metadata.section",
-        "permalink": "metadata/sections/2"
-    }],
-    "message": "Here is the list of requested objects.",
-    "selected_range": [0, 0],
-    "message_type": "object_selected"
-}</pre>
-</div>
-</div></blockquote>
-<p>To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: POST /metadata/properties/2/
-
-{
-    "name": "15 - here is new name",
-    "comment": "We just changed the property name"
-}</pre>
-</div>
-</div></blockquote>
-<p>Bulk object update is also possible. To make changes to several objects at once, you need to provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that have to be changed. The following resuest moves all properties with name having &#8220;sampling&#8221; to the section with ID 146:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: POST /metadata/properties/2/?name__icontains=sampling&amp;bulk_update=1
-
-{
-    "section": 146
-}</pre>
-</div>
-</div></blockquote>
-<p>Send the DELETE request to an object permalink to permanently archive it.</p>
 </div>
 <div class="section" id="data-management">
-<h2>1.4. DATA MANAGEMENT<a class="headerlink" href="#data-management" title="Permalink to this headline">¶</a></h2>
+<h2>1.3. DATA MANAGEMENT<a class="headerlink" href="#data-management" title="Permalink to this headline">¶</a></h2>
 <p>G-Node Data API provides a common set of objects for dealing with electro-physiological (in vivo and/or simulated) data. It is based on the NEO® data object model. NEO® approach provides common names and concepts to deal with electrophysiological data in an easy and well-structured way. It accounts for the trade-off between minimizing the data validation routine and at the same time keeping sufficient consistency. The NEO® data model concept is already used in several neuroscientific projects (OpenElectrophy, NeuroTools) and thus provides a promising opportunity to cooperate with other initiatives while not increasing the number of existing standards. On top of this data model we provide a set of core services (Data API). You may work with raw data objects - Spike Trains, Analog Signals, combining them in Segments, performing computations with analog signals and spike trains (sum, mean, fft etc.), and store new results back to the G-Node. The following types of raw data objects are supported:</p>
 <blockquote>
 <div><ul class="simple">
@@ -290,51 +145,51 @@
 <col width="61%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Attributes</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>block</td>
+<tr class="row-even"><td>block</td>
 <td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-odd"><td>segment</td>
 <td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
 </tr>
-<tr><td>event</td>
+<tr class="row-even"><td>event</td>
 <td>&#8216;label&#8217;*</td>
 </tr>
-<tr><td>eventarray</td>
+<tr class="row-odd"><td>eventarray</td>
 <td>No attributes</td>
 </tr>
-<tr><td>epoch</td>
+<tr class="row-even"><td>epoch</td>
 <td>&#8216;label&#8217;*</td>
 </tr>
-<tr><td>epocharray</td>
+<tr class="row-odd"><td>epocharray</td>
 <td>No attributes</td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-even"><td>unit</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>spiketrain</td>
+<tr class="row-odd"><td>spiketrain</td>
 <td>No attributes</td>
 </tr>
-<tr><td>analogsignal</td>
+<tr class="row-even"><td>analogsignal</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>analogsignalarray</td>
+<tr class="row-odd"><td>analogsignalarray</td>
 <td>No attributes</td>
 </tr>
-<tr><td>irsaanalogsignal</td>
+<tr class="row-even"><td>irsaanalogsignal</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>spike</td>
+<tr class="row-odd"><td>spike</td>
 <td>No attributes</td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-even"><td>recordingchannelgroup</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-odd"><td>recordingchannel</td>
 <td>&#8216;name&#8217;*, &#8216;index&#8217;</td>
 </tr>
 </tbody>
@@ -347,27 +202,27 @@
 <col width="75%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Data fields</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>event</td>
+<tr class="row-even"><td>event</td>
 <td>&#8216;time&#8217;</td>
 </tr>
-<tr><td>epoch</td>
+<tr class="row-odd"><td>epoch</td>
 <td>&#8216;time&#8217;, &#8216;duration&#8217;</td>
 </tr>
-<tr><td>spiketrain</td>
+<tr class="row-even"><td>spiketrain</td>
 <td>&#8216;t_start&#8217;, &#8216;t_stop&#8217;, &#8216;times&#8217;, &#8216;waveforms&#8217;</td>
 </tr>
-<tr><td>analogsignal</td>
+<tr class="row-odd"><td>analogsignal</td>
 <td>&#8216;sampling_rate&#8217;, &#8216;t_start&#8217;, &#8216;signal&#8217;</td>
 </tr>
-<tr><td>irsaanalogsignal</td>
+<tr class="row-even"><td>irsaanalogsignal</td>
 <td>&#8216;t_start&#8217;, &#8216;signal&#8217;, &#8216;times&#8217;</td>
 </tr>
-<tr><td>spike</td>
+<tr class="row-odd"><td>spike</td>
 <td>&#8216;left_sweep&#8217;, &#8216;time&#8217;, &#8216;sampling_rate&#8217;, &#8216;waveforms&#8217;</td>
 </tr>
 </tbody>
@@ -379,33 +234,33 @@
 <col width="86%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Children</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>block</td>
+<tr class="row-even"><td>block</td>
 <td>&#8216;segment&#8217;, &#8216;recordingchannelgroup&#8217;</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-odd"><td>segment</td>
 <td>&#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;, &#8216;analogsignalarray&#8217;, &#8216;spiketrain&#8217;, &#8216;spike&#8217;, &#8216;event&#8217;, &#8216;eventarray&#8217;, &#8216;epoch&#8217;, &#8216;epocharray&#8217;</td>
 </tr>
-<tr><td>eventarray</td>
+<tr class="row-even"><td>eventarray</td>
 <td>&#8216;event&#8217;</td>
 </tr>
-<tr><td>epocharray</td>
+<tr class="row-odd"><td>epocharray</td>
 <td>&#8216;epoch&#8217;</td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-even"><td>unit</td>
 <td>&#8216;spiketrain&#8217;,&#8217;spike&#8217;</td>
 </tr>
-<tr><td>analogsignalarray</td>
+<tr class="row-odd"><td>analogsignalarray</td>
 <td>&#8216;analogsignal&#8217;</td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-even"><td>recordingchannelgroup</td>
 <td>&#8216;recordingchannel&#8217;, &#8216;analogsignalarray&#8217;</td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-odd"><td>recordingchannel</td>
 <td>&#8216;unit&#8217;, &#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;</td>
 </tr>
 </tbody>
@@ -417,61 +272,61 @@
 <col width="70%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Parents</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>segment</td>
+<tr class="row-even"><td>segment</td>
 <td>&#8216;block&#8217;</td>
 </tr>
-<tr><td>event</td>
+<tr class="row-odd"><td>event</td>
 <td>&#8216;segment&#8217;, &#8216;eventarray&#8217;</td>
 </tr>
-<tr><td>eventarray</td>
+<tr class="row-even"><td>eventarray</td>
 <td>&#8216;segment&#8217;</td>
 </tr>
-<tr><td>epoch</td>
+<tr class="row-odd"><td>epoch</td>
 <td>&#8216;segment&#8217;, &#8216;epocharray&#8217;</td>
 </tr>
-<tr><td>epocharray</td>
+<tr class="row-even"><td>epocharray</td>
 <td>&#8216;segment&#8217;</td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-odd"><td>unit</td>
 <td>&#8216;recordingchannel&#8217;</td>
 </tr>
-<tr><td>spiketrain</td>
+<tr class="row-even"><td>spiketrain</td>
 <td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
 </tr>
-<tr><td>analogsignal</td>
+<tr class="row-odd"><td>analogsignal</td>
 <td>&#8216;segment&#8217;, &#8216;analogsignalarray&#8217;, &#8216;recordingchannel&#8217;</td>
 </tr>
-<tr><td>analogsignalarray</td>
+<tr class="row-even"><td>analogsignalarray</td>
 <td>&#8216;segment&#8217;</td>
 </tr>
-<tr><td>irsaanalogsignal</td>
+<tr class="row-odd"><td>irsaanalogsignal</td>
 <td>&#8216;segment&#8217;, &#8216;recordingchannel&#8217;</td>
 </tr>
-<tr><td>spike</td>
+<tr class="row-even"><td>spike</td>
 <td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-odd"><td>recordingchannelgroup</td>
 <td>&#8216;block&#8217;</td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-even"><td>recordingchannel</td>
 <td>&#8216;recordingchannelgroup&#8217;</td>
 </tr>
 </tbody>
 </table>
 <p>G-Node Data API supports a number of functions to manage objects, listed above. The following sections 2.1 - 2.8 give an overview .</p>
 <div class="section" id="create-or-update-data-object">
-<h3>1.4.1. 2.1 Create or update data object<a class="headerlink" href="#create-or-update-data-object" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.1. 2.1 Create or update data object<a class="headerlink" href="#create-or-update-data-object" title="Permalink to this headline">¶</a></h3>
 <p>Send an authorized HTTP request with the body (in JSON format), providing object data (attributes, arrays and relationships), to</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;/</pre>
 </div>
 </div></blockquote>
-<p>in order to create a new NEO object. You should specify object attributes, data fields (if exist), and relationships in the request body as a JSON object. For example, send an authorized HTTP POST request to the &#8220;/electrophysiology/segment&#8221; with the following body</p>
+<p>in order to create a new NEO object. You should specify object attributes, data fields (if exist), and relationships in the request body as a JSON object. For example, send an authorized HTTP POST request to the &#8220;/electrophysiology/&#8221; with the following body</p>
 <blockquote>
 <div><div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/
 
@@ -487,24 +342,26 @@
 <div><div class="highlight-python"><pre>HTTP CREATED (201)
 
 {
-    "logged_in_as": "bob",
-    "objects_selected": 1,
-    "selected": [{
-            "fields": {
-            "index": 12,
-            "name": "Trial 12, Saccade, Stim. 45 grad color red",
-            "current_state": 10,
-            "filedatetime": null,
-            "last_modified": "2012-04-10 13:38:23",
-            "safety_level": 3,
-            "date_created": "2012-04-10 13:38:23"
-            },
-        "model": "neo_api.segment",
-        "permalink": "/electrophysiology/segment/1"
-    }],
+    "neo_id": "segment_213",
+    "index": 1,
+    "name": "Trial 12, Saccade, Stim. 45 grad color red",
+    "author": "dummy",
+    "analogsignalarray": [(0)],
+    "filedatetime": "2011-05-12 00:00:00",
+    "eventarray": [(0)],
+    "irsaanalogsignal": [(0)],
+    "epoch": [(0)],
+    "epocharray": [(0)],
+    "spiketrain": [(0)],
+    "spike": [(0)],
+    "analogsignal": [(0)],
+    "date_created": "2011-09-29 10:42:40.004021",
     "message": "Object created successfully.",
-    "selected_range": [0, 0],
-    "message_type": "object_created"
+    "logged_in_as": "andrey",
+    "message_type": "object_created",
+    "event": [(0)],
+    "block": null,
+    "size": 0
 }</pre>
 </div>
 </div></blockquote>
@@ -516,7 +373,7 @@
 
 {
     "name": "Trial 12, Saccade, Stim. 45 grad color green",
-    "block": 1
+    "block": "block_1"
 }</pre>
 </div>
 </div></blockquote>
@@ -526,24 +383,26 @@
 <div><div class="highlight-python"><pre>HTTP SUCCESS (200)
 
 {
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [{
-    "fields": {
-        "index": 12,
-        "name": "Trial 12, Saccade, Stim. 45 grad color green",
-        "current_state": 10,
-        "filedatetime": null,
-        "last_modified": "2012-04-10 13:38:23",
-        "safety_level": 3,
-        "date_created": "2012-04-10 13:38:23"
-    },
-    "model": "neo_api.segment",
-    "permalink": "/electrophysiology/segment/1"
-}],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
+    "neo_id": "segment_213",
+    "index": 1,
+    "name": "Trial 12, Saccade, Stim. 45 grad color green",
+    "author": "dummy",
+    "analogsignalarray": [(0)],
+    "filedatetime": "2011-05-12 00:00:00",
+    "eventarray": [(0)],
+    "irsaanalogsignal": [(0)],
+    "epoch": [(0)],
+    "epocharray": [(0)],
+    "spiketrain": [(0)],
+    "spike": [(0)],
+    "analogsignal": [(0)],
+    "date_created": "2011-09-29 10:42:40.004021",
+    "message": "Object updated successfully. Data changes saved.",
+    "logged_in_as": "andrey",
+    "message_type": "object updated successfully",
+    "event": [(0)],
+    "block": null,
+    "size": 0
 }</pre>
 </div>
 </div></blockquote>
@@ -560,7 +419,7 @@
 </dl>
 </div>
 <div class="section" id="getting-a-single-object">
-<h3>1.4.2. Getting a single object<a class="headerlink" href="#getting-a-single-object" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.2. Getting a single object<a class="headerlink" href="#getting-a-single-object" title="Permalink to this headline">¶</a></h3>
 <p>To get a NEO object with its attributes send a following GET request</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;obj_type&gt;/&lt;obj_id&gt;/</pre>
@@ -571,35 +430,50 @@
 <div><div class="highlight-python"><pre>HTTP SUCCESS (200)
 
 {
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [{
-    "fields": {
-        "name": "From File: data_in_csv.txt, #952",
-        "signal_size": 12000,
-        "current_state": 10,
-        "last_modified": "2012-03-22 17:19:41",
-        "safety_level": 3,
-        "date_created": "2012-03-22 17:19:41"
+    "neo_id": "analogsignal_952",
+    "name": "LFP FIX Signal-5",
+    "author": "ray",
+    "message_type": "retrieved",
+    "signal": {
+        "units": "mv",
+        "data": [
+            179.6875,
+            172.85156,
+            158.20312,
+            151.36719,
+            ...
+            150.87891,
+            132.32422,
+            122.55859,
+            125.48828]
     },
-    "model": "neo_api.analogsignal",
-    "permalink": "/electrophysiology/analogsignal/952"
-}],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
+    "t_start": {
+        "units": "ms",
+        "data": 0
+    },
+    "recordingchannel": "recordingchannel_13",
+    "date_created": "2011-08-22 11:43:56",
+    "sampling_rate": {
+        "units": "hz",
+        "data": 20000
+    },
+    "message": "Object retrieved successfully.",
+    "logged_in_as": "ray",
+    "segment": "segment_213",
+    "analogsignalarray": null,
+    "size": 12000
 }</pre>
 </div>
 </div></blockquote>
-<p>Play with the q request GET parameter to get different information about an object, including its attributes, data arrays, downstream and upstream relationships. In the following sections you&#8217;ll also find how to request a slice of the signal(s), when the signal is very long.</p>
+<p>The response will contain full information about an object, including its attributes, data arrays, downstream and upstream relationships. In the following sections you&#8217;ll find how to query only part of the information (say, data or relationships, or a slice of the signal, when the signal is very long).</p>
 </div>
 <div class="section" id="partial-data-requests">
-<h3>1.4.3. Partial Data Requests<a class="headerlink" href="#partial-data-requests" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.3. Partial Data Requests<a class="headerlink" href="#partial-data-requests" title="Permalink to this headline">¶</a></h3>
 <p>You may want to request object data or relationaships only (see list of objects and their attributes, data fields and relationaships in the Tables 2.1 - 2.4), or even just get the overall information about an object (like object size) without getting any data or attributes. We support the following parameters for all GET requests for a single object</p>
 <blockquote>
 <div><ul class="simple">
-<li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;beard&#8221;, &#8220;link&#8221;. The response will contain content varying from just generic object information (&#8220;link&#8221;, &#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
-<li>[cascade] - when set to &#8220;True&#8221; will recursively retrieve all the children objects (not only their permalinks). Please be careful with such requests, requesting a big block in a &#8220;cascade&#8221; mode may result in several Gigobytes of data to download, and significant delays.</li>
+<li>[q] - can be one of &#8220;full&#8221;, &#8220;info&#8221;, &#8220;data&#8221;, &#8220;parents&#8221;, &#8220;children&#8221;. The response will contain content varying from just generic object information (&#8220;info&#8221;) to the full response (&#8220;full&#8221;).</li>
+<li>[cascade] - when set to &#8220;True&#8221; will recursively retrieve all the children objects (not only their IDs). Please be careful with such requests, requesting a big block in a &#8220;cascade&#8221; mode may result in several Gigobytes of data to download, and significant delays.</li>
 </ul>
 </div></blockquote>
 <p>Specifically for signal-based objects (Analog Signal, Irregularly Sampled Signal) the following GET request parameters are supported:</p>
@@ -617,7 +491,7 @@
 <p><em>Note. Some reasonable combinations of these parameters (like &#8216;start_time&#8217; and &#8216;duration&#8217; or &#8216;start_index&#8217; and &#8216;end_time&#8217; will return a correct response. Using redundant number of parameters will lead to their disregard, useless combinations may throw a 400 bad request.</em></p>
 <p>For example, send the following GET request</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/11/?start_index=30&amp;end_index=100&amp;downsample=10&amp;q=data</pre>
+<div><div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/11/?start_index=30&amp;end_index=100&amp;downsample=10</pre>
 </div>
 </div></blockquote>
 <p>to get the Analog Signal range with datapoints as of 30 to 100, downsampled from 71 points to 10:</p>
@@ -625,47 +499,46 @@
 <div><div class="highlight-python"><pre>HTTP SUCCESS (200)
 
 {
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [{
-    "fields": {
-        "sampling_rate": {
-            "units": "hz",
-            "data": 10000
-        },
-        "signal": {
-            "units": "mv",
-            "data": [
-                -109.15087908065715,
-                -143.56599349341815,
-                -123.28235629296393,
-                -116.57424590237954,
-                -85.95255136469267,
-                -86.48956135366747,
-                -45.100152757898336,
-                -29.496947080422245,
-                -52.86667933701428,
-                -30.721555308717267
-            ]},
-        "t_start": {
-            "units": "ms",
-            "data": 3
-        }
+    "neo_id": "analogsignal_952",
+    "name": "LFP FIX Signal-5",
+    "author": "ray",
+    "message_type": "retrieved",
+    "signal": {
+    "units": "mv",
+    "data": [
+        68.57667133722775,
+        77.09840224197298,
+        43.238698121320084,
+        17.58256832247581,
+        -2.4392013587548016,
+        -2.2720730942678244,
+        -13.626765036880082,
+        40.225247238106235,
+        85.47298589746826,
+        52.89693899799824]
     },
-    "model": "neo_api.analogsignal",
-    "permalink": "/electrophysiology/analogsignal/11"
-    }
-}],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
+    "t_start": {
+        "units": "ms",
+        "data": 1.5
+    },
+    "recordingchannel": "recordingchannel_13",
+    "date_created": "2011-08-22 11:43:56",
+    "sampling_rate": {
+        "units": "hz",
+        "data": 20000
+    },
+    "message": "Object retrieved successfully.",
+    "logged_in_as": "ray",
+    "segment": "segment_190",
+    "analogsignalarray": null,
+    "size": 12000
 }</pre>
 </div>
 </div></blockquote>
-<p>Notice that the &#8220;t_start&#8221; data field in the response has a data value of 3, indicating the start of the retrieved signal.</p>
+<p>Notice that the &#8220;t_start&#8221; data field in the response has a data value of 1.5, indicating the start of the retrieved signal.</p>
 </div>
 <div class="section" id="getting-a-list-of-objects">
-<h3>1.4.4. Getting a List of Objects<a class="headerlink" href="#getting-a-list-of-objects" title="Permalink to this headline">¶</a></h3>
+<h3>1.3.4. Getting a List of Objects<a class="headerlink" href="#getting-a-list-of-objects" title="Permalink to this headline">¶</a></h3>
 <p>Use the following HTTP GET</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;object_type&gt;/?params</pre>
@@ -673,459 +546,369 @@
 </div></blockquote>
 <p>to query NEO objects of a specific type. For example, if you want to get all Analog Signals available for a specific user, send the following request</p>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /electrophysiology/analogsignal/?max_results=3&amp;q=link</pre>
+<div><div class="highlight-python"><pre>GET /electrophysiology/analogsignal/</pre>
 </div>
 </div></blockquote>
-<p>You receive a list of Analog Signal permalinks as a response:</p>
+<p>You receive a list of Analog Signals IDs as a response:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
-
-{
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [
-    {
-    "fields": {},
-    "model": "neo_api.analogsignal",
-    "permalink": "/electrophysiology/analogsignal/1"
-    },
-    {
-    "fields": {},
-    "model": "neo_api.analogsignal",
-    "permalink": "/electrophysiology/analogsignal/2"
-    },
-    {
-    "fields": {},
-    "model": "neo_api.analogsignal",
-    "permalink": "/electrophysiology/analogsignal/3"
-    }
-],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
+<div><div class="highlight-python"><pre>{
+    "object_selected": 10,
+    "message_type": "object_selected",
+    "object_total": 10,
+    "selected": [
+        "analogsignal_12",
+        "analogsignal_13",
+        "analogsignal_14",
+        "analogsignal_15",
+        "analogsignal_16",
+        "analogsignal_17",
+        "analogsignal_18",
+        "analogsignal_19",
+        "analogsignal_20",
+        "analogsignal_21"]
+    "message": "Here is the list of requested objects.",
+    "logged_in_as": "ray",
+    "selected_as_of": 0
 }</pre>
 </div>
 </div></blockquote>
-<p>By default the API will return the first 1000 data objects in the response. Use standard filters to refine the selection.</p>
-</div>
-<div class="section" id="data-annotation">
-<h3>1.4.5. Data Annotation<a class="headerlink" href="#data-annotation" title="Permalink to this headline">¶</a></h3>
-<p>You may annotate (or &#8220;tag&#8221; or &#8220;label&#8221;) one or several Raw Data objects with particular metadata values by using the following request:</p>
+<p>By default the API will return the first 1000 data objects in the response. This saves bandwidth and improves performance. A response will contain &#8220;object_total&#8221; parameter, with the total number of available objects. The feature to request more than a 1000 objects is coming soon! You&#8217;ll be able to use the &#8220;range_start&#8221; parameter indicating the starting point of the range of the whole list of objects (for example, 0 or 1499) to retrieve the rest of the objects. Just send a &#8220;range_start&#8221; parameter in the GET request, like</p>
 <blockquote>
-<div><div class="highlight-python"><pre>POST /electrophysiology/analogsignal/11/
+<div><div class="highlight-python"><pre>GET /electrophysiology/analogsignals/?range_start=844</pre>
+</div>
+</div></blockquote>
+<p>to get the rest of the objects.</p>
+</div>
+<div class="section" id="labeling-raw-data-objects-with-metadata-coming-soon">
+<h3>1.3.5. Labeling raw data objects with metadata (coming soon)<a class="headerlink" href="#labeling-raw-data-objects-with-metadata-coming-soon" title="Permalink to this headline">¶</a></h3>
+<p>You may label several Raw Data objects with a particular value by using the following request:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>POST /labels/
 
 {
-    "metadata": [
-        "/metadata/values/2",
-        "/metadata/values/15"
+    "value_id": "value_1345", # some value, from properties
+    "selection_id": "selection_id", # you may apply a label to the selection
+    "apply_to": [
+        "segment_124",
+        "segment_125"
     ]
 }</pre>
 </div>
 </div></blockquote>
-<p>If the POST request is sent to the selection (several objects), all objects in the selection will be updated. Importantly, by default metadata values are added to the existing metadata values. If you need to completely overwrite object&#8217;s metadata, provide m2m_append=0 parameter in the request. This is the way to remove object metadata, providing empty list together with m2m_append=0.</p>
-<p><em>Note. For example, you have an experiment with stimulus which changes its color across trials. You have several Analog Signals recorded, and you want to indicate, which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, &#8220;StimulusColor&#8221; with values &#8220;red, green, blue&#8221;. In that case, annotate all required Analog Signals with appropriate metadata values, assigning a &#8220;red&#8221; value to the signals recorded when the Stimulius was red etc.</em></p>
+<p><em>Note. For example, you have an experiment with stimulus, changing its color across trials. You have several Analog Signals recorded, and you want to indicate (or &#8216;group&#8217; them), which of those were recorded under which stimulus condition. Assume in the experiment section tree you already defined a property, say, &#8220;StimulusColor&#8221; with values &#8220;red, green, blue&#8221;. In that case, you use this function to &#8220;label&#8221; all required Analog Signals with appropriate metadata value, assigning a &#8220;red&#8221; value to, let&#8217;s say, first five hundred Analog Signals, &#8220;green&#8221; - to the second five hundred time series etc.</em></p>
 </div>
-</div>
-<div class="section" id="metadata-management">
-<h2>1.5. METADATA MANAGEMENT<a class="headerlink" href="#metadata-management" title="Permalink to this headline">¶</a></h2>
-<p>You may organize your experimental data using odML Sections and Properties. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Here are the actions available for you to manage your experimental metadata.</p>
-<div class="section" id="getting-list-of-sections">
-<h3>1.5.1. Getting list of sections<a class="headerlink" href="#getting-list-of-sections" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="remove-labels-coming-soon">
+<h3>1.3.6. Remove labels (coming soon)<a class="headerlink" href="#remove-labels-coming-soon" title="Permalink to this headline">¶</a></h3>
+<p>You may completely remove a particular label:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /metadata/sections/?params</pre>
+<div><div class="highlight-python"><pre>DELETE /labels/&lt;label_id&gt;/</pre>
 </div>
 </div></blockquote>
-<p>in addition to the usual filters, use the following parameters:</p>
+<p>You may remove a particular label from one or several objects (providing a selection or a list of object IDs):</p>
 <blockquote>
-<div><ul class="simple">
-<li>[top] - owned (default), shared - return only top (no parent) sections, owned by the user or shared with the user</li>
-</ul>
-</div></blockquote>
-<p>Example response:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+<div><div class="highlight-python"><pre>DELETE /labels/&lt;label_id&gt;/
 
 {
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [
-    {
-    "fields": {},
-    "model": "metadata.section",
-    "permalink": "/metadata/sections/3"
-    },
-    {
-    "fields": {},
-    "model": "metadata.section",
-    "permalink": "/metadata/sections/1"
-    },
-    {
-    "fields": {},
-    "model": "metadata.section",
-    "permalink": "/metadata/sections/2"
-    }
-],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
+    "selection_id": "selection_id", # you may apply a label to the selection
+    "apply_to": [
+        "segment_124",
+        "segment_125"
+    ]
 }</pre>
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="section-create">
-<h3>1.5.2. Section: create<a class="headerlink" href="#section-create" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="metadata-management">
+<h2>1.4. METADATA MANAGEMENT<a class="headerlink" href="#metadata-management" title="Permalink to this headline">¶</a></h2>
+<p>You may organize your experimental data using odML Sections and Properties. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Here are the actions available for you to manage your experimental metadata.</p>
+<div class="section" id="getting-list-of-sections">
+<h3>1.4.1. Getting list of sections<a class="headerlink" href="#getting-list-of-sections" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>GET /metadata/sections/</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[recursive] - true, false (default) - do a recursive export</li>
+<li>[section_id] - sections in a specific section (root by default)</li>
+<li>[visibility] - private, public, shared, all (default) - which types of sections to return</li>
+<li>[owner] - filter by an owner of the file</li>
+<li>[created_min] - filters files older than created_min</li>
+<li>[created_max] - filters files younger than created_max</li>
+<li>[q] - full-text query string (also searches in parent section?)</li>
+<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="section-create-update-copy-or-move">
+<h3>1.4.2. Section: create, update, copy or move<a class="headerlink" href="#section-create-update-copy-or-move" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /metadata/sections/?params
 
 {
-    "parent_section": 2,
-    "name": "Electrode",
-    "tree_position": 1,
-    "odml_type": 0,
-    "safety_level": 3,
-    "description": "Settings and other experimental setup"
+    "title": "Stimuli",
+    "description": "This section describes the stimulus",
+    "type": "stimuli",
+    "link": "",
+    "repository": "",
+    "mapping": "",
+    "reference": "",
+    "parent_section": "section_1234",
 }</pre>
 </div>
 </div></blockquote>
-<p>New in the development version:
-if you need to create a section from the template (or from other section) - like a normal copy operations, provide the parameters below:</p>
+<p>if you need to create a section from the template (or from other section), or you want to move the section to another place in the metadata tree - provide the parameters below:</p>
 <blockquote>
 <div><ul class="simple">
-<li>source_template - section to copy</li>
-<li>[with_properties] - whether or not to copy properties, which belong to the section ()</li>
+<li>source_section_id - section to copy</li>
+<li>target_section_id - a section to copy into</li>
+<li>[mode] - move (default), copy - whether to move or copy</li>
+<li>[with_properties] - whether or not to copy properties, which belong to the section (in copy mode)</li>
 <li>[with_datafiles] - whether or not to copy links (!!) to datafiles, which belong to the section (in copy mode).</li>
 <li>[recursive] - true, false - copy all subsections recursively (in copy mode)</li>
 </ul>
 </div></blockquote>
-<p><em>Note. Files and blocks, contained in the template section, are never duplicated while making a copy: newly created section(s) will not contain any files or other data.</em></p>
-<p>Response:</p>
+<p><em>Note. Attributes of the section, provided in the request body, will be used as values for the newly created section. In case of copy/move, the request body can be empty or contain only required parameters.</em></p>
+<p><em>Note. Files, contained in the section, are never duplicated while using copy/move function. However, in the newly created section you will see the same files: these are only links to the files, which were successfully copied.</em></p>
 <blockquote>
-<div><div class="highlight-python"><pre>HTTP CREATED (201)
-
-{
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [{
-        "fields": {
-        "tree_position": 1,
-        "odml_type": 0,
-        "description": "Settings and other experimental setup",
-        "current_state": 10,
-        "is_template": false,
-        "last_modified": "2012-04-10 15:59:00",
-        "safety_level": 3,
-        "date_created": "2012-04-10 15:59:00",
-        "name": "Electrode"
-    },
-    "model": "metadata.section",
-    "permalink": "/metadata/sections/18"
-}],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
-}</pre>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+<p><em>Note. ACL for the file is by default assigned as for the parent section.</em></p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="getting-section-details">
-<h3>1.5.3. Getting section details<a class="headerlink" href="#getting-section-details" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.3. Getting section details<a class="headerlink" href="#getting-section-details" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /metadata/sections/&lt;section_id&gt;</pre>
 </div>
-</div></blockquote>
-<p>Response:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
-
-{
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [{
-    "fields": {
-        "tree_position": 1,
-        "odml_type": 0,
-        "description": "Settings and other experimental setup",
-        "current_state": 10,
-        "is_template": false,
-        "last_modified": "2012-04-10 15:59:00",
-        "safety_level": 3,
-        "date_created": "2012-04-10 15:59:00",
-        "name": "Electrode"
-        },
-    "model": "metadata.section",
-    "permalink": "/metadata/sections/18"
-}],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
-}</pre>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="delete-section">
-<h3>1.5.4. Delete section<a class="headerlink" href="#delete-section" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.4. Delete section<a class="headerlink" href="#delete-section" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>DELETE /metadata/sections/&lt;section_id&gt;/?params</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
-<dd><ul class="first last simple">
-<li>[force] - true, false (default) - use force=1 to delete the section even if there are other users with collaboration role (able to write). If omitted, the section will not be deleted being in the state having collaborators.</li>
+<dd><ul class="first simple">
+<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with collaboration role (able to write). If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
 </ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
 </dd>
 </dl>
-<p>Response:</p>
-<blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
-    <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Object was deleted.&quot;</span><span class="p">,</span>
-    <span class="s">&quot;logged_in_as&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
-    <span class="s">&quot;message_type&quot;</span><span class="p">:</span> <span class="s">&quot;deleted&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <div class="section" id="getting-list-of-properties">
-<h3>1.5.5. Getting list of properties<a class="headerlink" href="#getting-list-of-properties" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.5. Getting list of properties<a class="headerlink" href="#getting-list-of-properties" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /metadata/properties/?params</pre>
+<div><div class="highlight-python"><pre>GET /metadata/properties/</pre>
 </div>
 </div></blockquote>
-<p>Response:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
-
-{
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [
-    {
-        "fields": {},
-        "model": "metadata.property",
-        "permalink": "/metadata/properties/1"
-    },
-    {
-        "fields": {},
-        "model": "metadata.property",
-        "permalink": "/metadata/properties/2"
-    }
-],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
-}</pre>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[section_id] - properties in a specific section (all by default)</li>
+<li>[q] - full-text query string (searches both properties and values)</li>
+<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
 </div>
-</div></blockquote>
+</dd>
+</dl>
 </div>
 <div class="section" id="create-or-update-a-property">
-<h3>1.5.6. Create or update a property<a class="headerlink" href="#create-or-update-a-property" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.6. Create or update a property<a class="headerlink" href="#create-or-update-a-property" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /metadata/properties/&lt;property_id&gt;/
 
 {
-    "comment": "insert some comments here..",
-    "definition": "the type of electrode.",
-    "name": "type",
-    "dependency_value": "",
-    "dtype": "",
-    "section": 1,
-    "uncertainty": "",
+    "section_id": "section_1234",
+    "description": "This section describes the stimulus",
+    "name": "stimuli colors",
+    "type": "experimental conditions",
+    "unit": "",
+    "definition": "",
     "mapping": "",
     "dependency": "",
-    "safety_level": 3,
-    "unit": ""
 }</pre>
 </div>
-</div></blockquote>
-<p>Response:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200) or CREATED (201)
-
-{
-"logged_in_as": "bob",
-"objects_selected": 1,
-"selected": [{
-    "fields": {
-        "comment": "insert some comments here..",
-        "definition": "the type of electrode.",
-        "name": "type",
-        "dependency_value": "",
-        "dtype": "",
-        "uncertainty": "",
-        "current_state": 10,
-        "mapping": "",
-        "dependency": "",
-        "last_modified": "2012-04-10 16:18:26",
-        "safety_level": 3,
-        "date_created": "2012-04-10 16:18:26",
-        "unit": ""
-    },
-    "model": "metadata.property",
-    "permalink": "/metadata/properties/23"
-}],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 0],
-"message_type": "object_selected"
-}</pre>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="getting-a-property">
-<h3>1.5.7. Getting a property<a class="headerlink" href="#getting-a-property" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.7. Getting a property<a class="headerlink" href="#getting-a-property" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /metadata/properties/&lt;property_id&gt;</pre>
 </div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
 </div></blockquote>
-<p>Response is similar to the above.</p>
 </div>
 <div class="section" id="delete-property">
-<h3>1.5.8. Delete property<a class="headerlink" href="#delete-property" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.8. Delete property<a class="headerlink" href="#delete-property" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>DELETE /metadata/properties/&lt;property_id&gt;</pre>
+</div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
 </div>
 </div></blockquote>
 </div>
 </div>
 <div class="section" id="file-management">
-<h2>1.6. FILE MANAGEMENT<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h2>
+<h2>1.5. FILE MANAGEMENT<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="getting-list-of-datafiles">
-<h3>1.6.1. Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.1. Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/?params</pre>
 </div>
 </div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[section_id] - return files only in a specific section (all files if not provided)</li>
+<li>[visibility] - private, public, shared, all (default) - which types of files to return</li>
+<li>[owner] - filter by an owner of the file</li>
+<li>[created_min] - filters files older than created_min</li>
+<li>[created_max] - filters files younger than created_max</li>
+<li>[q] - full-text query string (also searches in parent section?)</li>
+<li>[max-results] - maximum number of results to be retrieved (default is 1000, provide this parameter if you need to query more).</li>
+</ul>
+</dd>
+</dl>
 <p>Typically you should get the following response:</p>
-<p>Response:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+<div><div class="highlight-python"><pre>Response:
 
-{
-"logged_in_as": "bob",
-"objects_selected": 2,
-"selected": [
-    {
-    "fields": {
-        "last_task_id": "2a3c89f4-9328-46aa-801e-b7bf88740f8f",
-        "title": "ascii_csv.txt",
-        "extracted_info": null,
-        "tags": "",
-        "current_state": 10,
-        "operations_log": "python-neuroshare: failure ascii-csv: success ",
-        "conversion_type": 3,
-        "caption": "",
-        "last_modified": "2012-03-14 17:27:08",
-        "safety_level": 3,
-        "date_created": "2012-03-14 17:27:08"
-    },
-    "model": "datafiles.datafile",
-    "permalink": "/datafiles/9"
-    },
-    {
-    "fields": {
-        "last_task_id": "7c260cfa-2395-40b7-907e-065088f41498",
-        "title": "ascii_csv.txt",
-        "extracted_info": null,
-        "tags": "",
-        "current_state": 10,
-        "operations_log": "python-neuroshare: failure ascii-csv: success ascii-csv: parsing successul ascii-csv: parsing successul objects parsed: 3ascii-csv: parsing successul objects parsed: 3",
-        "conversion_type": 3,
-        "caption": "",
-        "last_modified": "2012-03-15 10:27:45",
-        "safety_level": 3,
-        "date_created": "2012-03-14 17:29:21"
-    },
-    "model": "datafiles.datafile",
-    "permalink": "/datafiles/10"
-    }
-],
-"message": "Here is the list of requested objects.",
-"selected_range": [0, 1],
-"message_type": "object_selected"
-}</pre>
+TBD</pre>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="getting-single-file-details">
-<h3>1.6.2. Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.2. Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;</pre>
 </div>
+<div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
 </div></blockquote>
+<p>(Conversion status (not able to convert, not converted, NEO))
+(if convertable, provide additional statistics)</p>
 </div>
 <div class="section" id="upload-a-datafile-with-or-without-conversion">
-<h3>1.6.3. Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.3. Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /datafiles/?params
 
-the file should be sent with "raw_file" key.</pre>
+{
+    "name": "In-vivo single-channel recordings, V1",
+    "description": "Some description here",
+    "keywords": "monkey V1 single-channel"
+}</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first last simple">
 <li>[section_id] - provide an ID of the section in which to store the file (recommended).</li>
-<li>[convert] - 1 (default), 0 - whether try to convert the file into native format, if possible. For the moment the following types are supported: neuroshare, ascii-csv (a csv file where every line is a signal).</li>
+<li>[convert] - true (default), false - whether try to convert the file into native format, if possible. For the moment the following types are supported: TBD.</li>
 </ul>
 </dd>
 </dl>
 <p><em>Note. If the file is uploaded into a specific section, the security settings for the new file will be assigned as for the parent section. When no section is specified, the file is private by default.</em></p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+
+HTTP CREATED (201)
+
+TBD</pre>
 </div>
-<div class="section" id="modify-datafile-attributes-move-file-to-section">
-<h3>1.6.4. Modify datafile attributes, move file to Section<a class="headerlink" href="#modify-datafile-attributes-move-file-to-section" title="Permalink to this headline">¶</a></h3>
+</div></blockquote>
+</div>
+<div class="section" id="modify-datafile-attributes">
+<h3>1.5.4. Modify datafile attributes<a class="headerlink" href="#modify-datafile-attributes" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /datafiles/&lt;datafile_id&gt;/?params
 
 {
-    "caption": "Some REAL description goes here..",
-    "section": 1236,
+    "description": "Some REAL description goes here..",
 }</pre>
 </div>
 </div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[convert] - provide a convert=true parameter to initiate file conversion. The file should be convertible and never converted previously.</li>
+</ul>
+</dd>
+</dl>
 <p><em>Note. The conversion operation is asynchronous, which means you&#8217;ll not see the status of the conversion immediately in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.</em></p>
-<p><em>Note. ACL for the file is not changed when moved to a different section.</em></p>
-</div>
-<div class="section" id="datafile-conversion">
-<h3>1.6.5. Datafile conversion<a class="headerlink" href="#datafile-conversion" title="Permalink to this headline">¶</a></h3>
-<p>The following request</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/convert/</pre>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
 </div>
 </div></blockquote>
-<p>initiates file conversion.</p>
 </div>
-<div class="section" id="download-datafile">
-<h3>1.6.6. Download datafile<a class="headerlink" href="#download-datafile" title="Permalink to this headline">¶</a></h3>
-<p>When the file is not converted, you may get the originally uploaded file. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.</p>
+<div class="section" id="export-datafile">
+<h3>1.5.5. Export datafile<a class="headerlink" href="#export-datafile" title="Permalink to this headline">¶</a></h3>
+<p>When the file is not converted, it simply returns the originally uploaded file for download. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/download/?params</pre>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/binary/?params</pre>
 </div>
 </div></blockquote>
-<p>New in development version.
-in addition to the usual filters, use can use the following parameters:</p>
-<blockquote>
-<div><ul class="simple">
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
 <li>[format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.</li>
 </ul>
-</div></blockquote>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</dd>
+</dl>
 </div>
 <div class="section" id="delete-datafile">
-<h3>1.6.7. Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.6. Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: DELETE /datafiles/&lt;datafile_id&gt;/?params</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
-<dt>in addition to the usual filters, use can use the following parameters:</dt>
-<dd><ul class="first last simple">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
 <li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with access to the file. If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
 </ul>
+<div class="last highlight-python"><pre>Response:
+TBD</pre>
+</div>
 </dd>
 </dl>
 </div>
 </div>
 <div class="section" id="manage-permissions">
-<h2>1.7. MANAGE PERMISSIONS<a class="headerlink" href="#manage-permissions" title="Permalink to this headline">¶</a></h2>
+<h2>1.6. MANAGE PERMISSIONS<a class="headerlink" href="#manage-permissions" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>There is a possibility to share your data with other users in the G-Node Portal. You may share a particular section, which means all resources inside the section become shared. You may share the section recursively, which implies all subsections in the selected section with all their contents will become shared. You may also share a single or multiple datafiles. Datafiles and sections sharing is controlled via the access control lists. Access control lists are just basic lists that show who has access to a given resource. In the ACLs, the following roles are available for a given document or folder:</dt>
 <dd><ul class="first last simple">
@@ -1145,37 +928,74 @@ in addition to the usual filters, use can use the following parameters:</p>
 <p>With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.</p>
 <p>By &lt;resource_type&gt; in this paragraph we assume either &#8220;sections&#8221; or &#8220;datafiles&#8221;.</p>
 <div class="section" id="getting-resource-permissions">
-<h3>1.7.1. Getting resource permissions<a class="headerlink" href="#getting-resource-permissions" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.1. Getting resource permissions<a class="headerlink" href="#getting-resource-permissions" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/</pre>
 </div>
-</div></blockquote>
-<p>Response:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
-
+<div class="highlight-python"><pre>Response:
 {
     "message": "Here is the list of requested objects.",
-    "logged_in_as": "bob",
+    "logged_in_as": "&lt;user_id&gt;",
     "message_type": "object_selected",
-    "safety_level": 3,
+    "safety_level": &lt;access_level&gt;, # 1 = public, 2 = friendly, 3 = private
     "shared_with": {
-        "andrey": 1
+        "&lt;user_id&gt;": &lt;user_permissions&gt;, # 1 = read, 2 = read and write
+        "&lt;user_id&gt;": &lt;user_permissions&gt;
     }
 }</pre>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="update-resource-acl-share-unshare">
-<h3>1.7.2. Update resource ACL (share/unshare)<a class="headerlink" href="#update-resource-acl-share-unshare" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.2. Update resource ACL (share/unshare)<a class="headerlink" href="#update-resource-acl-share-unshare" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-python"><pre>POST /&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
+<div><div class="highlight-python"><pre>POST /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
 
 {
+    "safety_level": "&lt;access level&gt;", # integer specifying the access level: 1: public, 2: friendly, 3: private
+    "shared_with": {
+        "&lt;user_id&gt;": "&lt;user_permissions&gt;", # integer specifying granted rights: 1: read, 2:read and write
+        "&lt;user_id&gt;": "&lt;user_permissions&gt;"
+    }
+}</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first simple">
+<li>[recursive] - true, false (default) - apply to all resources recursivery (when &lt;resource_type&gt; = &#8220;sections&#8221;). Datafiles, found in subsections, will be also updated.</li>
+<li>[notify] - true, false (default?) - users will be notified per e-mail</li>
+</ul>
+<div class="last highlight-python"><pre>Response:
+{
+    "message": "Here is the list of requested objects.",
+    "logged_in_as": "&lt;user_id&gt;",
+    "message_type": "object_selected",
+    "safety_level": &lt;access_level&gt;, # 1 = public, 2 = friendly, 3 = private
+    "shared_with": {
+        "&lt;user_id&gt;": &lt;user_permissions&gt;, # 1 = read, 2 = read and write
+        "&lt;user_id&gt;": &lt;user_permissions&gt;
+    }
+}</pre>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="bulk-acl-update-share-unshare">
+<h3>1.6.3. Bulk ACL update (share/unshare)<a class="headerlink" href="#bulk-acl-update-share-unshare" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python"><pre>POST /acl/?params
+
+{
+    "resources": [
+        "section_1345",
+        "section_1346",
+        "datafile_1345"
+    ]
     "state": "&lt;access level&gt;", # can be public, friendly, private - access level
     "shared_with": {
-        "&lt;user_name&gt;": "&lt;user_role&gt;", # a role can be "reader" or "collaborator"
-        "&lt;user_id&gt;": "&lt;user_role_id&gt;" # could be IDs as well
+        "&lt;iser_id&gt;": "&lt;user_role&gt;", # a role can be "reader" or "collaborator"
+        "&lt;iser_id&gt;": "&lt;user_role&gt;"
     }
 }</pre>
 </div>
@@ -1183,25 +1003,27 @@ in addition to the usual filters, use can use the following parameters:</p>
 <dl class="docutils">
 <dt>parameters:</dt>
 <dd><ul class="first last simple">
-<li>[cascade] - true, false (default) - apply to all resources recursivery (when &lt;resource_type&gt; = &#8220;sections&#8221;). Datafiles, found in subsections, will be also updated.</li>
-</ul>
-</dd>
-<dt>New in development version:</dt>
-<dd><ul class="first last simple">
-<li>[notify]: 1 (default), 0 - whether to notify users by mail that an object was shared.</li>
+<li>[recursive] - true, false (default) - apply to all resources recursivery.</li>
 </ul>
 </dd>
 </dl>
-<div class="section" id="new-in-development-version">
-<h4>1.7.2.1. New in development version.<a class="headerlink" href="#new-in-development-version" title="Permalink to this headline">¶</a></h4>
+<p><em>Note. The requested ACL changes will be applied to the resources in a sequence, as they were provided in the request.</em></p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response:
+TBD</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="remove-a-user-from-all-shares">
+<h3>1.6.4. Remove a user from ALL shares<a class="headerlink" href="#remove-a-user-from-all-shares" title="Permalink to this headline">¶</a></h3>
+<p>Not implemented yet.</p>
+</div>
 </div>
 <div class="section" id="query-data-using-g-node-api">
-<h4>1.7.2.2. QUERY DATA USING G-NODE API<a class="headerlink" href="#query-data-using-g-node-api" title="Permalink to this headline">¶</a></h4>
+<h2>1.7. QUERY DATA USING G-NODE API<a class="headerlink" href="#query-data-using-g-node-api" title="Permalink to this headline">¶</a></h2>
 <p>You may select Raw Data objects (Segments, Analog Signals, Spike Trains) based on their attributes and labels and those of their parents and children. You may do that by creating Selections. Selections can be saved for future use.</p>
-</div>
-</div>
 <div class="section" id="create-selection">
-<h3>1.7.3. Create Selection<a class="headerlink" href="#create-selection" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.1. Create Selection<a class="headerlink" href="#create-selection" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>POST /selections/
 
@@ -1239,7 +1061,7 @@ TBD</pre>
 <p>If the &#8220;save_as&#8221; parameter was provided, the response will contain &#8220;selection_id&#8221; and &#8220;selection_name&#8221;. You may use this ID to get the contents of a particular selection later.</p>
 </div>
 <div class="section" id="get-list-of-saved-selections">
-<h3>1.7.4. Get list of saved Selections<a class="headerlink" href="#get-list-of-saved-selections" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.2. Get list of saved Selections<a class="headerlink" href="#get-list-of-saved-selections" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /selections/</pre>
 </div>
@@ -1252,7 +1074,7 @@ TBD</pre>
 </div></blockquote>
 </div>
 <div class="section" id="get-saved-selection">
-<h3>1.7.5. Get saved Selection<a class="headerlink" href="#get-saved-selection" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.3. Get saved Selection<a class="headerlink" href="#get-saved-selection" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /selections/&lt;selection_id&gt;/</pre>
 </div>
@@ -1263,16 +1085,13 @@ TBD</pre>
 TBD</pre>
 </div>
 </div></blockquote>
-<div class="section" id="id3">
-<h4>1.7.5.1. New in development version.<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+</div>
 </div>
 <div class="section" id="resource-action-history-draft">
-<h4>1.7.5.2. RESOURCE ACTION HISTORY (draft)<a class="headerlink" href="#resource-action-history-draft" title="Permalink to this headline">¶</a></h4>
+<h2>1.8. RESOURCE ACTION HISTORY (draft)<a class="headerlink" href="#resource-action-history-draft" title="Permalink to this headline">¶</a></h2>
 <p>In order not to forget, how certain scientific computations were achieved, or what is the source of a certain analog signal, you may request a history of an action with objects. An action history is a table indicating a source for an operation, description of an operation made and a result.</p>
-</div>
-</div>
 <div class="section" id="get-object-action-history">
-<h3>1.7.6. Get object action history<a class="headerlink" href="#get-object-action-history" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.1. Get object action history<a class="headerlink" href="#get-object-action-history" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /&lt;resource_type&gt;/&lt;resource_id&gt;/history/?params</pre>
 </div>
@@ -1290,7 +1109,7 @@ TBD</pre>
 </dl>
 </div>
 <div class="section" id="get-user-action-history">
-<h3>1.7.7. Get user action history<a class="headerlink" href="#get-user-action-history" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.2. Get user action history<a class="headerlink" href="#get-user-action-history" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><pre>GET /profiles/profile/&lt;user_id&gt;/history/?params</pre>
 </div>
@@ -1357,52 +1176,51 @@ TBD</pre>
 <li><a class="reference internal" href="#id2">1.2.1. Authentication</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#key-api-principles">1.3. KEY API PRINCIPLES</a></li>
-<li><a class="reference internal" href="#data-management">1.4. DATA MANAGEMENT</a><ul>
-<li><a class="reference internal" href="#create-or-update-data-object">1.4.1. 2.1 Create or update data object</a></li>
-<li><a class="reference internal" href="#getting-a-single-object">1.4.2. Getting a single object</a></li>
-<li><a class="reference internal" href="#partial-data-requests">1.4.3. Partial Data Requests</a></li>
-<li><a class="reference internal" href="#getting-a-list-of-objects">1.4.4. Getting a List of Objects</a></li>
-<li><a class="reference internal" href="#data-annotation">1.4.5. Data Annotation</a></li>
+<li><a class="reference internal" href="#data-management">1.3. DATA MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#create-or-update-data-object">1.3.1. 2.1 Create or update data object</a></li>
+<li><a class="reference internal" href="#getting-a-single-object">1.3.2. Getting a single object</a></li>
+<li><a class="reference internal" href="#partial-data-requests">1.3.3. Partial Data Requests</a></li>
+<li><a class="reference internal" href="#getting-a-list-of-objects">1.3.4. Getting a List of Objects</a></li>
+<li><a class="reference internal" href="#labeling-raw-data-objects-with-metadata-coming-soon">1.3.5. Labeling raw data objects with metadata (coming soon)</a></li>
+<li><a class="reference internal" href="#remove-labels-coming-soon">1.3.6. Remove labels (coming soon)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#metadata-management">1.5. METADATA MANAGEMENT</a><ul>
-<li><a class="reference internal" href="#getting-list-of-sections">1.5.1. Getting list of sections</a></li>
-<li><a class="reference internal" href="#section-create">1.5.2. Section: create</a></li>
-<li><a class="reference internal" href="#getting-section-details">1.5.3. Getting section details</a></li>
-<li><a class="reference internal" href="#delete-section">1.5.4. Delete section</a></li>
-<li><a class="reference internal" href="#getting-list-of-properties">1.5.5. Getting list of properties</a></li>
-<li><a class="reference internal" href="#create-or-update-a-property">1.5.6. Create or update a property</a></li>
-<li><a class="reference internal" href="#getting-a-property">1.5.7. Getting a property</a></li>
-<li><a class="reference internal" href="#delete-property">1.5.8. Delete property</a></li>
+<li><a class="reference internal" href="#metadata-management">1.4. METADATA MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#getting-list-of-sections">1.4.1. Getting list of sections</a></li>
+<li><a class="reference internal" href="#section-create-update-copy-or-move">1.4.2. Section: create, update, copy or move</a></li>
+<li><a class="reference internal" href="#getting-section-details">1.4.3. Getting section details</a></li>
+<li><a class="reference internal" href="#delete-section">1.4.4. Delete section</a></li>
+<li><a class="reference internal" href="#getting-list-of-properties">1.4.5. Getting list of properties</a></li>
+<li><a class="reference internal" href="#create-or-update-a-property">1.4.6. Create or update a property</a></li>
+<li><a class="reference internal" href="#getting-a-property">1.4.7. Getting a property</a></li>
+<li><a class="reference internal" href="#delete-property">1.4.8. Delete property</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#file-management">1.6. FILE MANAGEMENT</a><ul>
-<li><a class="reference internal" href="#getting-list-of-datafiles">1.6.1. Getting list of datafiles</a></li>
-<li><a class="reference internal" href="#getting-single-file-details">1.6.2. Getting single file details</a></li>
-<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">1.6.3. Upload a datafile (with or without conversion)</a></li>
-<li><a class="reference internal" href="#modify-datafile-attributes-move-file-to-section">1.6.4. Modify datafile attributes, move file to Section</a></li>
-<li><a class="reference internal" href="#datafile-conversion">1.6.5. Datafile conversion</a></li>
-<li><a class="reference internal" href="#download-datafile">1.6.6. Download datafile</a></li>
-<li><a class="reference internal" href="#delete-datafile">1.6.7. Delete datafile</a></li>
+<li><a class="reference internal" href="#file-management">1.5. FILE MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#getting-list-of-datafiles">1.5.1. Getting list of datafiles</a></li>
+<li><a class="reference internal" href="#getting-single-file-details">1.5.2. Getting single file details</a></li>
+<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">1.5.3. Upload a datafile (with or without conversion)</a></li>
+<li><a class="reference internal" href="#modify-datafile-attributes">1.5.4. Modify datafile attributes</a></li>
+<li><a class="reference internal" href="#export-datafile">1.5.5. Export datafile</a></li>
+<li><a class="reference internal" href="#delete-datafile">1.5.6. Delete datafile</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#manage-permissions">1.7. MANAGE PERMISSIONS</a><ul>
-<li><a class="reference internal" href="#getting-resource-permissions">1.7.1. Getting resource permissions</a></li>
-<li><a class="reference internal" href="#update-resource-acl-share-unshare">1.7.2. Update resource ACL (share/unshare)</a><ul>
-<li><a class="reference internal" href="#new-in-development-version">1.7.2.1. New in development version.</a></li>
-<li><a class="reference internal" href="#query-data-using-g-node-api">1.7.2.2. QUERY DATA USING G-NODE API</a></li>
+<li><a class="reference internal" href="#manage-permissions">1.6. MANAGE PERMISSIONS</a><ul>
+<li><a class="reference internal" href="#getting-resource-permissions">1.6.1. Getting resource permissions</a></li>
+<li><a class="reference internal" href="#update-resource-acl-share-unshare">1.6.2. Update resource ACL (share/unshare)</a></li>
+<li><a class="reference internal" href="#bulk-acl-update-share-unshare">1.6.3. Bulk ACL update (share/unshare)</a></li>
+<li><a class="reference internal" href="#remove-a-user-from-all-shares">1.6.4. Remove a user from ALL shares</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#create-selection">1.7.3. Create Selection</a></li>
-<li><a class="reference internal" href="#get-list-of-saved-selections">1.7.4. Get list of saved Selections</a></li>
-<li><a class="reference internal" href="#get-saved-selection">1.7.5. Get saved Selection</a><ul>
-<li><a class="reference internal" href="#id3">1.7.5.1. New in development version.</a></li>
-<li><a class="reference internal" href="#resource-action-history-draft">1.7.5.2. RESOURCE ACTION HISTORY (draft)</a></li>
+<li><a class="reference internal" href="#query-data-using-g-node-api">1.7. QUERY DATA USING G-NODE API</a><ul>
+<li><a class="reference internal" href="#create-selection">1.7.1. Create Selection</a></li>
+<li><a class="reference internal" href="#get-list-of-saved-selections">1.7.2. Get list of saved Selections</a></li>
+<li><a class="reference internal" href="#get-saved-selection">1.7.3. Get saved Selection</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#get-object-action-history">1.7.6. Get object action history</a></li>
-<li><a class="reference internal" href="#get-user-action-history">1.7.7. Get user action history</a></li>
+<li><a class="reference internal" href="#resource-action-history-draft">1.8. RESOURCE ACTION HISTORY (draft)</a><ul>
+<li><a class="reference internal" href="#get-object-action-history">1.8.1. Get object action history</a></li>
+<li><a class="reference internal" href="#get-user-action-history">1.8.2. Get user action history</a></li>
 </ul>
 </li>
 </ul>
@@ -1425,7 +1243,7 @@ TBD</pre>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -1439,10 +1257,6 @@ TBD</pre>
       </div>
       <div class="clearer"></div>
     </div>
-  <div class="footer">
-    <h2>Questions/Feedback</h2>
-    <p>Having any questions? Got an idea how to improve a service? You're welcome to contact us!<br> Please send your questions/feedback to support-at-g-node.org , we are happy to help!</p>
-  </div>
   <div class="footer">
     &copy; Copyright 2011, asobolev.
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.

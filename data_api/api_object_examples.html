@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. G-Node API Object Examples &mdash; g-node-portal v0.6 documentation</title>
+    <title>2. G-Node API Object Examples &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../index.html" />
     <link rel="up" title="The G-Node DATA API" href="data_api_index.html" />
     <link rel="prev" title="1. DATA API Specification" href="data_api_specification.html" />
    
@@ -30,45 +33,22 @@
 
   </head>
   <body>
-
-<div id="tabhead">
-	<div class="logo">
-
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
-
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../_static/default.jpg" alt="" border="0" />
-		</div>
-    </div>
-    </div>
-</div>
-
   
   
 
-    <div id="right_tabs">
-        <div class="seitenbreite">
-        <ul class="tabs">
-          <li><a href="http://www.g-node.org">G-Node Website</a></li>
-          <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
-          </li>
-        </ul>
-        </div>
-    </div>
-  
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="data_api_specification.html" title="1. DATA API Specification"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">g-node-portal 0.6 documentation</a> &raquo;</li>
+          <li><a href="data_api_index.html" accesskey="U">The G-Node DATA API</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -77,55 +57,8 @@
             
   <div class="section" id="g-node-api-object-examples">
 <span id="api-object-examples"></span><h1>2. G-Node API Object Examples<a class="headerlink" href="#g-node-api-object-examples" title="Permalink to this headline">¶</a></h1>
-<p>Here you may find a list of examples of HTTP request bodies for all supported data- and metadata- objects. All examples assume creating a new object. If some of the required parameters to create an object are missing, the system will respond with an error.</p>
-<p>To perform an update, you need to provide an ID of an object in the end of the URL, like &#8220;/electrophysiology/segment/12345/&#8221;. While requesting an update, only parameters that are proposed for an update can be provided.</p>
-<div class="section" id="metadata-objects">
-<h2>2.1. Metadata objects<a class="headerlink" href="#metadata-objects" title="Permalink to this headline">¶</a></h2>
-<p>Send the following HTTP POST request to create a new section:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP POST /metadata/sections/
-
-{
-    "name": "Electrode",
-    "tree_position": 1,
-    "odml_type": 0,
-    "safety_level": 3,
-    "description": "Settings and other experimental setup"
-}</pre>
-</div>
-</div></blockquote>
-<p>Create new property with the following request:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP POST /metadata/properties/
-
-{
-    "comment": "insert some comments here..",
-    "definition": "the type of electrode.",
-    "name": "type",
-    "dependency_value": "",
-    "dtype": "",
-    "section": 1,
-    "uncertainty": "",
-    "mapping": "",
-    "dependency": "",
-    "safety_level": 3,
-    "unit": ""
-}</pre>
-</div>
-</div></blockquote>
-<p>This request is used to create new value:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP POST /metadata/values/
-
-{
-    "safety_level": 3,
-    "data": "extracellular"
-}</pre>
-</div>
-</div></blockquote>
-</div>
-<div class="section" id="data-objects">
-<h2>2.2. Data objects<a class="headerlink" href="#data-objects" title="Permalink to this headline">¶</a></h2>
+<p>Here you may find a list of examples of HTTP request bodies for all supported NEO objects. All examples assume creating a new object. If some of the required parameters to create an object are missing, the system will respond with an error. You may find a list of required parameters (attributes, data parameters and relationships) in the section 6 of the specification in tables 6.1 - 6.4.</p>
+<p>To perform an update, you need to provide an ID of an object (e.g. 12345 for &#8220;segment_12345&#8221;) in the end of the URL, like &#8220;/neo/segment/12345/&#8221;. While requesting an update, only parameters that are proposed for an update can be provided.</p>
 <p>This is an example request to create a new Block:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>HTTP POST /electrophysiology/block/
@@ -145,7 +78,7 @@
     "name": "Trial 1",
     "filedatetime": "2011-10-07",
     "index": 1,
-    "block": "1"
+    "block": "block_1234"
 }</pre>
 </div>
 </div></blockquote>
@@ -159,8 +92,7 @@
         "units": "ms"
     },
     "label": "Stimuli end",
-    "segment": "1",
-    "eventarray": "1"
+    "segment": "segment_2"
 }</pre>
 </div>
 </div></blockquote>
@@ -169,7 +101,7 @@
 <div><div class="highlight-python"><pre>HTTP POST /electrophysiology/eventarray
 
 {
-    "segment": 12345
+    "segment": "segment_12345"
 }</pre>
 </div>
 </div></blockquote>
@@ -179,7 +111,7 @@
 <div><div class="highlight-python"><pre>HTTP POST /electrophysiology/event/456/
 
 {
-    "eventarray": 897
+    "eventarray": "eventarray_897"
 }</pre>
 </div>
 </div></blockquote>
@@ -197,8 +129,7 @@
         "units": "ms"
     },
     "label": "Displaying blue screen",
-    "segment": 1,
-    "epocharray": 1
+    "segment": "segment_5"
 }</pre>
 </div>
 </div></blockquote>
@@ -207,7 +138,7 @@
 <div><div class="highlight-python"><pre>HTTP POST /electrophysiology/epocharray/
 
 {
-    "segment": 1234
+    "segment": "segment_1234"
 }</pre>
 </div>
 </div></blockquote>
@@ -218,7 +149,7 @@
 
 {
     "name": "Tethrode #5",
-    "block": 12
+    "block": "block_12"
 }</pre>
 </div>
 </div></blockquote>
@@ -230,7 +161,7 @@
 {
     "name": "Electrode #1",
     "index": 1,
-    "recordingchannelgroup": 18
+    "recordingchannelgroup": "recordingchannelgroup_1569"
 }</pre>
 </div>
 </div></blockquote>
@@ -239,11 +170,12 @@
 <div><div class="highlight-python"><pre>HTTP POST /electrophysiology/unit/
 
 {
+    "obj_type": "unit",
     "name": "Neuron 34.56 x 28.8 x 245.69",
     "recordingchannel": [
-        67,
-        68,
-        69
+        "recordingchannel_67",
+        "recordingchannel_68",
+        "recordingchannel_69"
     ]
 }</pre>
 </div>
@@ -266,8 +198,8 @@
         "units": "mV",
         "data": [12.2, 12.7, 19.0, 7.81, 3.42, 9.28, -5.86]
     },
-    "segment": 1,
-    "recordingchannel": 1
+    "segment": "segment_1234",
+    "recordingchannel": "recordingchannel_69"
 }</pre>
 </div>
 <p>Please note, for any &#8220;array&#8221;-type parameter you need to provide a dictionnary of parameters - &#8220;units&#8221; and &#8220;data&#8221;.</p>
@@ -289,8 +221,8 @@
         "units": "ms",
         "data": [155.0, 158.0, 160.0, 161.0, 162.0, 165.0, 168.0]
     },
-    "segment": 1,
-    "recordingchannel": 1
+    "segment": "segment_1234",
+    "recordingchannel": "recordingchannel_69"
 }</pre>
 </div>
 </div></blockquote>
@@ -299,7 +231,7 @@
 <div><div class="highlight-python"><pre>HTTP POST /electrophysiology/analogsignalarray/
 
 {
-    "segment": 1234
+    "segment": "segment_1234"
 }</pre>
 </div>
 </div></blockquote>
@@ -321,8 +253,22 @@
         "data": 15.0,
         "units": "ms"
     },
-    "segment": 1,
-    "unit": 1
+    "waveforms": [{
+            "channel_index": 0,
+            "waveform": {
+                "units": "mV",
+                "data": [5.86, -1.46, -0.488, -7.32, -9.77, -12.7, -12.7]
+            }
+        },
+        {
+            "channel_index": 1,
+            "waveform": {
+                "units": "mV",
+                "data": [45.86, -31.46, -0.338, 67.32, -19.77, -109.7, -39.7]
+            }
+    }],
+    "segment": "segment_1234",
+    "unit": "unit_22"
 }</pre>
 </div>
 </div></blockquote>
@@ -343,31 +289,34 @@
         "units": "ms",
         "data": [-4.88, 3.42, 2.44]
     },
-    "segment": 1,
-    "unit": 1
+    "waveforms": [{
+            "channel_index": 0,
+            "time_of_spike": {
+                "units": "ms",
+                "data": 469.1
+            },
+            "waveform": {
+                "units": "mV",
+                "data": [5.86, -1.46, -0.488, -7.32, -9.77, -12.7, -12.7]
+            }
+        },
+        {
+            "channel_index": 1,
+            "time_of_spike": {
+                "units": "ms",
+                "data": 789.4
+            },
+            "waveform": {
+                "units": "mV",
+                "data": [45.86, -31.46, -0.338, 67.32, -19.77, -109.7, -39.7]
+            }
+    }],
+    "segment": "segment_1234",
+    "unit": "unit_22"
 }</pre>
 </div>
 </div></blockquote>
-<p>And finally, a waveform:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP POST /electrophysiology/waveform/
-
-{
-    "channel_index": 0,
-    "time_of_spike": {
-        "units": "ms",
-        "data": 469.1
-    },
-    "waveform": {
-        "units": "mV",
-        "data": [5.86, -1.46, -0.488, -7.32, -9.77, -12.7, -12.7]
-    },
-    "spiketrain": 1,
-    "spike": 1,
-}</pre>
-</div>
-</div></blockquote>
-</div>
+<p>Please note, that you may provide a set of waveforms inside a waveform parameter, as shown in this example.</p>
 </div>
 
 
@@ -375,16 +324,7 @@
         </div>
       </div>
       <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">2. G-Node API Object Examples</a><ul>
-<li><a class="reference internal" href="#metadata-objects">2.1. Metadata objects</a></li>
-<li><a class="reference internal" href="#data-objects">2.2. Data objects</a></li>
-</ul>
-</li>
-</ul>
-<h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="data_api_index.html">The G-Node DATA API</a><ul>
@@ -400,7 +340,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -414,10 +354,6 @@
       </div>
       <div class="clearer"></div>
     </div>
-  <div class="footer">
-    <h2>Questions/Feedback</h2>
-    <p>Having any questions? Got an idea how to improve a service? You're welcome to contact us!<br> Please send your questions/feedback to support-at-g-node.org , we are happy to help!</p>
-  </div>
   <div class="footer">
     &copy; Copyright 2011, asobolev.
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
