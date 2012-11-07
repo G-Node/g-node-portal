@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Some title here.. &mdash; g-node-portal v0.6 documentation</title>
+    <title>FILE MANAGEMENT &mdash; g-node-portal v0.6 documentation</title>
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -73,17 +73,170 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="some-title-here">
-<h1>Some title here..<a class="headerlink" href="#some-title-here" title="Permalink to this headline">¶</a></h1>
-<p>Text is coming soon..</p>
-<span class="target" id="file-types"></span></div>
+  <div class="section" id="file-management">
+<h1>FILE MANAGEMENT<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h1>
+<p>About...</p>
+<div class="section" id="file-types-and-supported-formats">
+<span id="file-types"></span><h2>File types and supported formats<a class="headerlink" href="#file-types-and-supported-formats" title="Permalink to this headline">¶</a></h2>
+<p>List supported formats and corresponsing file types</p>
+</div>
+<div class="section" id="getting-list-of-datafiles">
+<h2>Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/?params</pre>
+</div>
+</div></blockquote>
+<p>Typically you should get the following response:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Response: HTTP SUCCESS (200)
+
+{
+"logged_in_as": "bob",
+"objects_selected": 2,
+"selected": [
+    {
+    "fields": {
+        "last_task_id": "2a3c89f4-9328-46aa-801e-b7bf88740f8f",
+        "title": "ascii_csv.txt",
+        "extracted_info": null,
+        "tags": "",
+        "current_state": 10,
+        "operations_log": "python-neuroshare: failure ascii-csv: success ",
+        "conversion_type": 3,
+        "caption": "",
+        "last_modified": "2012-03-14 17:27:08",
+        "safety_level": 3,
+        "date_created": "2012-03-14 17:27:08"
+    },
+    "model": "datafiles.datafile",
+    "permalink": "/datafiles/9"
+    },
+    {
+    "fields": {
+        "last_task_id": "7c260cfa-2395-40b7-907e-065088f41498",
+        "title": "ascii_csv.txt",
+        "extracted_info": null,
+        "tags": "",
+        "current_state": 10,
+        "operations_log": "python-neuroshare: failure ascii-csv: success ascii-csv: parsing successul ascii-csv: parsing successul objects parsed: 3ascii-csv: parsing successul objects parsed: 3",
+        "conversion_type": 3,
+        "caption": "",
+        "last_modified": "2012-03-15 10:27:45",
+        "safety_level": 3,
+        "date_created": "2012-03-14 17:29:21"
+    },
+    "model": "datafiles.datafile",
+    "permalink": "/datafiles/10"
+    }
+],
+"message": "Here is the list of requested objects.",
+"selected_range": [0, 1],
+"message_type": "object_selected"
+}</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="getting-single-file-details">
+<h2>Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h2>
+<p>Requesting information about a single file is like a normal <a class="reference internal" href="principles.html#get-single-object"><em>single object request</em></a>:</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="upload-a-datafile-with-or-without-conversion">
+<h2>Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /datafiles/?params
+
+the file should be sent with "raw_file" key.</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[section_id] - provide an ID of the section in which to store the file (recommended).</li>
+<li>[convert] - 1 (default), 0 - whether try to convert the file into native format, if possible. For the moment the following types are supported: neuroshare, ascii-csv (a csv file where every line is a signal).</li>
+</ul>
+</dd>
+</dl>
+<p><em>Note. If the file is uploaded into a specific section, the security settings for the new file will be assigned as for the parent section. When no section is specified, the file is private by default.</em></p>
+</div>
+<div class="section" id="modify-datafile-attributes-move-file-to-section">
+<h2>Modify datafile attributes, move file to Section<a class="headerlink" href="#modify-datafile-attributes-move-file-to-section" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: POST /datafiles/&lt;datafile_id&gt;/?params
+
+{
+    "caption": "Some REAL description goes here..",
+    "section": 1236,
+}</pre>
+</div>
+</div></blockquote>
+<p><em>Note. The conversion operation is asynchronous, which means you&#8217;ll not see the status of the conversion immediately in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.</em></p>
+<p><em>Note. ACL for the file is not changed when moved to a different section.</em></p>
+</div>
+<div class="section" id="datafile-conversion">
+<h2>Datafile conversion<a class="headerlink" href="#datafile-conversion" title="Permalink to this headline">¶</a></h2>
+<p>The following request</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/convert/</pre>
+</div>
+</div></blockquote>
+<p>initiates file conversion.</p>
+</div>
+<div class="section" id="download-datafile">
+<h2>Download datafile<a class="headerlink" href="#download-datafile" title="Permalink to this headline">¶</a></h2>
+<p>When the file is not converted, you may get the originally uploaded file. When file is in native format, it can convert all underlying data into a file with the format specified and return it for download.</p>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/download/?params</pre>
+</div>
+</div></blockquote>
+<p>New in development version.
+in addition to the usual filters, use can use the following parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>[format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="delete-datafile">
+<h2>Delete datafile<a class="headerlink" href="#delete-datafile" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-python"><pre>Request: DELETE /datafiles/&lt;datafile_id&gt;/?params</pre>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>in addition to the usual filters, use can use the following parameters:</dt>
+<dd><ul class="first last simple">
+<li>[force] - true, false (default) - use &#8220;true&#8221; to delete the file even if there are other users with access to the file. If &#8220;false&#8221; or omitted, the file will not be deleted being in the state having collaborators.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FILE MANAGEMENT</a><ul>
+<li><a class="reference internal" href="#file-types-and-supported-formats">File types and supported formats</a></li>
+<li><a class="reference internal" href="#getting-list-of-datafiles">Getting list of datafiles</a></li>
+<li><a class="reference internal" href="#getting-single-file-details">Getting single file details</a></li>
+<li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">Upload a datafile (with or without conversion)</a></li>
+<li><a class="reference internal" href="#modify-datafile-attributes-move-file-to-section">Modify datafile attributes, move file to Section</a></li>
+<li><a class="reference internal" href="#datafile-conversion">Datafile conversion</a></li>
+<li><a class="reference internal" href="#download-datafile">Download datafile</a></li>
+<li><a class="reference internal" href="#delete-datafile">Delete datafile</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   </ul></li>

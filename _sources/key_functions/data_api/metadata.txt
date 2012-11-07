@@ -3,7 +3,7 @@
 METADATA MANAGEMENT
 ===================
 
-You may organize your experimental data using odML Sections and Properties. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Below we describe actions available for you to manage your experimental metadata. To better understand our metadata concept please consider a nice example in the :ref:`overview <overview_metadata>`. For object specification refer to the :ref:`object model <Metadata>`.
+You may organize your experimental data using :ref:`odML Sections and Properties <Metadata>`. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Below we describe actions available for you to manage your experimental metadata. To better understand our metadata concept please consider a nice example in the :ref:`overview <overview_metadata>`. For object specification refer to the :ref:`object model <Metadata>`.
 
 ------------------------
 Getting list of sections

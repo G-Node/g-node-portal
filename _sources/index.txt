@@ -50,22 +50,22 @@ Key functions
 
    * current version 0.2: 
 
-     * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`electrophysiology <key_functions/data_api/electrophysiology>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>` | :doc:`JSON object examples <key_functions/data_api/object_examples>`
+     * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`electrophysiology <key_functions/data_api/electrophysiology>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files and formats <key_functions/data_api/files>` | :doc:`bulk upload <key_functions/data_api/bulk_upload>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>` | :doc:`JSON object examples <key_functions/data_api/object_examples>`
 
    * version 0.1: 
 
-     * :doc:`API reference <key_functions/data_api/0.1/api_specification>` | :doc:`JSON object examples <key_functions/data_api/0.1/api_object_examples>`
+     * :doc:`API reference <key_functions/data_api/0.1/api_specification>` | :doc:`object specs and examples (JSON) <key_functions/data_api/0.1/api_object_examples>`
 
 """"""""""""""""""
 Complete reference
 """"""""""""""""""
  * Matlab: 
 
-   * :doc:`Client reference <reference/matlab>` | :doc:`dummy object examples <reference/matlab_examples>`
+   * :doc:`Client reference <reference/matlab>` | :doc:`object specs and examples <reference/matlab_examples>`
 
  * Python: 
 
-   * :doc:`Client reference <reference/python>`
+   * :doc:`Client reference <reference/python>` | :doc:`object specs and examples <reference/python_examples>`
 
 
 """""""""""""""""

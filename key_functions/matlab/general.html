@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;some_title_here&gt; &mdash; g-node-portal v0.6 documentation</title>
+    <title>&lt;no title&gt; &mdash; g-node-portal v0.6 documentation</title>
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -73,10 +73,124 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="some-title-here">
-<h1>&lt;some_title_here&gt;<a class="headerlink" href="#some-title-here" title="Permalink to this headline">¶</a></h1>
-<p>Text is coming soon..</p>
-</div>
+  <p># G-Node MATLAB Toolbox</p>
+<p>&gt; The global scale of neuroinformatics offers unprecedented
+&gt; opportunities for scientific collaborations between and among
+&gt; experimental and theoretical neuroscientists. To fully harvest these
+&gt; possibilities, a set of coordinated activities is required that will
+&gt; improve three key ingredients of neuroscientific research: data
+&gt; access, data storage, and data analysis (...) ([Herz et al., 2008](<a class="reference external" href="http://www.g-node.org/publications/NN2436.pdf">http://www.g-node.org/publications/NN2436.pdf</a>))</p>
+<p>The G-Node MATLAB Toolbox (GMT) allows convenient access to electro-physiological
+recordings stored in the G-Node [Data Store](<a class="reference external" href="http://portal.g-node.org/data">http://portal.g-node.org/data</a>) through
+the MATLAB command line. Requirements are</p>
+<ul class="simple">
+<li>MATLAB R2008b or higher on any platform supporting Java (Linux, Mac, Windows), as well as a</li>
+<li>G-Node account (available [here](<a class="reference external" href="http://portal.g-node.org/data">http://portal.g-node.org/data</a>)).</li>
+</ul>
+<p>In addition, a backend for persistent and lab-wide caching is recommended but
+not necessary (e.g., MongoDB).</p>
+<p>## Installation</p>
+<p>Installation of GMT is similar to that of most MATLAB
+toolboxes. Simply download the newest release and drop it into your
+toolbox folder. In order to get the latest stable version (0.41b),
+follow these steps:</p>
+<ol class="arabic">
+<li><p class="first">[Download one of the provided archives from GitHub.](<a class="reference external" href="http://github.com/G-Node/gnode-client-matlab/downloads">http://github.com/G-Node/gnode-client-matlab/downloads</a>)</p>
+</li>
+<li><p class="first">Unzip/untar the release to your MATLAB toolbox directory. In most cases, this
+corresponds to <cite>$MATLAB_HOME/toolbox</cite>. Your toolbox directory should now contain
+a folder <cite>gnode</cite>.</p>
+</li>
+<li><p class="first">Adjust the account settings in the default configuration file
+(<cite>$MATLAB_HOME/toolbox/gnode/default.json</cite>):
+* Set <cite>username</cite> to the name of the G-Node account you want to use.
+* Set <cite>password</cite> to your password. (All transfer is mediated by a secure</p>
+<blockquote>
+<div><p>connection.)</p>
+</div></blockquote>
+<ul class="simple">
+<li>Set <cite>apiDefinition</cite> to the supplied <cite>requirements.json</cite> file. For instance,
+if your <cite>$MATLAB_HOME</cite> corresponds to <cite>/home/john/matlab/</cite>, you
+should put <cite>/home/john/matlab/toolbox/gnode/requirements.json</cite>.</li>
+</ul>
+</li>
+<li><p class="first">Open MATLAB.</p>
+</li>
+<li><p class="first">Check that your installation was successful by typing <cite>import gnode.*;</cite> at the
+MATLAB prompt. If there are no errors, you can start using the toolbox.</p>
+</li>
+<li><p class="first">Read the [documentation](<a class="reference external" href="https://github.com/g-node/gnode-client-matlab/wiki">https://github.com/g-node/gnode-client-matlab/wiki</a>).</p>
+</li>
+</ol>
+<p>If you want to track the development branch, follow these steps. NB,
+release channel updates may break compatibility or introduce bugs.</p>
+<ol class="arabic simple">
+<li>Locate your MATLAB toolbox directory. In most cases, this corresponds
+to <cite>$MATLAB_HOME/toolbox</cite>.</li>
+<li>Clone the git repository from GitHub via
+<cite>git clone https://github.com/g-node/gnode-client-matlab.git</cite>.</li>
+<li>Proceed from <cite>3</cite> in the outline above.</li>
+</ol>
+<p>## Getting started</p>
+<p>Before using the toolbox, you should set up your MATLAB environment and initialize a session.</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>matlab
+% Move all toolbox functions into scope
+import gnode.*;</p>
+<p>% Prepare MATLAB
+set_up_classpath();</p>
+<p>% Initialize session. &#8216;default&#8217; will use the account settings specified
+% during installation.
+session = init(&#8216;default&#8217;);
+<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+<p>Now the toolbox is ready for use. It requires a network connection for all
+operations involving download or upload. The G-Node data store uses a simple
+object model similar to [NEO](<a class="reference external" href="http://packages.python.org/neo/">http://packages.python.org/neo/</a>). All your data
+is stored in a set of object types tailored to electrophysiology, such as blocks,
+segments, recording channels, signals et cetera.</p>
+<p>In the MATLAB environment, we represent these objects as structures. Here is a
+basic example for creating and uploading such an object.</p>
+<p><a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a>matlab
+% Create a structure containing signal data</p>
+<p>signal = make_dummy(session, &#8216;analogsignal&#8217;);</p>
+<p>signal.name = &#8216;My brand new signal&#8217;;
+signal.sampling_rate = struct(&#8216;units&#8217;, &#8216;Hz&#8217;, &#8216;data&#8217;, 12000);
+signal.t_start = struct(&#8216;units&#8217;, &#8216;ms&#8217;, &#8216;data&#8217;, 0);
+signal.signal = struct(&#8216;units&#8217;, &#8216;mV&#8217;, &#8216;data&#8217;, my_data);</p>
+<p>% This returns the ID of the newly created object in
+% the G-Node data store</p>
+<p>new_object = create(session, signal);
+<a href="#id13"><span class="problematic" id="id14">``</span></a><a href="#id15"><span class="problematic" id="id16">`</span></a></p>
+<p>Subsequent object retrieval is equally straightforward and supports
+various access methods (e.g., single ID, array of IDs, numeric
+range). Here are a few examples to get you going:</p>
+<p><a href="#id17"><span class="problematic" id="id18">``</span></a><a href="#id19"><span class="problematic" id="id20">`</span></a>matlab
+% Lists of objects
+my_list = get_list(g, &#8216;analogsignal&#8217;);</p>
+<p>% Single objects
+my_recording = get(session, &#8216;analogsignal_947&#8217;);</p>
+<p>% Multiple objects
+all = { &#8216;analogsignal_948&#8217;, &#8216;segment_43&#8217;, &#8216;unit_8&#8217; };
+my_recordings = get(session, all);</p>
+<p>% Ranges
+more_recordings = get_range(session, &#8216;analogsignal&#8217;, 947, 1002);
+<a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a></p>
+<p>More advanced operations (e.g., updates, download queues, batch object
+creation and upload, and so on) are described in the [GMT wiki](<a class="reference external" href="https://github.com/g-node/gnode-client-matlab/wiki">https://github.com/g-node/gnode-client-matlab/wiki</a>).</p>
+<p>## FAQ</p>
+<p><strong>Q:</strong> Is the G-Node toolbox compatible with older versions of MATLAB (i.e., before R2008b)?
+<strong>A:</strong> Unfortunately not. GMT makes heavy use of the JVM bridge provided by Mathworks. This</p>
+<blockquote>
+<div>bridge is under constant development. Various
+incompatibilities and lack of features make it unfeasible to support MATLAB versions
+before R2008b.</div></blockquote>
+<p><strong>Q:</strong> Is there any versioning support for my data (e.g., revert after destructive edit)?
+<strong>A:</strong> Not yet.</p>
+<p><strong>Q:</strong> Can I contribute?
+<strong>A:</strong> GMT is open-source; pull requests are always welcome. As a user, please report</p>
+<blockquote>
+<div>any bugs or missing features on the Issue Tracker.</div></blockquote>
+<p>## License</p>
+<p>GMT is distributed under the MIT license (see <cite>LICENSE</cite>).</p>
 
 
           </div>

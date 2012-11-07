@@ -54,7 +54,7 @@ to create a new :ref:`Segment <Segment>`. If the response status is 'Created' (2
     }
 
 
-A full set of examples for all supported ePhys objects can be found in :doc:`object examples <../../reference/api_object_examples>`.
+A full set of examples for all supported ePhys objects can be found in :doc:`object examples <object_examples>`.
 
 *Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider the* :ref:`ePhys specification <ePhys Objects>`.
 
@@ -101,7 +101,7 @@ A response should look similar to this:
     }
 
 
-Our model for electrophysiology, based on the NEO® model, suggests particular object relationships: a segment (timeframe) is a part of a block (experiment), events happen within a segment etc. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. Relationships are updated in a similar way as normal attributes: provide relationships inside the POST request to save appropriate data structure of your recordings. The full list of supported connections can be found in the :ref:`key concepts <ePhys Objects>` in attribute/relationaship tables, given for every object. Also consider the :doc:`object examples page <../../reference/api_object_examples>`.
+Our model for electrophysiology, based on the `NEO® model <http://neo.readthedocs.org/en/latest/index.html>`_, suggests particular object relationships: a segment (timeframe) is a part of a block (experiment), events happen within a segment etc. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. Relationships are updated in a similar way as normal attributes: provide relationships inside the POST request to save appropriate data structure of your recordings. The full list of supported connections can be found in the :ref:`key concepts <ePhys Objects>` in attribute/relationaship tables, given for every object. Also consider the :doc:`object examples page <object_examples>`.
 
 Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (the 'sampling_rate' data field of :ref:`AnalogSignal <AnalogSignal>` object typically has units "Hz" or "KHz", :ref:`Event <Event>` object has "time" in "ms" etc). Use a dict with "data" and "units" keys while updating these fields:
 

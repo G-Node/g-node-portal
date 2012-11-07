@@ -120,7 +120,7 @@
 }</pre>
 </div>
 </div></blockquote>
-<p>A full set of examples for all supported ePhys objects can be found in <tt class="xref doc docutils literal"><span class="pre">object</span> <span class="pre">examples</span></tt>.</p>
+<p>A full set of examples for all supported ePhys objects can be found in <a class="reference internal" href="object_examples.html"><em>object examples</em></a>.</p>
 <p><em>Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider the</em> <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys specification</em></a>.</p>
 <p>To update the <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a>, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we&#8217;ve just created was assigned an ID = 213, send an HTTP POST to the &#8220;/electrophysiology/segment/213/&#8221; with the following body</p>
 <blockquote>
@@ -160,7 +160,7 @@
 }</pre>
 </div>
 </div></blockquote>
-<p>Our model for electrophysiology, based on the NEO® model, suggests particular object relationships: a segment (timeframe) is a part of a block (experiment), events happen within a segment etc. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. Relationships are updated in a similar way as normal attributes: provide relationships inside the POST request to save appropriate data structure of your recordings. The full list of supported connections can be found in the <a class="reference internal" href="../terminology.html#ephys-objects"><em>key concepts</em></a> in attribute/relationaship tables, given for every object. Also consider the <tt class="xref doc docutils literal"><span class="pre">object</span> <span class="pre">examples</span> <span class="pre">page</span></tt>.</p>
+<p>Our model for electrophysiology, based on the <a class="reference external" href="http://neo.readthedocs.org/en/latest/index.html">NEO® model</a>, suggests particular object relationships: a segment (timeframe) is a part of a block (experiment), events happen within a segment etc. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. Relationships are updated in a similar way as normal attributes: provide relationships inside the POST request to save appropriate data structure of your recordings. The full list of supported connections can be found in the <a class="reference internal" href="../terminology.html#ephys-objects"><em>key concepts</em></a> in attribute/relationaship tables, given for every object. Also consider the <a class="reference internal" href="object_examples.html"><em>object examples page</em></a>.</p>
 <p>Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (the &#8216;sampling_rate&#8217; data field of <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> object typically has units &#8220;Hz&#8221; or &#8220;KHz&#8221;, <a class="reference internal" href="../terminology.html#event"><em>Event</em></a> object has &#8220;time&#8221; in &#8220;ms&#8221; etc). Use a dict with &#8220;data&#8221; and &#8220;units&#8221; keys while updating these fields:</p>
 <div class="highlight-python"><pre>"time": {
     "units": "ms",

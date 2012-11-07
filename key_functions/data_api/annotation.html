@@ -75,9 +75,7 @@
             
   <div class="section" id="data-annotation">
 <h1>Data Annotation<a class="headerlink" href="#data-annotation" title="Permalink to this headline">¶</a></h1>
-<p>Imagine you have an experiment with stimulus which changes its color across experimental trials. After several trials you need to indicate, which signals were recorded under which stimulus color. We call this basic linking of data and metadata as &#8220;data annotation&#8221;. In this section we describe how it works in this context.</p>
-<blockquote>
-<div>This is Assume in the experiment section tree you already defined a property, say, &#8220;StimulusColor&#8221; with values &#8220;red, green, blue&#8221;. In that case, annotate all required Analog Signals with appropriate metadata values, assigning a &#8220;red&#8221; value to the signals recorded when the Stimulius was red etc.*</div></blockquote>
+<p>Data annotation is the process of connecting data and metadata, by &#8220;tagging&#8221; recorded <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys elements</em></a> with appropriate metadata values. To understand data annotation better, consider a <a class="reference internal" href="../../overview.html#annotation-example"><em>nice example in the overview</em></a> or <a class="reference internal" href="../terminology.html#data-annotation"><em>its definition</em></a>.</p>
 <p>You may annotate (or &#8220;tag&#8221;) one or several <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys Objects</em></a> with particular metadata values by using the following request:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /electrophysiology/analogsignal/11/
@@ -90,8 +88,8 @@
 }</pre>
 </div>
 </div></blockquote>
-<p>If the POST request is sent to the selection (several objects), all objects in the selection will be updated. Importantly, by default metadata values are added to the existing metadata values. If you need to completely overwrite object&#8217;s metadata, provide m2m_append=0 parameter in the request. This is the way to remove object metadata, providing empty list together with m2m_append=0.</p>
-<p>Another feature is that metadata propagates down the electrophysiological hierarchy by default, e.g. if you annotate a <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a> that contains some <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignals</em></a> or <a class="reference internal" href="../terminology.html#event"><em>Events</em></a>, all these signals and events will be also annotated. This can be controlled with the &#8220;cascade&#8221; attribute, provide cascade=0 to cancel propagation.</p>
+<p>If the POST request is sent to the selection (several objects), all objects in the selection will be updated. Importantly, by default metadata values are added to the existing metadata values. If you need to completely overwrite object&#8217;s metadata, provide m2m_append=0 parameter in the request. This is also the way to <strong>remove</strong> object metadata, providing empty list together with m2m_append=0.</p>
+<p>Another feature is that metadata propagates down the <a class="reference internal" href="../terminology.html#ephys-objects"><em>electrophysiological hierarchy</em></a> by default, e.g. if you annotate a <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a> that contains some <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignals</em></a> or <a class="reference internal" href="../terminology.html#event"><em>Events</em></a>, all these signals and events will be also annotated. This can be controlled with the &#8220;cascade&#8221; attribute: provide cascade=0 to cancel cascade propagation.</p>
 </div>
 
 
