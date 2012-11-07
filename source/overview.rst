@@ -51,16 +51,34 @@ Assume in the experiment section tree you already defined a property, say, "Stim
 Query your experiments
 ----------------------
 
+This section is being described..
 
 --------------------------------
 Open your data for Collaborators
 --------------------------------
 
+This section is being described..
 
 -------------
 Track changes
 -------------
 
+This section is being described..
 
+----------------
+Bulk data upload
+----------------
+
+^^^^^^^^^^^^
+Zip archives
+^^^^^^^^^^^^
+
+This section is in development..
+
+^^^^^^^^^^^^^^^
+Upload via sFTP
+^^^^^^^^^^^^^^^
+
+This section is in development..
 
 

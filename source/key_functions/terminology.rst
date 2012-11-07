@@ -27,20 +27,20 @@ electrophysiology ( ePhys Objects )
 
     ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). An original concept is described `here <http://neo.readthedocs.org/en/latest/core.html>`_, however we provide all descriptions down below for convenience. A good example :ref:`is described in the overview <overview_ephys>`. The following raw data objects are supported:
 
- * block
- * segment
- * event
- * eventarray
- * epoch
- * epocharray
- * unit
- * spiketrain
- * analogsignal
- * analogsignalarray
- * irsaanalogsignal
- * spike
- * recordingchannelgroup
- * recordingchannel  
+ * AnalogSignal_
+ * IrSaAnalogSignal_
+ * AnalogSignalArray_
+ * SpikeTrain_
+ * Spike_
+ * Event_
+ * EventArray_
+ * Epoch_
+ * EpochArray_
+ * Block_
+ * Segment_
+ * Unit_
+ * RecordingChannelGroup_
+ * RecordingChannel_
 
 Every object serves a specific purpose to organize your electrophysiological data. 'Block's mainly represent one experiment (or the whole data, recorded within one experiment). 'Segment' represents an experimental trial, a "time frame" within an experiment with unique experimental conditions. Blocks may contain several segments, like an experiment consists of several trials. A 'Segment' may contain 'AnalogSignal's, 'Event's or 'Epoch's, which are used to organize recorded signals, single time events, or events with duration inside one experimental time-frame. Segment may also contain 'SpikeTrain' objects to accommodate the spike data. For every 'Block' one may define a set of 'RecordingChannel's according to the experimental setup. These channels can be organized under a 'RecordingChannelGroup', to keep track of tethrodes. 'AnalogSignals' can be linked to the appropriate 'RecordingChannel's to make the dataset consistent.
 
@@ -51,6 +51,17 @@ The overall data model for electrophysiology looks like this:
     :align: center
 
 Every object in this context has a set of *attributes* and *data fields*, it may also have relationships, like *parents* and *children*. For example, a segment has to have an attribute 'name'. 'AnalogSignal' should have a 'sampling_rate' data field, which consists of the unit (like Hz or KHz) and a value (like 20000). A 'Block' consists of 'Segments', which means the 'Block' has a child 'Segment', and a 'Segment' has a parent 'Block'. Below for each object you can find its definition, as well as the detailed listing of its attributes and relationships.
+
+.. _available_units:
+
+*Note. Some attributes have units. Here is the list of available units values:*
+
+ * in the time domain:
+   * "s", "ms", "us"
+ * in the signal domain:
+   * "V", "mV", "uV"
+ * in the signal sampling domain:
+   * "Hz", "KHz", "MHz", "1/s"
 
 *Note. Attributes with \* asterisk are mandatory.*
 
@@ -113,7 +124,7 @@ Parameter               Type
 =====================   ==========================
 t_start\*               float + units
 sampling_rate\*         float + units
-signal\*                array of floats 1D + units
+signal\*                array of floats 2D + units
 segment                 foreign key to Segment_
 recordingchannelgroup   foreign key to RecordingChannelGroup_
 =====================   ==========================
@@ -135,7 +146,7 @@ Parameter               Type
 time\*                  float + units
 sampling_rate\*         float + units
 left_sweep              float + units
-waveform\*              array of floats 1D + units
+waveform\*              array of floats 2D + units
 segment                 foreign key to Segment_
 unit                    foreign key to Unit_
 =====================   ==========================
@@ -249,6 +260,7 @@ Parameter               Type
 name\*                  string
 filedatetime            datetime
 index                   int
+section                 foreign key to Section_
 =====================   ==========================
 
 Block can contain objects of the following types:
