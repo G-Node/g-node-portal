@@ -24,6 +24,27 @@ foreign key                     "<parent_obj_permalink>"
 
 *Note. Available units values are* :ref:`listed here <available_units>`.
 
+.. _useful_mappings:
+
+---------------
+Useful mappings
+---------------
+
+For some parameters, like a publication state of an object (..., "safety_level": 3, ...), we use integers in the request and response which could be meaningless for a developer. To mitigate that here we provide mappings explaining values for such parameters:
+
+**safety_level**
+
+ * 1 - public
+ * 2 - friendly
+ * 3 - private (default)
+
+
+**user permissions** (used inside direct shares, find :ref:`more about it here <update_acl>`)
+
+ * 1 - read only
+ * 2 - read and write
+
+
 ------------------
 POST body examples
 ------------------
