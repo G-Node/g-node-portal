@@ -36,7 +36,7 @@ Key functions
 """""""""""""
  * Introduction: 
 
-   * :doc:`Key concepts and data model <key_functions/terminology>`
+   * :doc:`key concepts <key_functions/terminology>` | :doc:`core functions <key_functions/functions>` | :doc:`objects and data model <key_functions/object_model>`
 
  * Matlab:
 

@@ -9,6 +9,14 @@ The goal of this document is to present you the potential usage of the platform 
 
 .. _overview_ephys:
 
+.. _search_overview:
+
+------------------------------
+Start by searching public data
+------------------------------
+
+
+
 -------------------------------
 Organize your experimental Data
 -------------------------------
@@ -47,6 +55,8 @@ Assume you want to group channels by some spatial property, and later compare th
 Assume in the experiment section tree you already defined a property, say, "Stimulus Color" with values "red, green and blue". In that case, annotate all required Analog Signals with appropriate metadata values, assigning a "red" value to the signals recorded when the Stimulius was red etc.
 
 
+.. _query_overview:
+
 ----------------------
 Query your experiments
 ----------------------
@@ -64,6 +74,8 @@ Track changes
 -------------
 
 This section is being described..
+
+.. _bulk_upload:
 
 ----------------
 Bulk data upload

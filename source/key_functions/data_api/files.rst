@@ -114,6 +114,7 @@ parameters:
 
 *Note. If the file is uploaded into a specific section, the security settings for the new file will be assigned as for the parent section. When no section is specified, the file is private by default.*
 
+*Note. For bulk file upload consider this* :ref:`description in the overview <bulk_upload>`.
 
 ----------------------------------------------------
 Modify datafile attributes, move file to the Section
