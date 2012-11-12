@@ -75,10 +75,54 @@
             
   <div class="section" id="file-management">
 <h1>FILE MANAGEMENT<a class="headerlink" href="#file-management" title="Permalink to this headline">¶</a></h1>
-<p>About...</p>
+<p>In this section we describe how to upload, download and convert files.</p>
 <div class="section" id="file-types-and-supported-formats">
 <span id="file-types"></span><h2>File types and supported formats<a class="headerlink" href="#file-types-and-supported-formats" title="Permalink to this headline">¶</a></h2>
-<p>List supported formats and corresponsing file types</p>
+<p>We support data conversion from several open and proprietary formats, available in the domain of neuroscience. If you upload a file of the supported format, you may request to extract data from it further to be able to directly access your experimental data and metadata or export and download it in different format. We do support data extraction from ZIP/TAR archives too. Here is the list of supported formats:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="2%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Format</th>
+<th class="head">Type</th>
+<th class="head">Comments</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>neuroshare*</td>
+<td>1</td>
+<td><a class="reference external" href="http://neuroshare.sourceforge.net/standards.shtml">Neuroshare</a> compatible. Extracted into <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys Objects</em></a></td>
+</tr>
+<tr><td>NEO I/O*</td>
+<td>2</td>
+<td>compatible with <a class="reference external" href="http://neo.readthedocs.org/en/latest/io.html">NEO I/O</a>. Extracted into <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys Objects</em></a></td>
+</tr>
+<tr><td>ascii-csv</td>
+<td>3</td>
+<td>a csv file where every line represents a signal as comma-separated floats. Extracted into <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> objects</td>
+</tr>
+<tr><td>odML*</td>
+<td>4</td>
+<td>compatible with <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>. Extracts odML structure and creates the same metadata structure in the root of the metadata tree</td>
+</tr>
+<tr><td>HDF5</td>
+<td>5</td>
+<td>a file should have an array in the root (&#8220;/&#8221;). Can be used with any <a class="reference internal" href="electrophysiology.html#array-upload-note"><em>data-containing object</em></a> as a corresponding data array.</td>
+</tr>
+<tr><td>ZIP</td>
+<td>6</td>
+<td>ZIP archive. Extracted folders are replicated as metadata <a class="reference internal" href="../object_model.html#section"><em>Section</em></a> objects containing original files from the archive.</td>
+</tr>
+<tr><td>TAR</td>
+<td>7</td>
+<td>TAR archive. Extracted folders are replicated as metadata <a class="reference internal" href="../object_model.html#section"><em>Section</em></a> objects containing original files from the archive.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note. Conversion from types marked with asterisk are in development.</em></p>
 </div>
 <div class="section" id="getting-list-of-datafiles">
 <h2>Getting list of datafiles<a class="headerlink" href="#getting-list-of-datafiles" title="Permalink to this headline">¶</a></h2>
@@ -118,7 +162,7 @@
         "extracted_info": null,
         "tags": "",
         "current_state": 10,
-        "operations_log": "python-neuroshare: failure ascii-csv: success ascii-csv: parsing successul ascii-csv: parsing successul objects parsed: 3ascii-csv: parsing successul objects parsed: 3",
+        "operations_log": "python-neuroshare: failure ascii-csv: success ... ",
         "conversion_type": 3,
         "caption": "",
         "last_modified": "2012-03-15 10:27:45",
@@ -137,12 +181,13 @@
 </div></blockquote>
 </div>
 <div class="section" id="getting-single-file-details">
-<h2>Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h2>
+<span id="getting-single-file"></span><h2>Getting single file details<a class="headerlink" href="#getting-single-file-details" title="Permalink to this headline">¶</a></h2>
 <p>Requesting information about a single file is like a normal <a class="reference internal" href="principles.html#get-single-object"><em>single object request</em></a>:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;</pre>
 </div>
 </div></blockquote>
+<p>See the response example above; it&#8217;s very similar.</p>
 </div>
 <div class="section" id="upload-a-datafile-with-or-without-conversion">
 <h2>Upload a datafile (with or without conversion)<a class="headerlink" href="#upload-a-datafile-with-or-without-conversion" title="Permalink to this headline">¶</a></h2>
@@ -156,14 +201,15 @@ the file should be sent with "raw_file" key.</pre>
 <dt>parameters:</dt>
 <dd><ul class="first last simple">
 <li>[section_id] - provide an ID of the section in which to store the file (recommended).</li>
-<li>[convert] - 1 (default), 0 - whether try to convert the file into native format, if possible. For the moment the following types are supported: neuroshare, ascii-csv (a csv file where every line is a signal).</li>
+<li>[convert] - 1 (default), 0 - whether try to convert the file into native format, if possible. See the <a class="reference internal" href="#file-types"><em>supported file types in this table</em></a>.</li>
 </ul>
 </dd>
 </dl>
 <p><em>Note. If the file is uploaded into a specific section, the security settings for the new file will be assigned as for the parent section. When no section is specified, the file is private by default.</em></p>
+<p><em>Note. For bulk file upload consider this</em> <a class="reference internal" href="../../overview.html#bulk-upload"><em>description in the overview</em></a>.</p>
 </div>
-<div class="section" id="modify-datafile-attributes-move-file-to-section">
-<h2>Modify datafile attributes, move file to Section<a class="headerlink" href="#modify-datafile-attributes-move-file-to-section" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="modify-datafile-attributes-move-file-to-the-section">
+<h2>Modify datafile attributes, move file to the Section<a class="headerlink" href="#modify-datafile-attributes-move-file-to-the-section" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /datafiles/&lt;datafile_id&gt;/?params
 
@@ -173,7 +219,6 @@ the file should be sent with "raw_file" key.</pre>
 }</pre>
 </div>
 </div></blockquote>
-<p><em>Note. The conversion operation is asynchronous, which means you&#8217;ll not see the status of the conversion immediately in the response. You may use a details request (2.2) to check whether the file was converted successfully or not.</em></p>
 <p><em>Note. ACL for the file is not changed when moved to a different section.</em></p>
 </div>
 <div class="section" id="datafile-conversion">
@@ -184,6 +229,7 @@ the file should be sent with "raw_file" key.</pre>
 </div>
 </div></blockquote>
 <p>initiates file conversion.</p>
+<p><em>Note. The conversion operation is asynchronous, which means you&#8217;ll not see the status of the conversion immediately in the response. You may use a normal :ref:`details request &lt;getting_single_file&gt;` to check whether the file was converted successfully and see log for details.</em></p>
 </div>
 <div class="section" id="download-datafile">
 <h2>Download datafile<a class="headerlink" href="#download-datafile" title="Permalink to this headline">¶</a></h2>
@@ -191,13 +237,6 @@ the file should be sent with "raw_file" key.</pre>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: GET /datafiles/&lt;datafile_id&gt;/download/?params</pre>
 </div>
-</div></blockquote>
-<p>New in development version.
-in addition to the usual filters, use can use the following parameters:</p>
-<blockquote>
-<div><ul class="simple">
-<li>[format] - required file format. The following formats are supported: HDF5. Leave this empty to download an original file.</li>
-</ul>
 </div></blockquote>
 </div>
 <div class="section" id="delete-datafile">
@@ -229,7 +268,7 @@ in addition to the usual filters, use can use the following parameters:</p>
 <li><a class="reference internal" href="#getting-list-of-datafiles">Getting list of datafiles</a></li>
 <li><a class="reference internal" href="#getting-single-file-details">Getting single file details</a></li>
 <li><a class="reference internal" href="#upload-a-datafile-with-or-without-conversion">Upload a datafile (with or without conversion)</a></li>
-<li><a class="reference internal" href="#modify-datafile-attributes-move-file-to-section">Modify datafile attributes, move file to Section</a></li>
+<li><a class="reference internal" href="#modify-datafile-attributes-move-file-to-the-section">Modify datafile attributes, move file to the Section</a></li>
 <li><a class="reference internal" href="#datafile-conversion">Datafile conversion</a></li>
 <li><a class="reference internal" href="#download-datafile">Download datafile</a></li>
 <li><a class="reference internal" href="#delete-datafile">Delete datafile</a></li>

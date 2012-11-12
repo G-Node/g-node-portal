@@ -80,7 +80,7 @@
 <h2>Data is stored in Files<a class="headerlink" href="#data-is-stored-in-files" title="Permalink to this headline">¶</a></h2>
 <p>We use <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 file format</a> to store any array data. We made several performance tests which showed this is the optimal way of managing large data arrays. Practically that means that for every object, that has an array data associated with it (like <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../terminology.html#spiketrain"><em>SpikeTrain</em></a>) we store the data in related HDF5 file. In order to access the data using the API you basically have to access the associated file. There are several format options, explained in the <a class="reference internal" href="#data-format"><em>sections below</em></a>.</p>
 <div class="section" id="create-data-related-object">
-<h3>Create data-related object<a class="headerlink" href="#create-data-related-object" title="Permalink to this headline">¶</a></h3>
+<span id="create-array-routine"></span><h3>Create data-related object<a class="headerlink" href="#create-data-related-object" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt>So the routine to create a new data-associated object has actually two steps:</dt>
 <dd><ul class="first last simple">

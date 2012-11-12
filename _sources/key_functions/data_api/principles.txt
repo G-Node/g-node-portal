@@ -246,13 +246,13 @@ You may filter the list of objects by owner, permissions or specific conditions 
 
 ::
 
-    Request: GET /metadata/sections/?owner=alex&safety_level=1&name__icontains=experiment
+    Request: GET /metadata/section/?owner=alex&safety_level=1&name__icontains=experiment
 
 filters Alex's publicly available metadata :ref:`sections <Section>` containing 'experiment' in the name, or
 
 ::
 
-    Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11
+    Request: GET /metadata/section/?date_created__gt=2012-02-23 13:20:11
 
 filters out all objects created before February, 23 2012. For more information on filtering consider :doc:`search and query <query>` section.
 
@@ -262,7 +262,7 @@ DATA API limits the number objects to be retrieved in one request by 100. If the
 
 ::
 
-    Request: GET /metadata/sections/?offset=120&max_results=300
+    Request: GET /metadata/section/?offset=120&max_results=300
 
 will retrieve 300 objects, indexed from 120 to 419 respectively.
 
@@ -276,7 +276,7 @@ To get a single object you should specify its ID at the end of the URL:
 
 ::
 
-    Request: GET /metadata/sections/10/
+    Request: GET /metadata/section/10/
 
 .. _q_parameter:
 
@@ -287,7 +287,7 @@ This works with both list of objects and single objects. For example
 
 ::
 
-    Request: GET /metadata/sections/2/?q=full
+    Request: GET /metadata/section/2/?q=full
 
 will retrieve the full information about the section:
 
@@ -306,9 +306,9 @@ will retrieve the full information about the section:
                 "name": "stimulus",
                 "datafile_set": [],
                 "property_set": [
-                    "metadata/properties/10",
-                    "metadata/properties/11",
-                    "metadata/properties/15"
+                    "metadata/property/10",
+                    "metadata/property/11",
+                    "metadata/property/15"
                 ],
                 "current_state": 10,
                 "is_template": false,
@@ -318,14 +318,14 @@ will retrieve the full information about the section:
                 "owner": 2,
                 "date_created": "2012-02-23 18:19:53",
                 "section_set": [
-                    "metadata/sections/4",
-                    "metadata/sections/6"
+                    "metadata/section/4",
+                    "metadata/section/6"
                 ],
                 "user_custom": null,
                 "description": ""
             },
             "model": "metadata.section",
-            "permalink": "metadata/sections/2"
+            "permalink": "metadata/section/2"
         }],
         "message": "Here is the list of requested objects.",
         "selected_range": [0, 0],
@@ -353,9 +353,9 @@ so you can directly access parent objects and go up the hierarchy. Besides objec
     {
         ...
         "property_set": [
-            "metadata/properties/10",
-            "metadata/properties/11",
-            "metadata/properties/15"
+            "metadata/property/10",
+            "metadata/property/11",
+            "metadata/property/15"
         ],
         ...
     }
@@ -374,7 +374,7 @@ To update one or several attributes of an object send POST to the object permali
 
 ::
 
-    Request: POST /metadata/properties/2/
+    Request: POST /metadata/property/2/
 
     {
         "name": "15 - here is new name",
@@ -386,17 +386,19 @@ To update one or several attributes of an object send POST to the object permali
 Bulk update
 ^^^^^^^^^^^
 
-Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /<namespace>/<object_type>/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all properties with name having "sampling" to the section with ID 146:
+Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /<namespace>/<object_type>/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all property with name having "sampling" to the section with ID 146:
 
 ::
 
-    Request: POST /metadata/properties/2/?name__icontains=sampling&bulk_update=1
+    Request: POST /metadata/property/2/?name__icontains=sampling&bulk_update=1
 
     {
         "section": 146
     }
 
 A good use case is nicely illustrated in the paragraph below.
+
+.. _manage_relations:
 
 ^^^^^^^^^^^^^^^^^^^^
 Manage relationships
@@ -406,10 +408,10 @@ Standard one-to-many relationships (like (one) :ref:`recording channel <Recordin
 
 ::
 
-    Request: POST /metadata/properties/2/
+    Request: POST /metadata/property/2/
 
     {
-        "section": "metadata/sections/2"
+        "section": "metadata/section/2"
     }
 
 There are 2 options to update a foreing key: you may provide a permalink (shown above), or just an ID (2 in this example).
@@ -422,9 +424,9 @@ Important to mention, updating the reverse relationship is not supported. That m
 
     {
         "property_set": [
-            "metadata/properties/10",
-            "metadata/properties/11",
-            "metadata/properties/15"
+            "metadata/property/10",
+            "metadata/property/11",
+            "metadata/property/15"
         ]
     }
 
@@ -432,10 +434,10 @@ will not work, instead it is better to do something like:
 
 ::
 
-    Request: POST /metadata/properties/?id__in=[10,11,15]&bulk_update=1
+    Request: POST /metadata/property/?id__in=[10,11,15]&bulk_update=1
 
     {
-        "section": "metadata/sections/2"
+        "section": "metadata/section/2"
     }
 
 

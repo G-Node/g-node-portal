@@ -10,6 +10,8 @@ Data is stored in Files
 
 We use `HDF5 file format <http://www.hdfgroup.org/HDF5/>`_ to store any array data. We made several performance tests which showed this is the optimal way of managing large data arrays. Practically that means that for every object, that has an array data associated with it (like :ref:`AnalogSignal <AnalogSignal>` or :ref:`SpikeTrain <SpikeTrain>`) we store the data in related HDF5 file. In order to access the data using the API you basically have to access the associated file. There are several format options, explained in the :ref:`sections below <data_format>`.
 
+.. _create_array_routine:
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 Create data-related object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

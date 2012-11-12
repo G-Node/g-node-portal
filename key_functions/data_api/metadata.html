@@ -75,11 +75,11 @@
             
   <div class="section" id="metadata-management">
 <h1>METADATA MANAGEMENT<a class="headerlink" href="#metadata-management" title="Permalink to this headline">¶</a></h1>
-<p>You may organize your experimental data using <a class="reference internal" href="../terminology.html#id10"><em>odML Sections and Properties</em></a>. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Below we describe actions available for you to manage your experimental metadata. To better understand our metadata concept please consider a nice example in the <a class="reference internal" href="../../overview.html#overview-metadata"><em>overview</em></a>. For object specification refer to the <a class="reference internal" href="../terminology.html#id10"><em>object model</em></a>.</p>
+<p>You may organize your experimental data using <a class="reference internal" href="../terminology.html#id11"><em>odML Sections and Properties</em></a>. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Below we describe actions available for you to manage your experimental metadata. To better understand our metadata concept please consider a nice example in the <a class="reference internal" href="../../overview.html#overview-metadata"><em>overview</em></a>. For object specification refer to the <a class="reference internal" href="../terminology.html#id11"><em>object model</em></a>.</p>
 <div class="section" id="getting-list-of-sections">
 <h2>Getting list of sections<a class="headerlink" href="#getting-list-of-sections" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /metadata/sections/?params</pre>
+<div><div class="highlight-python"><pre>GET /metadata/section/?params</pre>
 </div>
 </div></blockquote>
 <p>in addition to the <a class="reference internal" href="query.html"><em>usual filters</em></a>, use the following parameters:</p>
@@ -166,10 +166,11 @@
 </div></blockquote>
 <p>In this example you can see the <a class="reference internal" href="../terminology.html#section"><em>section</em></a> with ID = 1 has a couple of <a class="reference internal" href="../terminology.html#datafile"><em>datafiles</em></a> inside plus a couple of <a class="reference internal" href="../terminology.html#block"><em>blocks</em></a> linked to it. The second section (ID = 2) has no data inside however holds several properties, which describe the experiment.</p>
 </div>
-<div class="section" id="section-create">
-<h2>Section: create<a class="headerlink" href="#section-create" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="section-create-or-update">
+<h2>Section: create or update<a class="headerlink" href="#section-create-or-update" title="Permalink to this headline">¶</a></h2>
+<p>Create and update operations are implemented inline with the <a class="reference internal" href="principles.html"><em>key API principles</em></a>:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: POST /metadata/sections/?params
+<div><div class="highlight-python"><pre>Request: POST /metadata/section/[section_id/]?params
 
 {
     "parent_section": 2,
@@ -212,7 +213,7 @@ if you need to create a section from the template (or from other section) provid
         "name": "Electrode"
     },
     "model": "metadata.section",
-    "permalink": "/metadata/sections/18"
+    "permalink": "/metadata/section/18"
 }],
 "message": "Here is the list of requested objects.",
 "selected_range": [0, 0],
@@ -225,7 +226,7 @@ if you need to create a section from the template (or from other section) provid
 <h2>Getting section details<a class="headerlink" href="#getting-section-details" title="Permalink to this headline">¶</a></h2>
 <p>Similarly to the usual <a class="reference internal" href="principles.html#get-single-object"><em>GET single object</em></a> request:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /metadata/sections/&lt;section_id&gt;/</pre>
+<div><div class="highlight-python"><pre>GET /metadata/section/&lt;section_id&gt;/</pre>
 </div>
 </div></blockquote>
 <p>Response:</p>
@@ -248,7 +249,7 @@ if you need to create a section from the template (or from other section) provid
         "name": "Electrode"
         },
     "model": "metadata.section",
-    "permalink": "/metadata/sections/18"
+    "permalink": "/metadata/section/18"
 }],
 "message": "Here is the list of requested objects.",
 "selected_range": [0, 0],
@@ -260,7 +261,7 @@ if you need to create a section from the template (or from other section) provid
 <div class="section" id="delete-section">
 <h2>Delete section<a class="headerlink" href="#delete-section" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><div class="highlight-python"><pre>DELETE /metadata/sections/&lt;section_id&gt;/?params</pre>
+<div><div class="highlight-python"><pre>DELETE /metadata/section/&lt;section_id&gt;/?params</pre>
 </div>
 </div></blockquote>
 <dl class="docutils">
@@ -286,7 +287,7 @@ if you need to create a section from the template (or from other section) provid
 <h2>Getting list of properties in the section<a class="headerlink" href="#getting-list-of-properties-in-the-section" title="Permalink to this headline">¶</a></h2>
 <p>You basically have to query properties with the filter set on the particular section:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /metadata/properties/?section=&lt;section_id&gt;</pre>
+<div><div class="highlight-python"><pre>GET /metadata/property/?section=&lt;section_id&gt;</pre>
 </div>
 </div></blockquote>
 <p>Response:</p>
@@ -300,12 +301,12 @@ if you need to create a section from the template (or from other section) provid
     {
         "fields": {...},
         "model": "metadata.property",
-        "permalink": "/metadata/properties/1"
+        "permalink": "/metadata/property/1"
     },
     {
         "fields": {...},
         "model": "metadata.property",
-        "permalink": "/metadata/properties/2"
+        "permalink": "/metadata/property/2"
     }
 ],
 ...
@@ -330,7 +331,7 @@ if you need to create a section from the template (or from other section) provid
 <h2>Create or update a property<a class="headerlink" href="#create-or-update-a-property" title="Permalink to this headline">¶</a></h2>
 <p>Managing propeties is similar to managing sections and is implemented inline with the <a class="reference internal" href="principles.html"><em>key API principles</em></a>:</p>
 <blockquote>
-<div><div class="highlight-python"><pre>Request: POST /metadata/properties/[&lt;property_id&gt;]/
+<div><div class="highlight-python"><pre>Request: POST /metadata/property/[&lt;property_id&gt;]/
 
 {
     "comment": "insert some comments here..",
@@ -366,7 +367,7 @@ if you need to create a section from the template (or from other section) provid
         "unit": ""
     },
     "model": "metadata.property",
-    "permalink": "/metadata/properties/23"
+    "permalink": "/metadata/property/23"
 }],
 ...
 }</pre>
@@ -376,7 +377,7 @@ if you need to create a section from the template (or from other section) provid
 <div class="section" id="getting-a-property">
 <h2>Getting a property<a class="headerlink" href="#getting-a-property" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><div class="highlight-python"><pre>GET /metadata/properties/&lt;property_id&gt;/</pre>
+<div><div class="highlight-python"><pre>GET /metadata/property/&lt;property_id&gt;/</pre>
 </div>
 </div></blockquote>
 <p>Response is very similar to the one provided above.</p>
@@ -384,7 +385,7 @@ if you need to create a section from the template (or from other section) provid
 <div class="section" id="delete-property">
 <h2>Delete property<a class="headerlink" href="#delete-property" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><div class="highlight-python"><pre>DELETE /metadata/properties/&lt;property_id&gt;</pre>
+<div><div class="highlight-python"><pre>DELETE /metadata/property/&lt;property_id&gt;</pre>
 </div>
 </div></blockquote>
 <p>This request permanently moves the property into archive.</p>
@@ -461,7 +462,7 @@ if you need to create a section from the template (or from other section) provid
   <ul>
 <li><a class="reference internal" href="#">METADATA MANAGEMENT</a><ul>
 <li><a class="reference internal" href="#getting-list-of-sections">Getting list of sections</a></li>
-<li><a class="reference internal" href="#section-create">Section: create</a></li>
+<li><a class="reference internal" href="#section-create-or-update">Section: create or update</a></li>
 <li><a class="reference internal" href="#getting-section-details">Getting section details</a></li>
 <li><a class="reference internal" href="#delete-section">Delete section</a></li>
 <li><a class="reference internal" href="#getting-list-of-properties-in-the-section">Getting list of properties in the section</a></li>

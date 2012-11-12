@@ -75,10 +75,15 @@
             
   <div class="section" id="data-annotation">
 <h1>Data Annotation<a class="headerlink" href="#data-annotation" title="Permalink to this headline">¶</a></h1>
-<p>Data annotation is the process of connecting data and metadata, by &#8220;tagging&#8221; recorded <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys elements</em></a> with appropriate metadata values. To understand data annotation better, consider a <a class="reference internal" href="../../overview.html#annotation-example"><em>nice example in the overview</em></a> or <a class="reference internal" href="../terminology.html#data-annotation"><em>its definition</em></a>.</p>
-<p>You may annotate (or &#8220;tag&#8221;) one or several <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys Objects</em></a> with particular metadata values by using the following request:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: POST /electrophysiology/analogsignal/11/
+<p>Data annotation is the process of connecting data and metadata, by &#8220;tagging&#8221; recorded <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys elements</em></a> with appropriate metadata values. To understand <a class="reference internal" href="../terminology.html#data-annotation"><em>data annotation</em></a> better, consider a <a class="reference internal" href="../../overview.html#annotation-example"><em>nice example in the overview</em></a>.</p>
+<p>You may annotate (or &#8220;tag&#8221;) one or several <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys Objects</em></a> with particular metadata values. For that you should POST appropriate metadata values to a single object</p>
+<div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;/&lt;object_id&gt;/</pre>
+</div>
+<p>or to a selection of objects</p>
+<div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;/?filters</pre>
+</div>
+<p>for example:</p>
+<div class="highlight-python"><pre>Request: POST /electrophysiology/analogsignal/11/
 
 {
     "metadata": [
@@ -87,7 +92,6 @@
     ]
 }</pre>
 </div>
-</div></blockquote>
 <p>If the POST request is sent to the selection (several objects), all objects in the selection will be updated. Importantly, by default metadata values are added to the existing metadata values. If you need to completely overwrite object&#8217;s metadata, provide m2m_append=0 parameter in the request. This is also the way to <strong>remove</strong> object metadata, providing empty list together with m2m_append=0.</p>
 <p>Another feature is that metadata propagates down the <a class="reference internal" href="../terminology.html#ephys-objects"><em>electrophysiological hierarchy</em></a> by default, e.g. if you annotate a <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a> that contains some <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignals</em></a> or <a class="reference internal" href="../terminology.html#event"><em>Events</em></a>, all these signals and events will be also annotated. This can be controlled with the &#8220;cascade&#8221; attribute: provide cascade=0 to cancel cascade propagation.</p>
 </div>

@@ -79,7 +79,7 @@
 <div class="section" id="request-and-response">
 <h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
 <p>All operations are made using HTTP requests with JSON as a main request and response format. The API supports GET, POST and DELETE request types. Generally, GET requests are used to query objects and related data, POST requests create or update RESTful objects, DELETE requests move objects to the archive. Specifically, the following matrix summarizes which example URLs you should use to request a certain operation:</p>
-<div align="center" class="align-center"><object data="../../_images/api_principles_crud16.svg" type="image/svg+xml"><embed src="../../_images/api_principles_crud16.svg" type="image/svg+xml" /></object>
+<div align="center" class="align-center"><object data="../../_images/api_principles_crud18.svg" type="image/svg+xml"><embed src="../../_images/api_principles_crud18.svg" type="image/svg+xml" /></object>
 </div>
 <p>All URLs must have a host prefix, e.g. <a class="reference external" href="https://portal.g-node.org/data/">https://portal.g-node.org/data/</a>. These operations are described in detail within document sections below.</p>
 <p>A typical GET request should have a form like</p>
@@ -271,21 +271,21 @@ Vary:Accept-Language, Cookie</pre>
 <div class="section" id="filter-results">
 <h3>Filter results<a class="headerlink" href="#filter-results" title="Permalink to this headline">¶</a></h3>
 <p>You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=&lt;user_name&gt; or owner=&lt;user_ID&gt; parameters. Specify safety_level=3 or safety_level=1 to get only private or public objects respectively. That is basically applicable to any attribute: to filter by attribute (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example</p>
-<div class="highlight-python"><pre>Request: GET /metadata/sections/?owner=alex&amp;safety_level=1&amp;name__icontains=experiment</pre>
+<div class="highlight-python"><pre>Request: GET /metadata/section/?owner=alex&amp;safety_level=1&amp;name__icontains=experiment</pre>
 </div>
 <p>filters Alex&#8217;s publicly available metadata <a class="reference internal" href="../terminology.html#section"><em>sections</em></a> containing &#8216;experiment&#8217; in the name, or</p>
-<div class="highlight-python"><pre>Request: GET /metadata/sections/?date_created__gt=2012-02-23 13:20:11</pre>
+<div class="highlight-python"><pre>Request: GET /metadata/section/?date_created__gt=2012-02-23 13:20:11</pre>
 </div>
 <p>filters out all objects created before February, 23 2012. For more information on filtering consider <a class="reference internal" href="query.html"><em>search and query</em></a> section.</p>
 <p id="offset-parameter">DATA API limits the number objects to be retrieved in one request by 100. If there are more than a 100 objects you should request them using offset=100 (offset=200 etc.). You may also limit the number of objects by max_results=&lt;some_number&gt; parameter. The start / end indexes for the selected objects are usually contained in the response as &#8220;selected_range&#8221;. For example, in case there are more than 500 objects, the following request:</p>
-<div class="highlight-python"><pre>Request: GET /metadata/sections/?offset=120&amp;max_results=300</pre>
+<div class="highlight-python"><pre>Request: GET /metadata/section/?offset=120&amp;max_results=300</pre>
 </div>
 <p>will retrieve 300 objects, indexed from 120 to 419 respectively.</p>
 </div>
 <div class="section" id="access-single-object">
 <span id="get-single-object"></span><h3>Access single object<a class="headerlink" href="#access-single-object" title="Permalink to this headline">¶</a></h3>
 <p>To get a single object you should specify its ID at the end of the URL:</p>
-<div class="highlight-python"><pre>Request: GET /metadata/sections/10/</pre>
+<div class="highlight-python"><pre>Request: GET /metadata/section/10/</pre>
 </div>
 <dl class="docutils" id="q-parameter">
 <dt>You may also control the amount of the information about avery object you receive using the &#8216;q&#8217; parameter. You may provide q=</dt>
@@ -296,7 +296,7 @@ Vary:Accept-Language, Cookie</pre>
 </dd>
 </dl>
 <p>This works with both list of objects and single objects. For example</p>
-<div class="highlight-python"><pre>Request: GET /metadata/sections/2/?q=full</pre>
+<div class="highlight-python"><pre>Request: GET /metadata/section/2/?q=full</pre>
 </div>
 <p>will retrieve the full information about the section:</p>
 <div class="highlight-python"><pre>HTTP SUCCESS (200)
@@ -312,9 +312,9 @@ Vary:Accept-Language, Cookie</pre>
             "name": "stimulus",
             "datafile_set": [],
             "property_set": [
-                "metadata/properties/10",
-                "metadata/properties/11",
-                "metadata/properties/15"
+                "metadata/property/10",
+                "metadata/property/11",
+                "metadata/property/15"
             ],
             "current_state": 10,
             "is_template": false,
@@ -324,14 +324,14 @@ Vary:Accept-Language, Cookie</pre>
             "owner": 2,
             "date_created": "2012-02-23 18:19:53",
             "section_set": [
-                "metadata/sections/4",
-                "metadata/sections/6"
+                "metadata/section/4",
+                "metadata/section/6"
             ],
             "user_custom": null,
             "description": ""
         },
         "model": "metadata.section",
-        "permalink": "metadata/sections/2"
+        "permalink": "metadata/section/2"
     }],
     "message": "Here is the list of requested objects.",
     "selected_range": [0, 0],
@@ -352,9 +352,9 @@ Vary:Accept-Language, Cookie</pre>
 <div class="highlight-python"><pre>{
     ...
     "property_set": [
-        "metadata/properties/10",
-        "metadata/properties/11",
-        "metadata/properties/15"
+        "metadata/property/10",
+        "metadata/property/11",
+        "metadata/property/15"
     ],
     ...
 }</pre>
@@ -367,7 +367,7 @@ Vary:Accept-Language, Cookie</pre>
 <div class="section" id="attribute-updates">
 <h3>Attribute updates<a class="headerlink" href="#attribute-updates" title="Permalink to this headline">¶</a></h3>
 <p>To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/properties/2/
+<div class="highlight-python"><pre>Request: POST /metadata/property/2/
 
 {
     "name": "15 - here is new name",
@@ -377,8 +377,8 @@ Vary:Accept-Language, Cookie</pre>
 </div>
 <div class="section" id="bulk-update">
 <h3>Bulk update<a class="headerlink" href="#bulk-update" title="Permalink to this headline">¶</a></h3>
-<p>Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all properties with name having &#8220;sampling&#8221; to the section with ID 146:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/properties/2/?name__icontains=sampling&amp;bulk_update=1
+<p>Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all property with name having &#8220;sampling&#8221; to the section with ID 146:</p>
+<div class="highlight-python"><pre>Request: POST /metadata/property/2/?name__icontains=sampling&amp;bulk_update=1
 
 {
     "section": 146
@@ -387,12 +387,12 @@ Vary:Accept-Language, Cookie</pre>
 <p>A good use case is nicely illustrated in the paragraph below.</p>
 </div>
 <div class="section" id="manage-relationships">
-<h3>Manage relationships<a class="headerlink" href="#manage-relationships" title="Permalink to this headline">¶</a></h3>
+<span id="manage-relations"></span><h3>Manage relationships<a class="headerlink" href="#manage-relationships" title="Permalink to this headline">¶</a></h3>
 <p>Standard one-to-many relationships (like (one) <a class="reference internal" href="../terminology.html#recordingchannel"><em>recording channel</em></a> contains (many) <a class="reference internal" href="../terminology.html#analogsignal"><em>analog signals</em></a> from different experimental trials) are managed by updating the foreign key field of the &#8220;child&#8221; object. For that you send the usual POST request to update the foreign key attribute:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/properties/2/
+<div class="highlight-python"><pre>Request: POST /metadata/property/2/
 
 {
-    "section": "metadata/sections/2"
+    "section": "metadata/section/2"
 }</pre>
 </div>
 <p>There are 2 options to update a foreing key: you may provide a permalink (shown above), or just an ID (2 in this example).</p>
@@ -401,17 +401,17 @@ Vary:Accept-Language, Cookie</pre>
 
 {
     "property_set": [
-        "metadata/properties/10",
-        "metadata/properties/11",
-        "metadata/properties/15"
+        "metadata/property/10",
+        "metadata/property/11",
+        "metadata/property/15"
     ]
 }</pre>
 </div>
 <p>will not work, instead it is better to do something like:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/properties/?id__in=[10,11,15]&amp;bulk_update=1
+<div class="highlight-python"><pre>Request: POST /metadata/property/?id__in=[10,11,15]&amp;bulk_update=1
 
 {
-    "section": "metadata/sections/2"
+    "section": "metadata/section/2"
 }</pre>
 </div>
 </div>

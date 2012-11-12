@@ -2,11 +2,23 @@
 Data Annotation
 ===============
 
-Data annotation is the process of connecting data and metadata, by "tagging" recorded :ref:`ePhys elements <ePhys Objects>` with appropriate metadata values. To understand data annotation better, consider a :ref:`nice example in the overview <annotation_example>` or :ref:`its definition <Data annotation>`.
+Data annotation is the process of connecting data and metadata, by "tagging" recorded :ref:`ePhys elements <ePhys Objects>` with appropriate metadata values. To understand :ref:`data annotation <Data annotation>` better, consider a :ref:`nice example in the overview <annotation_example>`.
 
-You may annotate (or "tag") one or several :ref:`ePhys Objects <ePhys Objects>` with particular metadata values by using the following request:
+You may annotate (or "tag") one or several :ref:`ePhys Objects <ePhys Objects>` with particular metadata values. For that you should POST appropriate metadata values to a single object 
 
- ::
+::
+
+    Request: POST /electrophysiology/<object_type>/<object_id>/
+
+or to a selection of objects
+
+::
+
+    Request: POST /electrophysiology/<object_type>/?filters
+
+for example:
+
+::
     
     Request: POST /electrophysiology/analogsignal/11/
 

@@ -11,7 +11,7 @@ Getting list of sections
 
  ::
     
-    GET /metadata/sections/?params
+    GET /metadata/section/?params
 
 in addition to the :doc:`usual filters <query>`, use the following parameters:
 
@@ -97,13 +97,15 @@ Example response:
 In this example you can see the :ref:`section <Section>` with ID = 1 has a couple of :ref:`datafiles <Datafile>` inside plus a couple of :ref:`blocks <Block>` linked to it. The second section (ID = 2) has no data inside however holds several properties, which describe the experiment.
 
 
----------------
-Section: create
----------------
+-------------------------
+Section: create or update
+-------------------------
+
+Create and update operations are implemented inline with the :doc:`key API principles <principles>`:
 
  ::
     
-    Request: POST /metadata/sections/?params
+    Request: POST /metadata/section/[section_id/]?params
 
     {
         "parent_section": 2,
@@ -146,7 +148,7 @@ Response:
             "name": "Electrode"
         },
         "model": "metadata.section",
-        "permalink": "/metadata/sections/18"
+        "permalink": "/metadata/section/18"
     }],
     "message": "Here is the list of requested objects.",
     "selected_range": [0, 0],
@@ -162,7 +164,7 @@ Similarly to the usual :ref:`GET single object <get_single_object>` request:
 
  ::
     
-    GET /metadata/sections/<section_id>/
+    GET /metadata/section/<section_id>/
 
 Response:
 
@@ -186,7 +188,7 @@ Response:
             "name": "Electrode"
             },
         "model": "metadata.section",
-        "permalink": "/metadata/sections/18"
+        "permalink": "/metadata/section/18"
     }],
     "message": "Here is the list of requested objects.",
     "selected_range": [0, 0],
@@ -200,7 +202,7 @@ Delete section
 
  ::
 
-    DELETE /metadata/sections/<section_id>/?params
+    DELETE /metadata/section/<section_id>/?params
 
 
 parameters:
@@ -227,7 +229,7 @@ You basically have to query properties with the filter set on the particular sec
 
  ::
     
-    GET /metadata/properties/?section=<section_id>
+    GET /metadata/property/?section=<section_id>
 
 
 Response:
@@ -243,12 +245,12 @@ Response:
         {
             "fields": {...},
             "model": "metadata.property",
-            "permalink": "/metadata/properties/1"
+            "permalink": "/metadata/property/1"
         },
         {
             "fields": {...},
             "model": "metadata.property",
-            "permalink": "/metadata/properties/2"
+            "permalink": "/metadata/property/2"
         }
     ],
     ...
@@ -280,7 +282,7 @@ Managing propeties is similar to managing sections and is implemented inline wit
 
  ::
     
-    Request: POST /metadata/properties/[<property_id>]/
+    Request: POST /metadata/property/[<property_id>]/
 
     {
         "comment": "insert some comments here..",
@@ -317,7 +319,7 @@ Response:
             "unit": ""
         },
         "model": "metadata.property",
-        "permalink": "/metadata/properties/23"
+        "permalink": "/metadata/property/23"
     }],
     ...
     }
@@ -329,7 +331,7 @@ Getting a property
 
  ::
     
-    GET /metadata/properties/<property_id>/
+    GET /metadata/property/<property_id>/
 
 
 Response is very similar to the one provided above.
@@ -340,7 +342,7 @@ Delete property
 
  ::
     
-    DELETE /metadata/properties/<property_id>
+    DELETE /metadata/property/<property_id>
 
 This request permanently moves the property into archive.
 

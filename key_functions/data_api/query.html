@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Some title here.. &mdash; g-node-portal v0.6 documentation</title>
+    <title>Search and Query &mdash; g-node-portal v0.6 documentation</title>
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -73,39 +73,94 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="some-title-here">
-<h1>Some title here..<a class="headerlink" href="#some-title-here" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="search-and-query">
+<h1>Search and Query<a class="headerlink" href="#search-and-query" title="Permalink to this headline">¶</a></h1>
+<p>API supports simple full-text search across all objects, available for a logged-in user, as well as fine-grained queries with different filters and criterias.</p>
+<div class="section" id="query">
+<h2>Query<a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="field-lookups">
+<h3>Field lookups<a class="headerlink" href="#field-lookups" title="Permalink to this headline">¶</a></h3>
+<p>You may filter results of the request that returns a list of a particular object type (like <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../object_model.html#spiketrain"><em>SpikeTrain</em></a>) by providing several parameters in the GET request, for example:</p>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/event/?owner=alex&amp;label__icontains=stimulus</pre>
+</div>
 <dl class="docutils">
-<dt>The following lookups are supported:</dt>
+<dt>In this example we filter all available <a class="reference internal" href="../object_model.html#event"><em>events</em></a> to get only those belonging to &#8216;alex&#8217; and having &#8216;stimulus&#8217; in the label. You may use filters with any object attribute, in addition, for every filter you may specify special lookup, like __icontains in this example. The following lookups are supported (The back-end of the DATA API is based on <a class="reference external" href="https://www.djangoproject.com/">django</a> thus the whole query mechanism was somehow inspired by <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/querysets/">django queryset machinery</a>):</dt>
 <dd><ul class="first last simple">
-<li>exact</li>
-<li>iexact</li>
-<li>contains</li>
-<li>icontains</li>
-<li>gt</li>
-<li>gte</li>
-<li>lt</li>
-<li>lte</li>
-<li>startswith</li>
-<li>istartswith</li>
-<li>endswith</li>
-<li>iendswith</li>
-<li>year</li>
-<li>month</li>
-<li>day</li>
-<li>week_day</li>
-<li>isnull</li>
-</ul>
-</dd>
-<dt>The following lookups are coming soon:</dt>
-<dd><ul class="first last simple">
-<li>in</li>
-<li>search</li>
-<li>regex</li>
-<li>iregex</li>
+<li>exact - exact match</li>
+<li>iexact - case-insensitive exact match</li>
+<li>contains - case-sensitive containment test</li>
+<li>icontains - case-insensitive containment test</li>
+<li>in - in a given list. example:</li>
 </ul>
 </dd>
 </dl>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/segment/?index__in=[7,9,14]</pre>
+</div>
+<dl class="docutils">
+<dt>further:</dt>
+<dd><ul class="first last simple">
+<li>gt - greater than. example:</li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/?t_start__gt=15.55</pre>
+</div>
+<dl class="docutils">
+<dt>and</dt>
+<dd><ul class="first last simple">
+<li>gte - greater than or equal to</li>
+<li>lt - less than</li>
+<li>lte - less than or equal to</li>
+<li>startswith - case-sensitive starts-with</li>
+<li>istartswith - case-insensitive starts-with</li>
+<li>endswith - case-sensitive ends-with</li>
+<li>iendswith - case-insensitive ends-with</li>
+<li>year - for date/datetime fields, exact year match. example:</li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/?date_created__year=2010</pre>
+</div>
+<dl class="docutils">
+<dt>as well as</dt>
+<dd><ul class="first last simple">
+<li>month - for date/datetime fields, exact month match</li>
+<li>day - for date/datetime fields, exact day match</li>
+<li>week_day - for datetime fields, a &#8216;day of the week&#8217; match. Takes an integer value representing the day of week from 1 (Sunday) to 7 (Saturday)</li>
+</ul>
+</dd>
+</dl>
+<p>At the moment the query works only in &#8220;filter&#8221; mode, including in the response only those values, that MATCH the criteria provided in the GET request. We are extending the API to support the &#8220;exclude&#8221; mode, which will work the opposite way and return the results that do NOT match the provided criteria. This will provide more flexibility in using the query mechanism. This function is coming soon.</p>
+</div>
+<div class="section" id="filter-by-permissions">
+<h3>Filter by permissions<a class="headerlink" href="#filter-by-permissions" title="Permalink to this headline">¶</a></h3>
+<p>A useful case for filtering could be filtering objects by their authorship or permissions. For example, if you need to access only public objects (having safety_level = 1, see <a class="reference internal" href="object_examples.html#useful-mappings"><em>useful mappings</em></a>), use the request like:</p>
+<div class="highlight-python"><pre>Request: GET /metadata/section/?safety_level=1</pre>
+</div>
+<p>To quickly get a list of objects, shared by a particular user (who&#8217;s account name should be like &#8216;alex&#8217;), try:</p>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/?owner__icontains=alex</pre>
+</div>
+</div>
+<div class="section" id="splitting-results">
+<h3>Splitting results<a class="headerlink" href="#splitting-results" title="Permalink to this headline">¶</a></h3>
+<p>DATA API limits the number objects to be retrieved in one request by 100. If there are more than a 100 objects you should request them using offset=&lt;some_number&gt; (offset=200 etc.). You may also limit the number of objects by max_results=&lt;some_number&gt; parameter. The start / end indexes for the selected objects are usually contained in the response as &#8220;selected_range&#8221;. For example, in case there are more than 500 objects, the following request:</p>
+<div class="highlight-python"><pre>Request: GET /metadata/section/?offset=120&amp;max_results=300</pre>
+</div>
+<p>will retrieve 300 objects, indexed from 120 to 419 respectively.</p>
+</div>
+<div class="section" id="querying-data-by-metadata">
+<h3>Querying data by metadata<a class="headerlink" href="#querying-data-by-metadata" title="Permalink to this headline">¶</a></h3>
+<p>Bugs here!</p>
+</div>
+<div class="section" id="ordering-results">
+<h3>Ordering results<a class="headerlink" href="#ordering-results" title="Permalink to this headline">¶</a></h3>
+<p>This feature is being developed.</p>
+</div>
+</div>
+<div class="section" id="full-text-search">
+<h2>Full-text search<a class="headerlink" href="#full-text-search" title="Permalink to this headline">¶</a></h2>
+<p>A full-text search feature is being developed.</p>
+</div>
 </div>
 
 
@@ -113,7 +168,23 @@
         </div>
       </div>
       <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Search and Query</a><ul>
+<li><a class="reference internal" href="#query">Query</a><ul>
+<li><a class="reference internal" href="#field-lookups">Field lookups</a></li>
+<li><a class="reference internal" href="#filter-by-permissions">Filter by permissions</a></li>
+<li><a class="reference internal" href="#splitting-results">Splitting results</a></li>
+<li><a class="reference internal" href="#querying-data-by-metadata">Querying data by metadata</a></li>
+<li><a class="reference internal" href="#ordering-results">Ordering results</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#full-text-search">Full-text search</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   </ul></li>

@@ -122,9 +122,12 @@ Some objects have data fields - they are similar to normal attributes, however o
 
 Objects, containing data arrays (data-containing objects), require special processing. These objects include:
  * :ref:`AnalogSignal <AnalogSignal>`
+ * :ref:`IrSaAnalogSignal <IrSaAnalogSignal>`
  * :ref:`AnalogSignalArray <AnalogSignalArray>`
  * :ref:`SpikeTrain <SpikeTrain>`
  * :ref:`Spike <Spike>`
+ * :ref:`EventArray <Event>`
+ * :ref:`EpochArray <Epoch>`
 
 To save or update a data-containing object you have to upload a file containing corresponding data first, and then create (update) an object with the usual HTTP POST request as shown above. This is done for performance reasons, huge amounts of data are poorly handled in JSON format together with the rest of the request body. In order to know how to upload the data please consider our description of the :doc:`array management <array_data>`. After you successfully uploaded a file with the data, you should use it's permalink in the POST request to connect a data-containing object with the actual data.
 

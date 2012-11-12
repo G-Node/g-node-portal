@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Object model &mdash; g-node-portal v0.6 documentation</title>
+    <title>Objects and data model &mdash; g-node-portal v0.6 documentation</title>
     <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -73,12 +73,611 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="object-model">
-<h1>Object model<a class="headerlink" href="#object-model" title="Permalink to this headline">¶</a></h1>
-<p>This section provides a full reference for all objects with their optional and mandatory attributes, child and parent relationships.</p>
-<div class="section" id="electrophysiology-definition">
-<span id="electrophysiology"></span><h2>Electrophysiology ( <a class="reference internal" href="terminology.html#ephys-objects"><em>definition</em></a> )<a class="headerlink" href="#electrophysiology-definition" title="Permalink to this headline">¶</a></h2>
-<p>All <tt class="xref doc docutils literal"><span class="pre">objects</span></tt>, supported by the system, are interconnected. In principal, it is suggested one uses Sections with Properties and Values to describe ad-hoc and experiment-specific metadata (not data-related metadata, like sampling rate for signals or number of channels) and</p>
+  <div class="section" id="objects-and-data-model">
+<h1>Objects and data model<a class="headerlink" href="#objects-and-data-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="electrophysiology">
+<h2>Electrophysiology<a class="headerlink" href="#electrophysiology" title="Permalink to this headline">¶</a></h2>
+<p>The overall data model for electrophysiology looks like this:</p>
+<div align="center" class="align-center"><img alt="../_images/ephys_om37.png" class="align-center" src="../_images/ephys_om37.png" style="width: 800px;" /></div>
+<p>Every object in this context has a set of <em>attributes</em> and <em>data fields</em>, it may also have relationships, like <em>parents</em> and <em>children</em>. For example, a <a class="reference internal" href="#segment">Segment</a> has to have an attribute &#8216;name&#8217;. <a class="reference internal" href="#analogsignal">AnalogSignal</a> should have a &#8216;sampling_rate&#8217; data field, which consists of the unit (like Hz or KHz) and a value (like 20000). A <a class="reference internal" href="#block">Block</a> consists of <a class="reference internal" href="#segment">Segment</a> objects, which means the <a class="reference internal" href="#block">Block</a> has a child <a class="reference internal" href="#segment">Segment</a>, and a <a class="reference internal" href="#segment">Segment</a> has a parent <a class="reference internal" href="#block">Block</a>. Below for each object you can find its definition, as well as the detailed listing of its attributes and relationships.</p>
+<p id="available-units"><em>Note. Some attributes have units. Here is the list of available units values:</em></p>
+<blockquote>
+<div><ul class="simple">
+<li>in the time domain:
+* &#8220;s&#8221;, &#8220;ms&#8221;, &#8220;us&#8221;</li>
+<li>in the signal domain:
+* &#8220;V&#8221;, &#8220;mV&#8221;, &#8220;uV&#8221;</li>
+<li>in the signal sampling domain:
+* &#8220;Hz&#8221;, &#8220;KHz&#8221;, &#8220;MHz&#8221;, &#8220;1/s&#8221;</li>
+</ul>
+</div></blockquote>
+<p><em>Note. Attributes with * asterisk are mandatory.</em></p>
+<p><a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys Objects</em></a> consist of:</p>
+<div class="section" id="analogsignal">
+<span id="id1"></span><h3>AnalogSignal<a class="headerlink" href="#analogsignal" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A regular sampling of a continuous, analog signal.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>sampling_rate*</td>
+<td>float + units</td>
+</tr>
+<tr><td>t_start*</td>
+<td>float + units</td>
+</tr>
+<tr><td>signal*</td>
+<td>array of floats 1D + units</td>
+</tr>
+<tr><td>segment</td>
+<td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
+</tr>
+<tr><td>recordingchannel</td>
+<td>foreign key to <a class="reference internal" href="#recordingchannel">RecordingChannel</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="irsaanalogsignal">
+<span id="id2"></span><h3>IrSaAnalogSignal<a class="headerlink" href="#irsaanalogsignal" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>An analog signal with non-regular sampling.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>t_start*</td>
+<td>float + units</td>
+</tr>
+<tr><td>signal*</td>
+<td>array of floats 1D + units</td>
+</tr>
+<tr><td>times*</td>
+<td>array of floats 1D + units</td>
+</tr>
+<tr><td>segment</td>
+<td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
+</tr>
+<tr><td>recordingchannel</td>
+<td>foreign key to <a class="reference internal" href="#recordingchannel">RecordingChannel</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="analogsignalarray">
+<span id="id3"></span><h3>AnalogSignalArray<a class="headerlink" href="#analogsignalarray" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A regular sampling of a multichannel continuous analog signal. This representation (as a 2D array) may be more efficient for subsequent analysis than the equivalent list of individual AnalogSignal objects.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>t_start*</td>
+<td>float + units</td>
+</tr>
+<tr><td>sampling_rate*</td>
+<td>float + units</td>
+</tr>
+<tr><td>signal*</td>
+<td>array of floats 2D + units</td>
+</tr>
+<tr><td>segment</td>
+<td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
+</tr>
+<tr><td>recordingchannelgroup</td>
+<td>foreign key to <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="spike">
+<span id="id4"></span><h3>Spike<a class="headerlink" href="#spike" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>One action potential characterized by its time and waveform.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>time*</td>
+<td>float + units</td>
+</tr>
+<tr><td>sampling_rate*</td>
+<td>float + units</td>
+</tr>
+<tr><td>left_sweep</td>
+<td>float + units</td>
+</tr>
+<tr><td>waveform*</td>
+<td>array of floats 2D + units</td>
+</tr>
+<tr><td>segment</td>
+<td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
+</tr>
+<tr><td>unit</td>
+<td>foreign key to <a class="reference internal" href="#unit">Unit</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="spiketrain">
+<span id="id5"></span><h3>SpikeTrain<a class="headerlink" href="#spiketrain" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A set of action potentials (spikes) emitted by the same unit in a period of time (with optional waveforms).</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>t_start*</td>
+<td>float + units</td>
+</tr>
+<tr><td>t_stop*</td>
+<td>float + units</td>
+</tr>
+<tr><td>times*</td>
+<td>array of floats 1D + units</td>
+</tr>
+<tr><td>waveforms</td>
+<td>array of floats 3D + units</td>
+</tr>
+<tr><td>segment</td>
+<td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
+</tr>
+<tr><td>unit</td>
+<td>foreign key to <a class="reference internal" href="#unit">Unit</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="event-and-eventarray">
+<span id="event"></span><h3>Event and EventArray<a class="headerlink" href="#event-and-eventarray" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A time point representng an event in the data, or an array of such time points.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>label(s)*</td>
+<td>string/array of strings 1D</td>
+</tr>
+<tr><td>time(s)*</td>
+<td>float/array of floats 1D + units</td>
+</tr>
+<tr><td>segment</td>
+<td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="epoch-and-epocharray">
+<span id="epoch"></span><h3>Epoch and EpochArray<a class="headerlink" href="#epoch-and-epocharray" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>An interval of time representing a period of time in the data, or an array of such intervals.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>label(s)*</td>
+<td>string/array of strings 1D</td>
+</tr>
+<tr><td>time(s)*</td>
+<td>float/array of floats 1D + units</td>
+</tr>
+<tr><td>duration(s)*</td>
+<td>float/array of floats 1D + units</td>
+</tr>
+<tr><td>segment</td>
+<td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p><a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys Objects</em></a> comprise a simple hierarchy of containers:</p>
+</div>
+<div class="section" id="segment">
+<span id="id6"></span><h3>Segment<a class="headerlink" href="#segment" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A container for heterogeneous discrete or continous data sharing a common clock (time basis) but not necessarily the same sampling rate, start time or end time. A Segment can be considered as equivalent to a “trial”, “episode”, “run”, “recording”, etc., depending on the experimental context. May contain any of the <a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys Objects</em></a>.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>filedatetime</td>
+<td>datetime</td>
+</tr>
+<tr><td>index</td>
+<td>int</td>
+</tr>
+<tr><td>block</td>
+<td>foreign key to <a class="reference internal" href="#block">Block</a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Segment can contain objects of the following types:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#analogsignal">AnalogSignal</a></li>
+<li><a class="reference internal" href="#irsaanalogsignal">IrSaAnalogSignal</a></li>
+<li><a class="reference internal" href="#analogsignalarray">AnalogSignalArray</a></li>
+<li><a class="reference internal" href="#spiketrain">SpikeTrain</a></li>
+<li><a class="reference internal" href="#spike">Spike</a></li>
+<li><a class="reference internal" href="#event">Event</a> and array of events</li>
+<li><a class="reference internal" href="#epoch">Epoch</a> and array of epochs</li>
+</ul>
+</dd>
+</dl>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="block">
+<span id="id7"></span><h3>Block<a class="headerlink" href="#block" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>The top-level container gathering all of the data, discrete and continuous, for a given recording session. Contains <a class="reference internal" href="#segment">Segment</a> and <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a> objects.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>filedatetime</td>
+<td>datetime</td>
+</tr>
+<tr><td>index</td>
+<td>int</td>
+</tr>
+<tr><td>section</td>
+<td>foreign key to <a class="reference internal" href="#section">Section</a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Block can contain objects of the following types:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#segment">Segment</a></li>
+<li><a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a></li>
+</ul>
+</dd>
+</dl>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p><a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys Objects</em></a> also include <em>Grouping objects</em>. These objects express the relationships between data items, such as which signals were recorded on which electrodes, which spike trains were obtained from which membrane potential signals, etc. They contain references to data objects that cut across the simple container hierarchy.</p>
+</div>
+<div class="section" id="recordingchannel">
+<span id="id8"></span><h3>RecordingChannel<a class="headerlink" href="#recordingchannel" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Links <a class="reference internal" href="#analogsignal">AnalogSignal</a> and/or <a class="reference internal" href="#spiketrain">SpikeTrain</a> objects that come from the same logical and/or physical channel inside a <a class="reference internal" href="#block">Block</a>, possibly across several <a class="reference internal" href="#segment">Segment</a> objects.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>index</td>
+<td>int</td>
+</tr>
+<tr><td>recordingchannelgroup</td>
+<td>foreign key to <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>RecordingChannel can contain objects of the following types:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#unit">Unit</a></li>
+<li><a class="reference internal" href="#analogsignal">AnalogSignal</a></li>
+<li><a class="reference internal" href="#irsaanalogsignal">IrSaAnalogSignal</a></li>
+</ul>
+</dd>
+</dl>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="recordingchannelgroup">
+<span id="id9"></span><h3>RecordingChannelGroup<a class="headerlink" href="#recordingchannelgroup" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A group for associated RecordingChannel objects. This has several possible uses: for linking several AnalogSignalArray objects across several Segment objects inside a Block, for multielectrode arrays, where spikes may be recorded on more than one recording channel, and so the RecordingChannelGroup can be used to associate each Unit with the group of recording channels from which it was calculated, as well as for grouping several RecordingChannel objects. There are many use cases for this. For instance, for intracellular recording, it is common to record both membrane potentials and currents at the same time, so each RecordingChannelGroup may correspond to the particular property that is being recorded. For multielectrode arrays, RecordingChannelGroup is used to gather all RecordingChannel objects of the same array.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>block</td>
+<td>foreign key to <a class="reference internal" href="#block">Block</a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>RecordingChannelGroup can contain objects of the following types:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#recordingchannel">RecordingChannel</a></li>
+<li><a class="reference internal" href="#analogsignalarray">AnalogSignalArray</a></li>
+</ul>
+</dd>
+</dl>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="unit">
+<span id="id10"></span><h3>Unit<a class="headerlink" href="#unit" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>A Unit gathers all the <a class="reference internal" href="#spiketrain">SpikeTrain</a> objects within a common <a class="reference internal" href="#block">Block</a>, possibly across several Segments, that have been emitted by the same cell. A Unit is linked to <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a> objects from which it was detected.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>recordingchannel</td>
+<td>foreign key to <a class="reference internal" href="#recordingchannel">RecordingChannel</a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Unit can contain objects of the following types:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#spiketrain">SpikeTrain</a></li>
+<li><a class="reference internal" href="#spike">Spike</a></li>
+</ul>
+</dd>
+</dl>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+</div>
+<div class="section" id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<p>The general metadata object model looks like:</p>
+<div align="center" class="align-center"><img alt="../_images/metadata_om39.png" class="align-center" src="../_images/metadata_om39.png" /></div>
+<p>it is implemented inline with <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a> concept and consists of objects like <a class="reference internal" href="#section">Section</a>, <a class="reference internal" href="#properties-with-values">Properties with Values</a>.  Here goes the complete metadata objects specification.</p>
+<div class="section" id="section">
+<span id="id11"></span><h3>Section<a class="headerlink" href="#section" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>An element used to group and organize your metadata in a tree structure. Intuitively it&#8217;s like a folder in a usual file system. A Section can contain other Sections, <a class="reference internal" href="#properties-with-values">Properties with Values</a>, <a class="reference internal" href="#datafile">Datafile</a> or <a class="reference internal" href="#block">Block</a>. The Section is a prototype of the <a class="reference external" href="http://www.g-node.org/projects/odml">odML®</a> section and is implemented inline with odML concepts and methodology.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>description</td>
+<td>string</td>
+</tr>
+<tr><td>odml_type</td>
+<td>int (0-99)</td>
+</tr>
+<tr><td>tree_position</td>
+<td>int</td>
+</tr>
+<tr><td>parent_section</td>
+<td>foreign key to <a class="reference internal" href="#section">Section</a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Section can contain objects of the following types:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#section">Section</a></li>
+<li><a class="reference internal" href="#block">Block</a></li>
+<li><a class="reference internal" href="#datafile">Datafile</a></li>
+</ul>
+</dd>
+</dl>
+<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+<div class="section" id="properties-and-values">
+<span id="properties-with-values"></span><h3>Properties and Values<a class="headerlink" href="#properties-and-values" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Inspired by the &#8220;key-value pairs&#8221; concept, Properties and Values used similarly as a flexible way to annotate your data (implemented in line with <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>) within any metadata <a class="reference internal" href="#section">Section</a>. Some good examples could be a model of your recording device, duration of the stimulus, a layer of the cell you&#8217;ve recorded from. Properties and Values can be used to &#8220;label&#8221; your <a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys Objects</em></a> (<a class="reference internal" href="#analogsignal">AnalogSignal</a>, <a class="reference internal" href="#spiketrain">SpikeTrain</a> etc.) to indicate certain metadata for them.</div></blockquote>
+<p>Property:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>definition</td>
+<td>string</td>
+</tr>
+<tr><td>dependency</td>
+<td>string</td>
+</tr>
+<tr><td>dependency_value</td>
+<td>string</td>
+</tr>
+<tr><td>mapping</td>
+<td>string</td>
+</tr>
+<tr><td>unit</td>
+<td>string</td>
+</tr>
+<tr><td>dtype</td>
+<td>string</td>
+</tr>
+<tr><td>uncertainty</td>
+<td>string</td>
+</tr>
+<tr><td>comment</td>
+<td>string</td>
+</tr>
+<tr><td>section*</td>
+<td>foreign key to <a class="reference internal" href="#section">Section</a></td>
+</tr>
+</tbody>
+</table>
+<p>Property can contain one or several value objects:</p>
+<p>Value:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>data*</td>
+<td>string</td>
+</tr>
+<tr><td>parent_property*</td>
+<td>foreign key to <a class="reference internal" href="#section">Section</a></td>
+</tr>
+</tbody>
+</table>
+<p>See exact objects representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+</div>
+</div>
+<div class="section" id="files">
+<span id="datafile"></span><h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id14">
+<h3>Datafile<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Datafile represents an arbitrary file, uploaded by a user. Some data or metadata can be extracted from the Datafile if it is in one of the supported formats (<a class="reference external" href="http://neo.readthedocs.org/en/latest/io.html">NEO I/O</a>, <a class="reference external" href="http://neuroshare.sourceforge.net/index.shtml">Neuroshare</a>, <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>). All data-related objects, like <a class="reference internal" href="#analogsignal">AnalogSignal</a> or <a class="reference internal" href="#spike">Spike</a>, have their data part also stored as HDF5 files (<a class="reference external" href="http://www.hdfgroup.org/HDF5/whatishdf5.html">what is HDF5?</a>), having array in the file root.</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Parameter</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>name*</td>
+<td>string</td>
+</tr>
+<tr><td>caption</td>
+<td>string</td>
+</tr>
+<tr><td>section*</td>
+<td>foreign key to <a class="reference internal" href="#section">Section</a></td>
+</tr>
+</tbody>
+</table>
+<p>The system supports data conversion from files to the <a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys</em></a> and <a class="reference internal" href="#metadata">Metadata</a> objects, listed above, if the <a class="reference internal" href="#datafile">Datafile</a> is compartible with supported formats (see <a class="reference internal" href="#datafile">Datafile</a> above).</p>
+</div>
+</div>
+<div class="section" id="full-model-overview">
+<h2>Full model overview<a class="headerlink" href="#full-model-overview" title="Permalink to this headline">¶</a></h2>
+<p>Just to summarize this document, the data model for the whole system looks like:</p>
+<div align="center" class="align-center"><img alt="../_images/common_om30.png" class="align-center" src="../_images/common_om30.png" style="width: 800px;" /></div>
 </div>
 </div>
 
@@ -90,8 +689,32 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Object model</a><ul>
-<li><a class="reference internal" href="#electrophysiology-definition">Electrophysiology ( <tt class="docutils literal"><span class="pre">definition</span></tt> )</a></li>
+<li><a class="reference internal" href="#">Objects and data model</a><ul>
+<li><a class="reference internal" href="#electrophysiology">Electrophysiology</a><ul>
+<li><a class="reference internal" href="#analogsignal">AnalogSignal</a></li>
+<li><a class="reference internal" href="#irsaanalogsignal">IrSaAnalogSignal</a></li>
+<li><a class="reference internal" href="#analogsignalarray">AnalogSignalArray</a></li>
+<li><a class="reference internal" href="#spike">Spike</a></li>
+<li><a class="reference internal" href="#spiketrain">SpikeTrain</a></li>
+<li><a class="reference internal" href="#event-and-eventarray">Event and EventArray</a></li>
+<li><a class="reference internal" href="#epoch-and-epocharray">Epoch and EpochArray</a></li>
+<li><a class="reference internal" href="#segment">Segment</a></li>
+<li><a class="reference internal" href="#block">Block</a></li>
+<li><a class="reference internal" href="#recordingchannel">RecordingChannel</a></li>
+<li><a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a></li>
+<li><a class="reference internal" href="#unit">Unit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#metadata">Metadata</a><ul>
+<li><a class="reference internal" href="#section">Section</a></li>
+<li><a class="reference internal" href="#properties-and-values">Properties and Values</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#files">Files</a><ul>
+<li><a class="reference internal" href="#id14">Datafile</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#full-model-overview">Full model overview</a></li>
 </ul>
 </li>
 </ul>
