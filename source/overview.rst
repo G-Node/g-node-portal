@@ -63,11 +63,24 @@ Query your experiments
 
 This section is being described..
 
+
+.. _sharing_overview:
+
 --------------------------------
 Open your data for Collaborators
 --------------------------------
 
-This section is being described..
+There is a possibility to share your data with other users in the G-Node Portal. When you share an object, it immediately becomes accessible for the users depending on the access level you select. In case an object is a container (has downstream relations, like a :ref:`Segment <Segment>` can have :ref:`Events <Event>`), you may share an object recursively, which implies all children objects in the selected object with all their contents will become shared. Object sharing is controlled via the object safety level (kind of a sharing state) and :ref:`access control list <acl_term>`. Object's safety level can be
+ * private — noone, except users, specified explicitly in the Access Control List, may see the resource.
+ * friendly — all friends have a reader role, with no need to assign them for every resource.
+ * public — all users may see the contents of the resource.
+
+In addition to the common object sharing state (safety level), many objects support :ref:`Access Control Lists <acl_term>`, that show who has access to a given object. 
+
+Every object has an owner, which is always a person who initially created an object, and cannot be changed.
+
+With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.
+
 
 -------------
 Track changes

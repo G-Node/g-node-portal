@@ -1,6 +1,6 @@
-=============================
-Key concepts and Object model
-=============================
+============
+Key concepts
+============
 
 Throughout this entire documentation, it's refered to a series of terms like :ref:`Section <Section>` or :ref:`Datafile <Datafile>`, which are intended to have specific meanings.
 
@@ -63,4 +63,34 @@ data annotation
 ---------------
 
     Data annotation is the process of assinging metadata to the data, when some special connection is required. It is needed basically in order to establish a connection between data and metadata for easy search and generic access. An example could be a case when you, say, described the color of your Stimuli as a property in a Stimuli section, and after you acquire the data you need to indicate, which particular signals were recorded at which particular color frequency. In this case, data annotation means establishing a link between particular signals and particular values of the color property.
+
+
+.. _acl_term:
+
+-------------------
+access control list
+-------------------
+
+    Access Control List (ACL) is a property of an object that is used to keep a list of users, having access to the object. Every user in this list can have either read-only or read-write permissions. ACL is independent from basic sharing state (safety level) for an object: even if an object is private, people, listed in the ACL, **will be able to access** an object. Not all objects can have ACLs, here is a list of objects with sharing support:
+
+ * all ePhys objects:
+   * :ref:`AnalogSignal <AnalogSignal>`
+   * :ref:`IrSaAnalogSignal <IrSaAnalogSignal>`
+   * :ref:`AnalogSignalArray <AnalogSignalArray>`
+   * :ref:`SpikeTrain <SpikeTrain>`
+   * :ref:`Spike <Spike>`
+   * :ref:`Event <Event>`
+   * :ref:`EventArray <Event>`
+   * :ref:`Epoch <Epoch>`
+   * :ref:`EpochArray <Epoch>`
+   * :ref:`Block <Block>`
+   * :ref:`Segment <Segment>`
+   * :ref:`Unit <Unit>`
+   * :ref:`RecordingChannelGroup <RecordingChannelGroup>`
+   * :ref:`RecordingChannel <RecordingChannel>`
+ * metadata Section
+   * :ref:`Section <Section>`
+ * and any file
+   * :ref:`Datafile <Datafile>`
+
 

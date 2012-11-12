@@ -10,13 +10,13 @@ Create or update data object
 
 Send an authorized HTTP request with the body (in JSON format), providing object data (attributes, arrays and relationships), to
 
- ::
+::
     
     Request: POST /electrophysiology/<object_type>/
 
 in order to create a new object (except data-containing objects, like :ref:`AnalogSignal <AnalogSignal>` or :ref:`SpikeTrain <SpikeTrain>`, for which :ref:`you have to upload data first <array_upload_note>`), you should specify object attributes, data fields (if exist), and relationships in the request body as a JSON object. For example, send an authorized HTTP POST request to the "/electrophysiology/segment/" with the following body
 
- ::
+::
 
     HTTP POST /electrophysiology/segment/
 
@@ -28,7 +28,7 @@ in order to create a new object (except data-containing objects, like :ref:`Anal
 
 to create a new :ref:`Segment <Segment>`. If the response status is 'Created' (201) a client receives a new ID of a segment from the response. Here is the response example:
 
- ::
+::
 
     HTTP CREATED (201)
     
@@ -60,7 +60,7 @@ A full set of examples for all supported ePhys objects can be found in :doc:`obj
 
 To update the :ref:`Segment <Segment>`, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we've just created was assigned an ID = 213, send an HTTP POST to the "/electrophysiology/segment/213/" with the following body
 
- ::
+::
     
     HTTP POST /electrophysiology/segment/213/
 
@@ -74,7 +74,7 @@ to change the name of the segment and link it to the :ref:`Block <Block>` with I
 
 A response should look similar to this:
 
- ::
+::
 
     HTTP SUCCESS (200)
     
@@ -138,14 +138,14 @@ Getting a single object
 
 To get a NEO object with its attributes send a following GET request 
 
- ::
+::
     
     Request: GET /electrophysiology/<obj_type>/<obj_id>/
 
 
 You'll get the response, similar to:
 
- ::
+::
 
     HTTP SUCCESS (200)
     
@@ -179,21 +179,21 @@ Getting a List of Objects
 
 Use the following HTTP GET 
 
- ::
+::
     
     Request: GET /electrophysiology/<object_type>/?params
 
 
 to query multiple :ref:`ePhys objects <ePhys Objects>` of a specific type. For example, if you want to get all Analog Signals available for a specific user, send the following request 
 
- ::
+::
     
     GET /electrophysiology/analogsignal/?q=link
 
 
 You receive a list of Analog Signal permalinks as a response:
 
- ::
+::
 
     HTTP SUCCESS (200)
     
@@ -226,5 +226,57 @@ You receive a list of Analog Signal permalinks as a response:
 By default the API will return the first 100 data objects in the response. Use :ref:`offset parameter <offset_parameter>` and/or :doc:`standard filters <query>` to refine the selection.
 
 All :ref:`ePhys objects <ePhys Objects>` support sharing with other users by managing permissions. To learn more about sharing objects please refer to :doc:`permissions <permissions>`.
+
+
+-------------------------
+Accessing object metadata
+-------------------------
+
+You may request object metadata directly by sending a GET to 
+
+::
+    
+    GET /electrophysiology/analogsignal/<obj_id>/metadata/
+
+
+You will get a list of [<property>, <value>] pairs in the response:
+
+{
+    ...
+    "metadata": [
+        [
+            {
+                "fields": {
+                    "comment": "",
+                    "definition": "",
+                    "name": "bla22!",
+                    "section": "/metadata/section/2",
+                    "id": 1,
+                    "safety_level": 3,
+                    ...
+                },
+                "model": "metadata.property",
+                "permalink": "/metadata/property/1"
+            },
+            {
+                "fields": {
+                    "id": 1,
+                    "safety_level": 3,
+                    "owner": "/profiles/profile/5",
+                    "data": "1584",
+                    "parent_property": "/metadata/property/1"
+                    ...
+                },
+                "model": "metadata.value",
+                "permalink": "/metadata/value/1"
+            }
+        ],
+        ...
+    ]
+}
+
+or an empty list if no metadata is assigned.
+
+For the moment we do not support accessing metadata directly for several objects.
 
 
