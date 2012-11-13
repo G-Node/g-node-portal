@@ -64,7 +64,7 @@ A typical response will look like this:
                     "current_state": 10,
                     "safety_level": 3,
                     "owner": "/profiles/profile/5",
-                    "date_created": "2012-07-26T17:16:07",
+                    "date_created": "2012-07-26 17:16:07",
                     "block": "/electrophysiology/block/1",
                     "metadata": []
                 },

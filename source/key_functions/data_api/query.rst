@@ -42,6 +42,7 @@ and
  * **gte** - greater than or equal to
  * **lt** - less than
  * **lte** - less than or equal to
+ * **isnull** - is equal to null (provide 0 for False, any other value means True)
  * **startswith** - case-sensitive starts-with
  * **istartswith** - case-insensitive starts-with
  * **endswith** - case-sensitive ends-with
