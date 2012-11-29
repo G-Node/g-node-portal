@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Key concepts and Object model &mdash; g-node-portal v0.6 documentation</title>
+    <title>Key concepts &mdash; g-node-portal v0.6 documentation</title>
     <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -73,8 +73,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="key-concepts-and-object-model">
-<h1>Key concepts and Object model<a class="headerlink" href="#key-concepts-and-object-model" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="key-concepts">
+<h1>Key concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h1>
 <p>Throughout this entire documentation, it&#8217;s refered to a series of terms like <a class="reference internal" href="object_model.html#section"><em>Section</em></a> or <a class="reference internal" href="object_model.html#datafile"><em>Datafile</em></a>, which are intended to have specific meanings.</p>
 <div class="section" id="permalink">
 <span id="common-terms"></span><h2>permalink<a class="headerlink" href="#permalink" title="Permalink to this headline">¶</a></h2>
@@ -122,6 +122,34 @@
 <blockquote>
 <div>Data annotation is the process of assinging metadata to the data, when some special connection is required. It is needed basically in order to establish a connection between data and metadata for easy search and generic access. An example could be a case when you, say, described the color of your Stimuli as a property in a Stimuli section, and after you acquire the data you need to indicate, which particular signals were recorded at which particular color frequency. In this case, data annotation means establishing a link between particular signals and particular values of the color property.</div></blockquote>
 </div>
+<div class="section" id="access-control-list">
+<span id="acl-term"></span><h2>access control list<a class="headerlink" href="#access-control-list" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><blockquote>
+<div>Access Control List (ACL) is a property of an object that is used to keep a list of users, having access to the object. Every user in this list can have either read-only or read-write permissions. ACL is independent from basic sharing state (safety level) for an object: even if an object is private, people, listed in the ACL, <strong>will be able to access</strong> an object. Not all objects can have ACLs, here is a list of objects with sharing support:</div></blockquote>
+<ul class="simple">
+<li>all ePhys objects:
+* <a class="reference internal" href="object_model.html#analogsignal"><em>AnalogSignal</em></a>
+* <a class="reference internal" href="object_model.html#irsaanalogsignal"><em>IrSaAnalogSignal</em></a>
+* <a class="reference internal" href="object_model.html#analogsignalarray"><em>AnalogSignalArray</em></a>
+* <a class="reference internal" href="object_model.html#spiketrain"><em>SpikeTrain</em></a>
+* <a class="reference internal" href="object_model.html#spike"><em>Spike</em></a>
+* <a class="reference internal" href="object_model.html#event"><em>Event</em></a>
+* <a class="reference internal" href="object_model.html#event"><em>EventArray</em></a>
+* <a class="reference internal" href="object_model.html#epoch"><em>Epoch</em></a>
+* <a class="reference internal" href="object_model.html#epoch"><em>EpochArray</em></a>
+* <a class="reference internal" href="object_model.html#block"><em>Block</em></a>
+* <a class="reference internal" href="object_model.html#segment"><em>Segment</em></a>
+* <a class="reference internal" href="object_model.html#unit"><em>Unit</em></a>
+* <a class="reference internal" href="object_model.html#recordingchannelgroup"><em>RecordingChannelGroup</em></a>
+* <a class="reference internal" href="object_model.html#recordingchannel"><em>RecordingChannel</em></a></li>
+<li>metadata Section
+* <a class="reference internal" href="object_model.html#section"><em>Section</em></a></li>
+<li>and any file
+* <a class="reference internal" href="object_model.html#datafile"><em>Datafile</em></a></li>
+</ul>
+</div></blockquote>
+</div>
 </div>
 
 
@@ -132,12 +160,13 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Key concepts and Object model</a><ul>
+<li><a class="reference internal" href="#">Key concepts</a><ul>
 <li><a class="reference internal" href="#permalink">permalink</a></li>
 <li><a class="reference internal" href="#object-identifier">object identifier</a></li>
 <li><a class="reference internal" href="#electrophysiology-ephys-objects">electrophysiology ( ePhys Objects )</a></li>
 <li><a class="reference internal" href="#metadata">metadata</a></li>
 <li><a class="reference internal" href="#data-annotation">data annotation</a></li>
+<li><a class="reference internal" href="#access-control-list">access control list</a></li>
 </ul>
 </li>
 </ul>

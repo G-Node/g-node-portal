@@ -79,13 +79,10 @@
 <div class="section" id="create-or-update-data-object">
 <h2>Create or update data object<a class="headerlink" href="#create-or-update-data-object" title="Permalink to this headline">¶</a></h2>
 <p>Send an authorized HTTP request with the body (in JSON format), providing object data (attributes, arrays and relationships), to</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;/</pre>
+<div class="highlight-python"><pre>Request: POST /electrophysiology/&lt;object_type&gt;/</pre>
 </div>
-</div></blockquote>
 <p>in order to create a new object (except data-containing objects, like <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../object_model.html#spiketrain"><em>SpikeTrain</em></a>, for which <a class="reference internal" href="#array-upload-note"><em>you have to upload data first</em></a>), you should specify object attributes, data fields (if exist), and relationships in the request body as a JSON object. For example, send an authorized HTTP POST request to the &#8220;/electrophysiology/segment/&#8221; with the following body</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/
+<div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/
 
 {
     "name": "Trial 12, Saccade, Stim. 45 grad color red",
@@ -93,10 +90,8 @@
     "index": 12
 }</pre>
 </div>
-</div></blockquote>
 <p>to create a new <a class="reference internal" href="../object_model.html#segment"><em>Segment</em></a>. If the response status is &#8216;Created&#8217; (201) a client receives a new ID of a segment from the response. Here is the response example:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP CREATED (201)
+<div class="highlight-python"><pre>HTTP CREATED (201)
 
 {
     "logged_in_as": "bob",
@@ -119,23 +114,19 @@
     "message_type": "object_created"
 }</pre>
 </div>
-</div></blockquote>
 <p>A full set of examples for all supported ePhys objects can be found in <a class="reference internal" href="object_examples.html"><em>object examples</em></a>.</p>
 <p><em>Note. To understand, which attributes, data fields and relationships are supported for every NEO object please consider the</em> <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys specification</em></a>.</p>
 <p>To update the <a class="reference internal" href="../object_model.html#segment"><em>Segment</em></a>, changing some ot its parameters, you need to send an authorized HTTP POST to the same URL providing the ID of the segment at the end of the URL. Assuming the segment we&#8217;ve just created was assigned an ID = 213, send an HTTP POST to the &#8220;/electrophysiology/segment/213/&#8221; with the following body</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/213/
+<div class="highlight-python"><pre>HTTP POST /electrophysiology/segment/213/
 
 {
     "name": "Trial 12, Saccade, Stim. 45 grad color green",
     "block": 1
 }</pre>
 </div>
-</div></blockquote>
 <p>to change the name of the segment and link it to the <a class="reference internal" href="../object_model.html#block"><em>Block</em></a> with ID 1. When update is required, you may specify only those parameters that you want to update. All other attributes, arrays and relationships will stay as they were.</p>
 <p>A response should look similar to this:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+<div class="highlight-python"><pre>HTTP SUCCESS (200)
 
 {
 "logged_in_as": "bob",
@@ -159,7 +150,6 @@
 "message_type": "object_selected"
 }</pre>
 </div>
-</div></blockquote>
 <p>Our model for electrophysiology, based on the <a class="reference external" href="http://neo.readthedocs.org/en/latest/index.html">NEO® model</a>, suggests particular object relationships: a segment (timeframe) is a part of a block (experiment), events happen within a segment etc. Object relationaships help to quickly organize neurophysiological data in the consistent and easily accessible structure. Relationships are updated in a similar way as normal attributes: provide relationships inside the POST request to save appropriate data structure of your recordings. The full list of supported connections can be found in the <a class="reference internal" href="../terminology.html#ephys-objects"><em>key concepts</em></a> in attribute/relationaship tables, given for every object. Also consider the <a class="reference internal" href="object_examples.html"><em>object examples page</em></a>.</p>
 <p>Some objects have data fields - they are similar to normal attributes, however one should also specify data units to save them (the &#8216;sampling_rate&#8217; data field of <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> object typically has units &#8220;Hz&#8221; or &#8220;KHz&#8221;, <a class="reference internal" href="../object_model.html#event"><em>Event</em></a> object has &#8220;time&#8221; in &#8220;ms&#8221; etc). Use a dict with &#8220;data&#8221; and &#8220;units&#8221; keys while updating these fields:</p>
 <div class="highlight-python"><pre>"time": {
@@ -194,13 +184,10 @@
 <div class="section" id="getting-a-single-object">
 <h2>Getting a single object<a class="headerlink" href="#getting-a-single-object" title="Permalink to this headline">¶</a></h2>
 <p>To get a NEO object with its attributes send a following GET request</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;obj_type&gt;/&lt;obj_id&gt;/</pre>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;obj_type&gt;/&lt;obj_id&gt;/</pre>
 </div>
-</div></blockquote>
 <p>You&#8217;ll get the response, similar to:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+<div class="highlight-python"><pre>HTTP SUCCESS (200)
 
 {
 "logged_in_as": "bob",
@@ -222,24 +209,18 @@
 "message_type": "object_selected"
 }</pre>
 </div>
-</div></blockquote>
 <p>Play with the <a class="reference internal" href="principles.html#q-parameter"><em>q request GET parameter</em></a> to get different information about an object, including its attributes, data arrays, downstream and upstream relationships. In <a class="reference internal" href="array_data.html"><em>array management</em></a> section you&#8217;ll also find how to request a slice of the signal(s) or request it&#8217;s downsampling, which is useful when signal is very long.</p>
 </div>
 <div class="section" id="getting-a-list-of-objects">
 <h2>Getting a List of Objects<a class="headerlink" href="#getting-a-list-of-objects" title="Permalink to this headline">¶</a></h2>
 <p>Use the following HTTP GET</p>
-<blockquote>
-<div><div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;object_type&gt;/?params</pre>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/&lt;object_type&gt;/?params</pre>
 </div>
-</div></blockquote>
 <p>to query multiple <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys objects</em></a> of a specific type. For example, if you want to get all Analog Signals available for a specific user, send the following request</p>
-<blockquote>
-<div><div class="highlight-python"><pre>GET /electrophysiology/analogsignal/?q=link</pre>
+<div class="highlight-python"><pre>GET /electrophysiology/analogsignal/?q=link</pre>
 </div>
-</div></blockquote>
 <p>You receive a list of Analog Signal permalinks as a response:</p>
-<blockquote>
-<div><div class="highlight-python"><pre>HTTP SUCCESS (200)
+<div class="highlight-python"><pre>HTTP SUCCESS (200)
 
 {
 "logged_in_as": "bob",
@@ -266,9 +247,65 @@
 "message_type": "object_selected"
 }</pre>
 </div>
-</div></blockquote>
 <p>By default the API will return the first 100 data objects in the response. Use <a class="reference internal" href="principles.html#offset-parameter"><em>offset parameter</em></a> and/or <a class="reference internal" href="query.html"><em>standard filters</em></a> to refine the selection.</p>
 <p>All <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys objects</em></a> support sharing with other users by managing permissions. To learn more about sharing objects please refer to <a class="reference internal" href="permissions.html"><em>permissions</em></a>.</p>
+</div>
+<div class="section" id="accessing-object-metadata">
+<h2>Accessing object metadata<a class="headerlink" href="#accessing-object-metadata" title="Permalink to this headline">¶</a></h2>
+<p>You may request object metadata directly by sending a GET to</p>
+<div class="highlight-python"><pre>GET /electrophysiology/analogsignal/&lt;obj_id&gt;/metadata/</pre>
+</div>
+<p>You will get a list of [&lt;property&gt;, &lt;value&gt;] pairs in the response:</p>
+<dl class="docutils">
+<dt>{</dt>
+<dd><p class="first">...
+&#8220;metadata&#8221;: [</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>[</dt>
+<dd><dl class="first docutils">
+<dt>{</dt>
+<dd><dl class="first docutils">
+<dt>&#8220;fields&#8221;: {</dt>
+<dd>&#8220;comment&#8221;: &#8220;&#8221;,
+&#8220;definition&#8221;: &#8220;&#8221;,
+&#8220;name&#8221;: &#8220;bla22!&#8221;,
+&#8220;section&#8221;: &#8220;/metadata/section/2&#8221;,
+&#8220;id&#8221;: 1,
+&#8220;safety_level&#8221;: 3,
+...</dd>
+</dl>
+<p class="last">},
+&#8220;model&#8221;: &#8220;metadata.property&#8221;,
+&#8220;permalink&#8221;: &#8220;/metadata/property/1&#8221;</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8220;fields&#8221;: {</dt>
+<dd>&#8220;id&#8221;: 1,
+&#8220;safety_level&#8221;: 3,
+&#8220;owner&#8221;: &#8220;/profiles/profile/5&#8221;,
+&#8220;data&#8221;: &#8220;1584&#8221;,
+&#8220;parent_property&#8221;: &#8220;/metadata/property/1&#8221;
+...</dd>
+</dl>
+<p>},
+&#8220;model&#8221;: &#8220;metadata.value&#8221;,
+&#8220;permalink&#8221;: &#8220;/metadata/value/1&#8221;</p>
+</div></blockquote>
+<p class="last">}</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="last">]</p>
+</dd>
+</dl>
+<p>}</p>
+<p>or an empty list if no metadata is assigned.</p>
+<p>For the moment we do not support accessing metadata directly for several objects.</p>
 </div>
 </div>
 
@@ -284,6 +321,7 @@
 <li><a class="reference internal" href="#create-or-update-data-object">Create or update data object</a></li>
 <li><a class="reference internal" href="#getting-a-single-object">Getting a single object</a></li>
 <li><a class="reference internal" href="#getting-a-list-of-objects">Getting a List of Objects</a></li>
+<li><a class="reference internal" href="#accessing-object-metadata">Accessing object metadata</a></li>
 </ul>
 </li>
 </ul>

@@ -120,25 +120,6 @@
 </table>
 <p><em>Note. Available units values are</em> <a class="reference internal" href="../object_model.html#available-units"><em>listed here</em></a>.</p>
 </div>
-<div class="section" id="useful-mappings">
-<span id="id1"></span><h2>Useful mappings<a class="headerlink" href="#useful-mappings" title="Permalink to this headline">¶</a></h2>
-<p>For some parameters, like a publication state of an object (..., &#8220;safety_level&#8221;: 3, ...), we use integers in the request and response which could be meaningless for a developer. To mitigate that here we provide mappings explaining values for such parameters:</p>
-<p><strong>safety_level</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li>1 - public</li>
-<li>2 - friendly</li>
-<li>3 - private (default)</li>
-</ul>
-</div></blockquote>
-<p><strong>user permissions</strong> (used inside direct shares, find <a class="reference internal" href="permissions.html#update-acl"><em>more about it here</em></a>)</p>
-<blockquote>
-<div><ul class="simple">
-<li>1 - read only</li>
-<li>2 - read and write</li>
-</ul>
-</div></blockquote>
-</div>
 <div class="section" id="post-body-examples">
 <h2>POST body examples<a class="headerlink" href="#post-body-examples" title="Permalink to this headline">¶</a></h2>
 <p>Here you may find a list of examples of HTTP request bodies for all supported objects. All examples provide an example POST request body to create a new object.</p>
@@ -453,7 +434,6 @@
   <ul>
 <li><a class="reference internal" href="#">Object specs and examples (JSON)</a><ul>
 <li><a class="reference internal" href="#json-attribute-rules">JSON attribute rules</a></li>
-<li><a class="reference internal" href="#useful-mappings">Useful mappings</a></li>
 <li><a class="reference internal" href="#post-body-examples">POST body examples</a><ul>
 <li><a class="reference internal" href="#electrophysiology">Electrophysiology</a></li>
 <li><a class="reference internal" href="#metadata">Metadata</a></li>

@@ -79,7 +79,7 @@
 <div class="section" id="request-and-response">
 <h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
 <p>All operations are made using HTTP requests with JSON as a main request and response format. The API supports GET, POST and DELETE request types. Generally, GET requests are used to query objects and related data, POST requests create or update RESTful objects, DELETE requests move objects to the archive. Specifically, the following matrix summarizes which example URLs you should use to request a certain operation:</p>
-<div align="center" class="align-center"><object data="../../_images/api_principles_crud18.svg" type="image/svg+xml"><embed src="../../_images/api_principles_crud18.svg" type="image/svg+xml" /></object>
+<div align="center" class="align-center"><object data="../../_images/api_principles_crud20.svg" type="image/svg+xml"><embed src="../../_images/api_principles_crud20.svg" type="image/svg+xml" /></object>
 </div>
 <p>All URLs must have a host prefix, e.g. <a class="reference external" href="https://portal.g-node.org/data/">https://portal.g-node.org/data/</a>. These operations are described in detail within document sections below.</p>
 <p>A typical GET request should have a form like</p>
@@ -117,7 +117,7 @@
                 "current_state": 10,
                 "safety_level": 3,
                 "owner": "/profiles/profile/5",
-                "date_created": "2012-07-26T17:16:07",
+                "date_created": "2012-07-26 17:16:07",
                 "block": "/electrophysiology/block/1",
                 "metadata": []
             },
@@ -156,15 +156,15 @@
 <li>&#8220;id&#8221; - an integer ID of an object</li>
 <li>&#8220;guid&#8221; - a unique object identifier (changes if any attribute of an object changes)</li>
 <li>&#8220;current_state&#8221; indicates an active (10) or deleted (20) object</li>
-<li>&#8220;safety_level&#8221; defines a general object access level, like (1) - public, (2) - friendly, (3) - private (default). See more about permissions in <em class="xref std std-ref">permissions</em> section.</li>
+<li>&#8220;safety_level&#8221; defines a general object access level, like (1) - public, (2) - friendly, (3) - private (default) - see <a class="reference internal" href="#useful-mappings"><em>useful mappings</em></a>. See more about permissions in <em class="xref std std-ref">permissions</em> section.</li>
 <li>&#8220;owner&#8221; - a <a class="reference internal" href="../terminology.html#common-terms"><em>permalink</em></a> to the owner of an object</li>
-<li>&#8220;date_created&#8221; is obviously an object creation date.</li>
+<li>&#8220;date_created&#8221; is, as you already guessed, an object creation date.</li>
 </ul>
 </dd>
 </dl>
 <p>plus some other attributes, specific to the current object.</p>
 <p>If an object has a parent (many-to-one relationship), an appropriate field will contain a permalink to this parent object or null, if empty. An example would be the &#8220;block&#8221; key in the response above.</p>
-<p>If an object has children (one-to-many relationship), you should be able to find a list containing children permalinks under the key named &#8220;&lt;child_type&gt;_set&#8221;. An example would be the &#8220;analogsignal_set&#8221; key in the response above, which contains <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> objects belonging to a certain <a class="reference internal" href="../terminology.html#segment"><em>Segment</em></a>.</p>
+<p>If an object has children (one-to-many relationship), you should be able to find a list containing children permalinks under the key named &#8220;&lt;child_type&gt;_set&#8221;. An example would be the &#8220;analogsignal_set&#8221; key in the response above, which contains <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> objects belonging to a certain <a class="reference internal" href="../object_model.html#segment"><em>Segment</em></a>.</p>
 <p>Some attributes, especially the ones having units, are presented in a special form like</p>
 <div class="highlight-python"><pre>"time": {
     data: 35,
@@ -190,7 +190,7 @@ Vary:Accept-Language, Cookie</pre>
 <h2>Requesting object(s)<a class="headerlink" href="#requesting-object-s" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="getting-object-list">
 <h3>Getting object list<a class="headerlink" href="#getting-object-list" title="Permalink to this headline">¶</a></h3>
-<p>To get the list of available objects of a specific type (e.g. <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a>, or a <a class="reference internal" href="../terminology.html#section"><em>Section</em></a>, or a <a class="reference internal" href="../terminology.html#datafile"><em>Datafile</em></a>) you need to send a GET request to the URL, ending with the name of this type, for example:</p>
+<p>To get the list of available objects of a specific type (e.g. <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a>, or a <a class="reference internal" href="../object_model.html#section"><em>Section</em></a>, or a <a class="reference internal" href="../object_model.html#datafile"><em>Datafile</em></a>) you need to send a GET request to the URL, ending with the name of this type, for example:</p>
 <div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/</pre>
 </div>
 <p>or</p>
@@ -273,7 +273,7 @@ Vary:Accept-Language, Cookie</pre>
 <p>You may filter the list of objects by owner, permissions or specific conditions on the attributes, specifying criterias directly in the GET as parameters. To filter by owner, include owner=&lt;user_name&gt; or owner=&lt;user_ID&gt; parameters. Specify safety_level=3 or safety_level=1 to get only private or public objects respectively. That is basically applicable to any attribute: to filter by attribute (field lookups) you need to provide attribute name followed by a double underscore and a lookup type. For example</p>
 <div class="highlight-python"><pre>Request: GET /metadata/section/?owner=alex&amp;safety_level=1&amp;name__icontains=experiment</pre>
 </div>
-<p>filters Alex&#8217;s publicly available metadata <a class="reference internal" href="../terminology.html#section"><em>sections</em></a> containing &#8216;experiment&#8217; in the name, or</p>
+<p>filters Alex&#8217;s publicly available metadata <a class="reference internal" href="../object_model.html#section"><em>sections</em></a> containing &#8216;experiment&#8217; in the name, or</p>
 <div class="highlight-python"><pre>Request: GET /metadata/section/?date_created__gt=2012-02-23 13:20:11</pre>
 </div>
 <p>filters out all objects created before February, 23 2012. For more information on filtering consider <a class="reference internal" href="query.html"><em>search and query</em></a> section.</p>
@@ -388,7 +388,7 @@ Vary:Accept-Language, Cookie</pre>
 </div>
 <div class="section" id="manage-relationships">
 <span id="manage-relations"></span><h3>Manage relationships<a class="headerlink" href="#manage-relationships" title="Permalink to this headline">¶</a></h3>
-<p>Standard one-to-many relationships (like (one) <a class="reference internal" href="../terminology.html#recordingchannel"><em>recording channel</em></a> contains (many) <a class="reference internal" href="../terminology.html#analogsignal"><em>analog signals</em></a> from different experimental trials) are managed by updating the foreign key field of the &#8220;child&#8221; object. For that you send the usual POST request to update the foreign key attribute:</p>
+<p>Standard one-to-many relationships (like (one) <a class="reference internal" href="../object_model.html#recordingchannel"><em>recording channel</em></a> contains (many) <a class="reference internal" href="../object_model.html#analogsignal"><em>analog signals</em></a> from different experimental trials) are managed by updating the foreign key field of the &#8220;child&#8221; object. For that you send the usual POST request to update the foreign key attribute:</p>
 <div class="highlight-python"><pre>Request: POST /metadata/property/2/
 
 {
@@ -418,7 +418,7 @@ Vary:Accept-Language, Cookie</pre>
 </div>
 <div class="section" id="creating-new-object">
 <span id="common-create"></span><h2>Creating new object<a class="headerlink" href="#creating-new-object" title="Permalink to this headline">¶</a></h2>
-<p>Send the POST request to the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) to create new object. The POST data request should contain a JSON object with at least <a class="reference internal" href="../terminology.html"><em>mandatory fields</em></a>, required to create a new object. For example, to create a new <a class="reference internal" href="../terminology.html#event"><em>event</em></a> labeled &#8220;stimulus onset&#8221; in the <a class="reference internal" href="../terminology.html#segment"><em>segment</em></a> with ID = 1 supply the following:</p>
+<p>Send the POST request to the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) to create new object. The POST data request should contain a JSON object with at least <a class="reference internal" href="../terminology.html"><em>mandatory fields</em></a>, required to create a new object. For example, to create a new <a class="reference internal" href="../object_model.html#event"><em>event</em></a> labeled &#8220;stimulus onset&#8221; in the <a class="reference internal" href="../object_model.html#segment"><em>segment</em></a> with ID = 1 supply the following:</p>
 <div class="highlight-python"><pre>Request: POST /electrophysiology/event/
 
 {
@@ -459,11 +459,11 @@ Vary:Accept-Language, Cookie</pre>
 ...
 }</pre>
 </div>
-<p>Objects, having ARRAY DATA  associated with them (like <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../terminology.html#spiketrain"><em>SpikeTrain</em></a>), require one additional step for creation. It was found optimal to handle large data in files, thus associated data must be uploaded to the server in file prior to the object creation. Please find the rules and detailed explanations for such cases in the section <a class="reference internal" href="array_data.html"><em>Working with arrays</em></a>.</p>
+<p>Objects, having ARRAY DATA  associated with them (like <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../object_model.html#spiketrain"><em>SpikeTrain</em></a>), require one additional step for creation. It was found optimal to handle large data in files, thus associated data must be uploaded to the server in file prior to the object creation. Please find the rules and detailed explanations for such cases in the section <a class="reference internal" href="array_data.html"><em>Working with arrays</em></a>.</p>
 </div>
 <div class="section" id="delete-object-s">
 <h2>Delete object(s)<a class="headerlink" href="#delete-object-s" title="Permalink to this headline">¶</a></h2>
-<p>Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a <em class="xref std std-ref">list</em> will archive all objects within the list. For example, to remove all <a class="reference internal" href="../terminology.html#event"><em>events</em></a> from a particular <a class="reference internal" href="../terminology.html#segment"><em>segment</em></a> with ID = 12 send</p>
+<p>Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a <em class="xref std std-ref">list</em> will archive all objects within the list. For example, to remove all <a class="reference internal" href="../object_model.html#event"><em>events</em></a> from a particular <a class="reference internal" href="../object_model.html#segment"><em>segment</em></a> with ID = 12 send</p>
 <div class="highlight-python"><pre>Request: DELETE /electrophysiology/event/?segment=12</pre>
 </div>
 </div>
@@ -538,6 +538,25 @@ Vary:Accept-Language, Cookie</pre>
 </tbody>
 </table>
 </div>
+<div class="section" id="useful-mappings">
+<span id="id2"></span><h2>Useful mappings<a class="headerlink" href="#useful-mappings" title="Permalink to this headline">¶</a></h2>
+<p>For some parameters, like a publication state of an object (..., &#8220;safety_level&#8221;: 3, ...), we use integers in the request and response which could be meaningless for a developer. To mitigate that here we provide mappings explaining values for such parameters:</p>
+<p><strong>safety_level</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>1 - public</li>
+<li>2 - friendly</li>
+<li>3 - private (default)</li>
+</ul>
+</div></blockquote>
+<p><strong>user permissions</strong> (used inside direct shares, find <a class="reference internal" href="permissions.html#update-acl"><em>more about it here</em></a>)</p>
+<blockquote>
+<div><ul class="simple">
+<li>1 - read only</li>
+<li>2 - read and write</li>
+</ul>
+</div></blockquote>
+</div>
 </div>
 
 
@@ -568,6 +587,7 @@ Vary:Accept-Language, Cookie</pre>
 <li><a class="reference internal" href="#delete-object-s">Delete object(s)</a></li>
 <li><a class="reference internal" href="#permissions">Permissions</a></li>
 <li><a class="reference internal" href="#http-messages">HTTP Messages</a></li>
+<li><a class="reference internal" href="#useful-mappings">Useful mappings</a></li>
 </ul>
 </li>
 </ul>

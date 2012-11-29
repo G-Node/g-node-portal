@@ -11,7 +11,7 @@ G-Node Portal is a platform for Neuroscientists to facilitate data access, data 
 
 Start by reading the G-Node Portal :doc:`overview <overview>`.
 
-You may sign up and instantly `try the platform <https://portal.g-node.org/data/>`_ using the web browser. If you are interested in using the platform from the Matlab or Python, consider our :doc:`tutorial <tutorial/index>`. If you are interested in the common DATA API, please start exploring :doc:`the principles here <key_functions/data_api/principles>`.
+You may sign up and instantly `try the platform <https://portal.g-node.org/data/>`_ using the web browser. If you are interested in using the platform from the Matlab or Python, consider our tutorials (:doc:`matlab <tutorial/_matlab>`, :doc:`python <tutorial/_python>` - coming soon). If you are interested in the common DATA API, please start exploring :doc:`the principles here <key_functions/data_api/principles>`.
 
 Everything you want to know about G-Node Platform:
 
@@ -22,14 +22,14 @@ First steps
 
    * :doc:`overview <overview>` | `sign up and try <https://portal.g-node.org/data/>`_
 
- * tutorial: 
+ * tutorial :doc:`(coming soon) <tutorial/_web_access>`:
 
-   * :doc:`web access <tutorial/web_access>` | :doc:`tutorial for Matlab users <tutorial/matlab>` | :doc:`tutorial for Python users <tutorial/python>`
+   * :doc:`web access <tutorial/_web_access>` | :doc:`tutorial for Matlab users <tutorial/_matlab>` | :doc:`tutorial for Python users <tutorial/_python>`
 
 """"""""""""""""""
 Download & Install
 """"""""""""""""""
- * :doc:`client for Matlab <install/matlab>` | :doc:`client for Python <install/python>` | :doc:`back-end server <install/backend>`
+ * `client for Matlab <https://github.com/G-Node/gnode-client-matlab/wiki/Installation>`_ | :doc:`soon: client for Python <install/_python>` | :doc:`soon: back-end server <install/_backend>`
 
 """""""""""""
 Key functions
@@ -40,32 +40,21 @@ Key functions
 
  * Matlab:
 
-   * :doc:`getting started <key_functions/matlab/getting_started>` | :doc:`general <key_functions/matlab/general>` | :doc:`retrieval <key_functions/matlab/retrieval>` | :doc:`upload <key_functions/matlab/upload>` | :doc:`utilities <key_functions/matlab/utilities>`
+   * `getting started <https://github.com/G-Node/gnode-client-matlab/wiki/Getting-started>`_ | `general <https://github.com/G-Node/gnode-client-matlab/wiki/General>`_ | `retrieval <https://github.com/G-Node/gnode-client-matlab/wiki/Retrieval>`_ | `upload <https://github.com/G-Node/gnode-client-matlab/wiki/Upload>`_ | `utilities <https://github.com/G-Node/gnode-client-matlab/wiki/Utilities>`_
 
- * Python: 
+ * Python :doc:`(coming soon) <key_functions/python/_basic>`:
 
-   * :doc:`basic features <key_functions/python/basic>` | :doc:`working with data <key_functions/python/data>` | :doc:`metadata and data annotation <key_functions/python/metadata>` | :doc:`file operations <key_functions/python/file>` | :doc:`search and query <key_functions/python/query>` | :doc:`permissions <key_functions/python/permissions>` | :doc:`history <key_functions/python/history>`
+   * :doc:`basic features <key_functions/python/_basic>` | :doc:`working with data <key_functions/python/_data>` | :doc:`metadata and data annotation <key_functions/python/_metadata>` | :doc:`file operations <key_functions/python/_file>` | :doc:`search and query <key_functions/python/_query>` | :doc:`permissions <key_functions/python/_permissions>` | :doc:`history <key_functions/python/_history>`
 
  * DATA API: 
 
    * current version 0.2: 
 
-     * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`electrophysiology <key_functions/data_api/electrophysiology>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files and formats <key_functions/data_api/files>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`going back in time <key_functions/data_api/back>` | :doc:`object specs and examples (JSON) <key_functions/data_api/object_examples>`
+     * :doc:`REST API principles <key_functions/data_api/principles>` | :doc:`authentication <key_functions/data_api/authentication>` | :doc:`electrophysiology <key_functions/data_api/electrophysiology>` | :doc:`metadata <key_functions/data_api/metadata>` | :doc:`data annotation <key_functions/data_api/annotation>` | :doc:`files and formats <key_functions/data_api/files>` | :doc:`array data <key_functions/data_api/array_data>` | :doc:`search and query <key_functions/data_api/query>` | :doc:`permissions <key_functions/data_api/permissions>` | :doc:`history <key_functions/data_api/history>` | :doc:`object specs and examples (JSON) <key_functions/data_api/object_examples>`
 
    * version 0.1: 
 
      * :doc:`API reference <key_functions/data_api/0.1/api_specification>` | :doc:`object specs and examples (JSON) <key_functions/data_api/0.1/api_object_examples>`
-
-""""""""""""""""""
-Complete reference
-""""""""""""""""""
- * Matlab: 
-
-   * :doc:`Client reference <reference/matlab>` | :doc:`object specs and examples <reference/matlab_examples>`
-
- * Python: 
-
-   * :doc:`Client reference <reference/python>` | :doc:`object specs and examples <reference/python_examples>`
 
 
 """""""""""""""""

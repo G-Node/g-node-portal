@@ -86,11 +86,11 @@
 <dl class="docutils">
 <dt>In this example we filter all available <a class="reference internal" href="../object_model.html#event"><em>events</em></a> to get only those belonging to &#8216;alex&#8217; and having &#8216;stimulus&#8217; in the label. You may use filters with any object attribute, in addition, for every filter you may specify special lookup, like __icontains in this example. The following lookups are supported (The back-end of the DATA API is based on <a class="reference external" href="https://www.djangoproject.com/">django</a> thus the whole query mechanism was somehow inspired by <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/querysets/">django queryset machinery</a>):</dt>
 <dd><ul class="first last simple">
-<li>exact - exact match</li>
-<li>iexact - case-insensitive exact match</li>
-<li>contains - case-sensitive containment test</li>
-<li>icontains - case-insensitive containment test</li>
-<li>in - in a given list. example:</li>
+<li><strong>exact</strong> - exact match</li>
+<li><strong>iexact</strong> - case-insensitive exact match</li>
+<li><strong>contains</strong> - case-sensitive containment test</li>
+<li><strong>icontains</strong> - case-insensitive containment test</li>
+<li><strong>in</strong> - in a given list. example:</li>
 </ul>
 </dd>
 </dl>
@@ -99,7 +99,7 @@
 <dl class="docutils">
 <dt>further:</dt>
 <dd><ul class="first last simple">
-<li>gt - greater than. example:</li>
+<li><strong>gt</strong> - greater than. example:</li>
 </ul>
 </dd>
 </dl>
@@ -108,14 +108,15 @@
 <dl class="docutils">
 <dt>and</dt>
 <dd><ul class="first last simple">
-<li>gte - greater than or equal to</li>
-<li>lt - less than</li>
-<li>lte - less than or equal to</li>
-<li>startswith - case-sensitive starts-with</li>
-<li>istartswith - case-insensitive starts-with</li>
-<li>endswith - case-sensitive ends-with</li>
-<li>iendswith - case-insensitive ends-with</li>
-<li>year - for date/datetime fields, exact year match. example:</li>
+<li><strong>gte</strong> - greater than or equal to</li>
+<li><strong>lt</strong> - less than</li>
+<li><strong>lte</strong> - less than or equal to</li>
+<li><strong>isnull</strong> - is equal to null (provide 0 for False, any other value means True)</li>
+<li><strong>startswith</strong> - case-sensitive starts-with</li>
+<li><strong>istartswith</strong> - case-insensitive starts-with</li>
+<li><strong>endswith</strong> - case-sensitive ends-with</li>
+<li><strong>iendswith</strong> - case-insensitive ends-with</li>
+<li><strong>year</strong> - for date/datetime fields, exact year match. example:</li>
 </ul>
 </dd>
 </dl>
@@ -124,9 +125,9 @@
 <dl class="docutils">
 <dt>as well as</dt>
 <dd><ul class="first last simple">
-<li>month - for date/datetime fields, exact month match</li>
-<li>day - for date/datetime fields, exact day match</li>
-<li>week_day - for datetime fields, a &#8216;day of the week&#8217; match. Takes an integer value representing the day of week from 1 (Sunday) to 7 (Saturday)</li>
+<li><strong>month</strong> - for date/datetime fields, exact month match</li>
+<li><strong>day</strong> - for date/datetime fields, exact day match</li>
+<li><strong>week_day</strong> - for datetime fields, a &#8216;day of the week&#8217; match. Takes an integer value representing the day of week from 1 (Sunday) to 7 (Saturday)</li>
 </ul>
 </dd>
 </dl>
@@ -134,7 +135,7 @@
 </div>
 <div class="section" id="filter-by-permissions">
 <h3>Filter by permissions<a class="headerlink" href="#filter-by-permissions" title="Permalink to this headline">¶</a></h3>
-<p>A useful case for filtering could be filtering objects by their authorship or permissions. For example, if you need to access only public objects (having safety_level = 1, see <a class="reference internal" href="object_examples.html#useful-mappings"><em>useful mappings</em></a>), use the request like:</p>
+<p>A useful case for filtering could be filtering objects by their authorship or permissions. For example, if you need to access only public objects (having safety_level = 1, see <a class="reference internal" href="principles.html#useful-mappings"><em>useful mappings</em></a>), use the request like:</p>
 <div class="highlight-python"><pre>Request: GET /metadata/section/?safety_level=1</pre>
 </div>
 <p>To quickly get a list of objects, shared by a particular user (who&#8217;s account name should be like &#8216;alex&#8217;), try:</p>
@@ -144,9 +145,9 @@
 <div class="section" id="splitting-results">
 <h3>Splitting results<a class="headerlink" href="#splitting-results" title="Permalink to this headline">¶</a></h3>
 <p>DATA API limits the number objects to be retrieved in one request by 100. If there are more than a 100 objects you should request them using offset=&lt;some_number&gt; (offset=200 etc.). You may also limit the number of objects by max_results=&lt;some_number&gt; parameter. The start / end indexes for the selected objects are usually contained in the response as &#8220;selected_range&#8221;. For example, in case there are more than 500 objects, the following request:</p>
-<div class="highlight-python"><pre>Request: GET /metadata/section/?offset=120&amp;max_results=300</pre>
+<div class="highlight-python"><pre>Request: GET /metadata/section/?offset=120&amp;max_results=30</pre>
 </div>
-<p>will retrieve 300 objects, indexed from 120 to 419 respectively.</p>
+<p>will retrieve 30 objects, indexed from 120 to 149 respectively.</p>
 </div>
 <div class="section" id="querying-data-by-metadata">
 <h3>Querying data by metadata<a class="headerlink" href="#querying-data-by-metadata" title="Permalink to this headline">¶</a></h3>

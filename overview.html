@@ -76,21 +76,25 @@
   <div class="section" id="overview">
 <span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <p>The aim of the G-Node Portal is to provide a platform for Neuroscientists for data storage, analysis and exchange. It was designed to support normal experimental workflow, so you may use it from your familiar analytical environment, like Matlab or Python. Here we give an overview of the platform and available services.</p>
-<p>The goal of this document is to present you the potential usage of the platform for your specific experimental workflow. If you want to try it now or you&#8217;re ready for a more detailed description - please <a class="reference external" href="https://portal.g-node.org/data/">login</a> or <a class="reference external" href="https://portal.g-node.org/data/account/signup/">sign up</a>, or proceed with our tutorials (<tt class="xref doc docutils literal"><span class="pre">tutorial</span> <span class="pre">for</span> <span class="pre">Matlab</span> <span class="pre">users</span></tt> | <tt class="xref doc docutils literal"><span class="pre">tutorial</span> <span class="pre">for</span> <span class="pre">Python</span> <span class="pre">users</span></tt>).</p>
+<p>The goal of this document is to present you the potential usage of the platform for your specific experimental workflow. If you want to try it now or you&#8217;re ready for a more detailed description - please <a class="reference external" href="https://portal.g-node.org/data/">login</a> or <a class="reference external" href="https://portal.g-node.org/data/account/signup/">sign up</a>, or proceed with our tutorials (<tt class="xref doc docutils literal"><span class="pre">matlab</span></tt>, <tt class="xref doc docutils literal"><span class="pre">python</span></tt> - coming soon).</p>
 <div class="section" id="start-by-searching-public-data">
-<span id="search-overview"></span><span id="overview-ephys"></span><h2>Start by searching public data<a class="headerlink" href="#start-by-searching-public-data" title="Permalink to this headline">¶</a></h2>
+<span id="search-overview"></span><h2>Start by searching public data<a class="headerlink" href="#start-by-searching-public-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>Sorry. This section is being developed.</strong></p>
 </div>
 <div class="section" id="organize-your-experimental-data">
-<h2>Organize your experimental Data<a class="headerlink" href="#organize-your-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p>Intuitively, these objects can be all drawn on this diagram:</p>
-<div align="center" class="align-center"><img alt="../_static/ephys_basic.png" class="align-center" src="../_static/ephys_basic.png" /></div>
+<span id="overview-ephys"></span><h2>Organize your experimental Data<a class="headerlink" href="#organize-your-experimental-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>Sorry. This section is being developed.</strong></p>
+<p>Intuitively, full data model can be drawn on this diagram:</p>
+<div align="center" class="align-center"><img alt="_images/ephys_basic18.png" class="align-center" src="_images/ephys_basic18.png" /></div>
 </div>
 <div class="section" id="create-your-metadata-structure">
 <span id="overview-metadata"></span><h2>Create your metadata structure<a class="headerlink" href="#create-your-metadata-structure" title="Permalink to this headline">¶</a></h2>
-<div align="center" class="align-center"><img alt="_images/metadata_example117.png" class="align-center" src="_images/metadata_example117.png" /></div>
+<p><strong>Sorry. This section is being developed.</strong></p>
+<div align="center" class="align-center"><img alt="_images/metadata_example135.png" class="align-center" src="_images/metadata_example135.png" /></div>
 </div>
 <div class="section" id="annotate-datasets">
 <span id="annotation-example"></span><h2>Annotate datasets<a class="headerlink" href="#annotate-datasets" title="Permalink to this headline">¶</a></h2>
+<p><strong>Sorry. This section is being developed.</strong></p>
 <p>Imagine you have an experiment with stimulus which changes its color across experimental trials. The &#8220;color&#8221; is an arbitrary parameter, we cannot predict the exact setup of your experimental study. In your future research you want to indicate, which signals were recorded under which stimulus color, to be able to perform some valueable data analysis. Essentially this is a need to connect recorded signal data with arbitrary metadata; we call this &#8220;data annotation&#8221; process. In this section we describe how it works.</p>
 <p>The idea is that you use objects in electrophysiology ...</p>
 <p>Assume you want to group channels by some spatial property, and later compare the results from this group to the results from all channels. Bla..</p>
@@ -98,18 +102,29 @@
 </div>
 <div class="section" id="query-your-experiments">
 <span id="query-overview"></span><h2>Query your experiments<a class="headerlink" href="#query-your-experiments" title="Permalink to this headline">¶</a></h2>
-<p>This section is being described..</p>
+<p><strong>Sorry. This section is being developed.</strong></p>
 </div>
 <div class="section" id="open-your-data-for-collaborators">
-<h2>Open your data for Collaborators<a class="headerlink" href="#open-your-data-for-collaborators" title="Permalink to this headline">¶</a></h2>
-<p>This section is being described..</p>
+<span id="sharing-overview"></span><h2>Open your data for Collaborators<a class="headerlink" href="#open-your-data-for-collaborators" title="Permalink to this headline">¶</a></h2>
+<p>There is a possibility to share your data with other users in the G-Node Portal. When you share an object, it immediately becomes accessible for the users depending on the access level you select. In case an object is a container (has downstream relations, like a <a class="reference internal" href="key_functions/object_model.html#segment"><em>Segment</em></a> can have <a class="reference internal" href="key_functions/object_model.html#event"><em>Events</em></a>), you may share an object recursively, which implies all children objects in the selected object with all their contents will become shared. Object sharing is controlled via the object safety level (kind of a sharing state) and <a class="reference internal" href="key_functions/terminology.html#acl-term"><em>access control list</em></a>. Object&#8217;s safety level can be</p>
+<blockquote>
+<div><ul class="simple">
+<li>private — noone, except users, specified explicitly in the Access Control List, may see the resource.</li>
+<li>friendly — all friends have a reader role, with no need to assign them for every resource.</li>
+<li>public — all users may see the contents of the resource.</li>
+</ul>
+</div></blockquote>
+<p>In addition to the common object sharing state (safety level), many objects support <a class="reference internal" href="key_functions/terminology.html#acl-term"><em>Access Control Lists</em></a>, that show who has access to a given object.</p>
+<p>Every object has an owner, which is always a person who initially created an object, and cannot be changed.</p>
+<p>With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.</p>
 </div>
 <div class="section" id="track-changes">
-<h2>Track changes<a class="headerlink" href="#track-changes" title="Permalink to this headline">¶</a></h2>
-<p>This section is being described..</p>
+<span id="id2"></span><h2>Track changes<a class="headerlink" href="#track-changes" title="Permalink to this headline">¶</a></h2>
+<p><strong>Sorry. This section is being developed.</strong></p>
 </div>
 <div class="section" id="bulk-data-upload">
 <span id="bulk-upload"></span><h2>Bulk data upload<a class="headerlink" href="#bulk-data-upload" title="Permalink to this headline">¶</a></h2>
+<p><strong>Sorry. This section is being developed.</strong></p>
 <div class="section" id="zip-archives">
 <h3>Zip archives<a class="headerlink" href="#zip-archives" title="Permalink to this headline">¶</a></h3>
 <p>This section is in development..</p>

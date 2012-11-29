@@ -64,7 +64,7 @@ A typical response will look like this:
                     "current_state": 10,
                     "safety_level": 3,
                     "owner": "/profiles/profile/5",
-                    "date_created": "2012-07-26T17:16:07",
+                    "date_created": "2012-07-26 17:16:07",
                     "block": "/electrophysiology/block/1",
                     "metadata": []
                 },
@@ -100,9 +100,9 @@ In "fields" you will always find:
  * "id" - an integer ID of an object
  * "guid" - a unique object identifier (changes if any attribute of an object changes)
  * "current_state" indicates an active (10) or deleted (20) object
- * "safety_level" defines a general object access level, like (1) - public, (2) - friendly, (3) - private (default). See more about permissions in :ref:`permissions <permissions>` section.
+ * "safety_level" defines a general object access level, like (1) - public, (2) - friendly, (3) - private (default) - see :ref:`useful mappings <useful_mappings>`. See more about permissions in :ref:`permissions <permissions>` section.
  * "owner" - a :ref:`permalink <common_terms>` to the owner of an object
- * "date_created" is obviously an object creation date.
+ * "date_created" is, as you already guessed, an object creation date.
 
 plus some other attributes, specific to the current object.
 
@@ -559,6 +559,23 @@ NotSupported    405     this type of HTTP request is not supported
 ============    ====    ===============
 
 
+.. _useful_mappings:
+
+---------------
+Useful mappings
+---------------
+
+For some parameters, like a publication state of an object (..., "safety_level": 3, ...), we use integers in the request and response which could be meaningless for a developer. To mitigate that here we provide mappings explaining values for such parameters:
+
+**safety_level**
+
+ * 1 - public
+ * 2 - friendly
+ * 3 - private (default)
 
 
+**user permissions** (used inside direct shares, find :ref:`more about it here <update_acl>`)
+
+ * 1 - read only
+ * 2 - read and write
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Some title here.. &mdash; g-node-portal v0.6 documentation</title>
+    <title>Versioning and history support &mdash; g-node-portal v0.6 documentation</title>
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -73,9 +73,26 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="some-title-here">
-<h1>Some title here..<a class="headerlink" href="#some-title-here" title="Permalink to this headline">¶</a></h1>
-<p>Text is coming soon..</p>
+  <div class="section" id="versioning-and-history-support">
+<h1>Versioning and history support<a class="headerlink" href="#versioning-and-history-support" title="Permalink to this headline">¶</a></h1>
+<p>You may know that our system supports <a class="reference internal" href="../../overview.html#track-changes"><em>object versioning</em></a>. That means, for every object we keep all changes made. This document describes how you can access previous versions.</p>
+<div class="section" id="going-back-in-time">
+<h2>Going back in time<a class="headerlink" href="#going-back-in-time" title="Permalink to this headline">¶</a></h2>
+<p>If any change was made to an object, you may request any of it&#8217;s previous states by specifying the time of the state in the request. Use the <strong>at_time</strong> parameter for that:</p>
+<div class="highlight-python"><pre>Request: GET /&lt;namespace&gt;/&lt;object_type&gt;/[&lt;object_id&gt;]/?at_time=&lt;YYYY-MM-DD HH:MM:SS&gt;</pre>
+</div>
+<p>this works with lists of objects too:</p>
+<div class="highlight-python"><pre>Request: GET /&lt;namespace&gt;/&lt;object_type&gt;/?at_time=&lt;YYYY-MM-DD HH:MM:SS&gt;</pre>
+</div>
+<p>For example, if you set <strong>at_time</strong> to any point in time in the previous century:</p>
+<div class="highlight-python"><pre>Request: GET /&lt;namespace&gt;/&lt;object_type&gt;/?at_time=1998-07-26 17:16:07</pre>
+</div>
+<p>you&#8217;ll obviously get no results.</p>
+</div>
+<div class="section" id="object-changes-history">
+<h2>Object changes history<a class="headerlink" href="#object-changes-history" title="Permalink to this headline">¶</a></h2>
+<p>Soon you&#8217;ll be able to request object changes history in one GET request, however, at the moment this feature is in development.</p>
+</div>
 </div>
 
 
@@ -83,7 +100,16 @@
         </div>
       </div>
       <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Versioning and history support</a><ul>
+<li><a class="reference internal" href="#going-back-in-time">Going back in time</a></li>
+<li><a class="reference internal" href="#object-changes-history">Object changes history</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   </ul></li>

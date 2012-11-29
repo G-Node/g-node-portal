@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Some title here.. &mdash; g-node-portal v0.6 documentation</title>
+    <title>MANAGE PERMISSIONS &mdash; g-node-portal v0.6 documentation</title>
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -73,17 +73,109 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="some-title-here">
-<h1>Some title here..<a class="headerlink" href="#some-title-here" title="Permalink to this headline">¶</a></h1>
-<p>Text is coming soon..</p>
-<span class="target" id="update-acl"></span></div>
+  <div class="section" id="manage-permissions">
+<h1>MANAGE PERMISSIONS<a class="headerlink" href="#manage-permissions" title="Permalink to this headline">¶</a></h1>
+<p>There is a possibility to share your data with other users in the G-Node Portal. To get an overview of object sharing consider the <a class="reference internal" href="../../overview.html#sharing-overview"><em>nice example in the overview</em></a>.</p>
+<div class="section" id="getting-resource-permissions">
+<h2>Getting resource permissions<a class="headerlink" href="#getting-resource-permissions" title="Permalink to this headline">¶</a></h2>
+<p>For objects, supporting sharing, you may request an <strong>object state</strong> together with <a class="reference internal" href="../terminology.html#acl-term"><em>ACL</em></a> by requesting:</p>
+<div class="highlight-python"><pre>GET /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/</pre>
+</div>
+<p>Response:</p>
+<div class="highlight-python"><pre>Response: HTTP SUCCESS (200)
+
+{
+    "message": "Here is the list of requested objects.",
+    "logged_in_as": "/profiles/profile/5",
+    "message_type": "object_selected",
+    "safety_level": &lt;access_level&gt;, # 1 = public, 2 = friendly, 3 = private
+    "shared_with": {
+        "&lt;user_id&gt;": &lt;user_permissions&gt;, # 1 = read, 2 = read and write
+        "&lt;user_id&gt;": &lt;user_permissions&gt;
+    }
+}</pre>
+</div>
+<p>Of course, getting just an <strong>object owner</strong> and <strong>safety level</strong> can be easy as <a class="reference internal" href="principles.html#get-single-object"><em>usual single object GET request</em></a>:</p>
+<div class="highlight-python"><pre>Request: GET /&lt;namespace&gt;/&lt;object_type&gt;/&lt;obj_id&gt;/</pre>
+</div>
+<p>You&#8217;ll find corresponding fields in the response as:</p>
+<div class="highlight-python"><pre>Response: HTTP SUCCESS (200)
+
+{
+    ...
+    "selected": [{
+        "fields": {
+            ...
+            "safety_level": 2,
+            "owner": "/profiles/profile/5",
+        },
+        ...
+    }],
+    ...
+}</pre>
+</div>
+</div>
+<div class="section" id="update-resource-acl-share-unshare">
+<span id="update-acl"></span><h2>Update resource ACL (share/unshare)<a class="headerlink" href="#update-resource-acl-share-unshare" title="Permalink to this headline">¶</a></h2>
+<p>To set particular ACL send the following HTTP POST:</p>
+<div class="highlight-python"><pre>POST /electrophysiology/&lt;resource_type&gt;/&lt;resource_id&gt;/acl/?params
+
+{
+    "safety_level": "&lt;access level&gt;", # 1: public, 2: friendly, 3: private
+    "shared_with": {
+        "&lt;user_id&gt;": "&lt;user_permissions&gt;", # 1: read, 2: read and write
+        "&lt;user_id&gt;": "&lt;user_permissions&gt;"
+    }
+}</pre>
+</div>
+<dl class="docutils">
+<dt>parameters:</dt>
+<dd><ul class="first last simple">
+<li>[cascade] - true, false (default) - apply to all objects recursivery. All nested objects will be also updated.</li>
+</ul>
+</dd>
+<dt>In development:</dt>
+<dd><ul class="first last simple">
+<li>[notify] - true, false (default?) - users will be notified per e-mail</li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python"><pre>Response: HTTP SUCCESS (200)
+
+{
+    "message": "Here is the list of requested objects.",
+    "logged_in_as": "/profiles/profile/5",
+    "message_type": "object_selected",
+    "safety_level": "&lt;access level&gt;", # 1: public, 2: friendly, 3: private
+    "shared_with": {
+        "&lt;user_id&gt;": "&lt;user_permissions&gt;", # 1: read, 2: read and write
+        "&lt;user_id&gt;": &lt;user_permissions&gt;
+    }
+}</pre>
+</div>
+</div>
+<div class="section" id="bulk-acl-update">
+<h2>Bulk ACL update<a class="headerlink" href="#bulk-acl-update" title="Permalink to this headline">¶</a></h2>
+<p>We consider developing this feature. Please drop a short email to the <a class="reference external" href="mailto:support&#37;&#52;&#48;g-node&#46;org">support<span>&#64;</span>g-node<span>&#46;</span>org</a> to let us know that you need it. It will make the development much faster.</p>
+</div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Related Topics</h3>
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MANAGE PERMISSIONS</a><ul>
+<li><a class="reference internal" href="#getting-resource-permissions">Getting resource permissions</a></li>
+<li><a class="reference internal" href="#update-resource-acl-share-unshare">Update resource ACL (share/unshare)</a></li>
+<li><a class="reference internal" href="#bulk-acl-update">Bulk ACL update</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   </ul></li>
