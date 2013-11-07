@@ -10,7 +10,11 @@ Throughout this entire documentation, it's refered to a series of terms like :re
 permalink
 ---------
 
-    A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a Datafile_ could have a permalink like https://portal.g-node.org/data/datafiles/3ABETEVKFI/
+    A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a :ref:`Datafile <Datafile>` could have a permalink like 
+
+ ::
+
+    https://portal.g-node.org/data/datafiles/3ABETEVKFI/
 
 -----------------
 object identifier
