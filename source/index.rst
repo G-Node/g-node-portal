@@ -24,12 +24,12 @@ First steps
 
  * tutorial :doc:`(coming soon) <tutorial/_web_access>`:
 
-   * :doc:`web access <tutorial/_web_access>` | :doc:`tutorial for Matlab users <tutorial/_matlab>` | :doc:`tutorial for Python users <tutorial/_python>`
+   * :doc:`web access <tutorial/_web_access>` | `tutorial for Matlab users <https://github.com/G-Node/gnode-client-matlab/wiki/Getting-started>`_ | `tutorial for Python users <http://g-node.github.io/python-gnode-client/getting_started.html>`_
 
 """"""""""""""""""
 Download & Install
 """"""""""""""""""
- * `client for Matlab <https://github.com/G-Node/gnode-client-matlab/wiki/Installation>`_ | :doc:`soon: client for Python <install/_python>` | :doc:`soon: back-end server <install/_backend>`
+ * `client for Matlab <https://github.com/G-Node/gnode-client-matlab/wiki/Installation>`_ | `client for Python <http://g-node.github.io/python-gnode-client/install.html>`_ | :doc:`soon: back-end server <install/_backend>`
 
 """""""""""""
 Key functions
@@ -40,11 +40,11 @@ Key functions
 
  * Matlab:
 
-   * `getting started <https://github.com/G-Node/gnode-client-matlab/wiki/Getting-started>`_ | `general <https://github.com/G-Node/gnode-client-matlab/wiki/General>`_ | `retrieval <https://github.com/G-Node/gnode-client-matlab/wiki/Retrieval>`_ | `upload <https://github.com/G-Node/gnode-client-matlab/wiki/Upload>`_ | `utilities <https://github.com/G-Node/gnode-client-matlab/wiki/Utilities>`_
+   * `getting started <https://github.com/G-Node/gnode-client-matlab/wiki/Getting-started>`_ | `general concepts <https://github.com/G-Node/gnode-client-matlab/wiki/General>`_ | `retrieval <https://github.com/G-Node/gnode-client-matlab/wiki/Retrieval>`_ | `upload <https://github.com/G-Node/gnode-client-matlab/wiki/Upload>`_ | `utilities <https://github.com/G-Node/gnode-client-matlab/wiki/Utilities>`_
 
- * Python :doc:`(coming soon) <key_functions/python/_basic>`:
+ * Python:
 
-   * :doc:`basic features <key_functions/python/_basic>` | :doc:`working with data <key_functions/python/_data>` | :doc:`metadata and data annotation <key_functions/python/_metadata>` | :doc:`file operations <key_functions/python/_file>` | :doc:`search and query <key_functions/python/_query>` | :doc:`permissions <key_functions/python/_permissions>` | :doc:`history <key_functions/python/_history>`
+   * `getting started <http://g-node.github.io/python-gnode-client/getting_started.html>`_ | `general concepts <http://g-node.github.io/python-gnode-client/general.html>`_ | `retrieval <http://g-node.github.io/python-gnode-client/retrieval.html>`_ | `upload <http://g-node.github.io/python-gnode-client/upload.html>`_
 
  * DATA API: 
 
