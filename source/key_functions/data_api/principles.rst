@@ -13,7 +13,7 @@ All operations are made using HTTP requests with JSON as a main request and resp
 .. image:: ../../_static/api_principles_crud.svg
     :align: center
 
-All URLs must have a host prefix, e.g. https://portal.g-node.org/data/. These operations are described in detail within document sections below.
+All URLs must have a host prefix, e.g. http://test.g-node.org. These operations are described in detail within document sections below.
 
 A typical GET request should have a form like
 
@@ -25,22 +25,22 @@ for example,
 
 ::
 
-    Request: GET /electrophysiology/spiketrain/1546/
+    Request: GET /electrophysiology/spiketrain/88CAVT7ACC/
 
-returns the spiketrain object with an ID = 1546 in JSON format.
+returns the spiketrain object with an ID = 88CAVT7ACC in JSON format.
 
 When you need to create or update object(s), you send a POST request with the same URL syntax. Data, sent together with the POST request should be in a JSON format, for example:
 
 ::
 
-    Request: POST /electrophysiology/spiketrain/1546/
+    Request: POST /electrophysiology/spiketrain/88CAVT7ACC/
 
     {
-        "name": "SP-1546",
+        "name": "SP-88CAVT7ACC",
         "comment": "spiketrain computed using Quiroga et al."
     }
 
-will make an update fields "name" and "comment" in the spiketrain object with an ID = 1546.
+will make an update fields "name" and "comment" in the spiketrain object with an ID = 88CAVT7ACC.
 
 A typical response will look like this:
 
@@ -58,18 +58,18 @@ A typical response will look like this:
                     "guid": "88aa2089cfc73e9279231c5518702222e5b8bb0d",
                     "name": "V1 FIX signals, trial 1",
                     "analogsignal_set": [
-                        "/electrophysiology/analogsignal/2",
-                        "/electrophysiology/analogsignal/178",
+                        "/electrophysiology/analogsignal/MR463EC50D",
+                        "/electrophysiology/analogsignal/RD5BKU7M83",
                     ],
                     "current_state": 10,
                     "safety_level": 3,
                     "owner": "/profiles/profile/5",
                     "date_created": "2012-07-26 17:16:07",
-                    "block": "/electrophysiology/block/1",
+                    "block": "/electrophysiology/block/M37HBUFDRU",
                     "metadata": []
                 },
                 "model": "neo_api.segment",
-                "permalink": "/electrophysiology/segment/2"
+                "permalink": "/electrophysiology/segment/7H28KRP9O8"
             },
             {
                 ...
@@ -178,8 +178,8 @@ You'll get a JSON response having a list of objects under "selected" key:
             "odml_type": 0,
             "name": "bla",
             "datafile_set": [
-                "/datafiles/4",
-                "/datafiles/10"
+                "/datafiles/RD5BKU7M83",
+                "/datafiles/MR463EC50D"
             ],
             "property_set": [(0)],
             "current_state": 10,
@@ -187,31 +187,31 @@ You'll get a JSON response having a list of objects under "selected" key:
             "local_id": 1,
             "safety_level": 3,
             "block_set": [
-                "/electrophysiology/block/2",
-                "/electrophysiology/block/3"
+                "/electrophysiology/block/DS7VO7IBIM",
+                "/electrophysiology/block/PQPHG4O2BB"
             ],
             "owner": "/profiles/profile/5",
             "date_created": "2012-08-30T16:18:02",
             "section_set": [
-                "/metadata/section/2"
+                "/metadata/section/45P1V1LP3M"
             ],
             "guid": "bef93665387c2702f8eff6302e9ac83d600ae56b",
             "user_custom": null,
             "description": ""
         },
         "model": "metadata.section",
-        "permalink": "/metadata/section/1"
+        "permalink": "/metadata/section/68H8MHGM6S"
         },
         ...
         {
         "fields": {
-            "parent_section": "/metadata/section/1",
+            "parent_section": "/metadata/section/68H8MHGM6S",
             "tree_position": 0,
             "odml_type": 0,
             "name": "fre",
             "datafile_set": [],
             "property_set": [
-                "/metadata/property/1"
+                "/metadata/property/A90M0KGMOE"
             ],
             "current_state": 10,
             "is_template": false,
@@ -226,7 +226,7 @@ You'll get a JSON response having a list of objects under "selected" key:
             "description": ""
         },
         "model": "metadata.section",
-        "permalink": "/metadata/section/2"
+        "permalink": "/metadata/section/MBDA6LQI62"
         }
     ],
     "message": "Here is the list of requested objects.",
@@ -276,61 +276,64 @@ To get a single object you should specify its ID at the end of the URL:
 
 ::
 
-    Request: GET /metadata/section/10/
+    Request: GET /metadata/section/MBDA6LQI62/
 
-.. _q_parameter:
 
-You may also control the amount of the information about avery object you receive using the 'q' parameter. You may provide q=
-    - 'link' - just permalink and some basic fields
-    - 'full' - everything: all attributes plus direct and reverse relations
-This works with both list of objects and single objects. For example
-
-::
-
-    Request: GET /metadata/section/2/?q=full
-
-will retrieve the full information about the section:
+This will retrieve the full information about the section:
 
 ::
 
     HTTP SUCCESS (200)
 
     {
-        "logged_in_as": "bob",
+        "selected_range": [
+            0,
+            0
+        ],
         "objects_selected": 1,
-        "selected": [{
-            "fields": {
-                "parent_section": null,
-                "tree_position": 1,
-                "odml_type": 20,
-                "name": "stimulus",
-                "datafile_set": [],
-                "property_set": [
-                    "metadata/property/10",
-                    "metadata/property/11",
-                    "metadata/property/15"
-                ],
-                "current_state": 10,
-                "is_template": false,
-                "last_modified": "2012-03-05 16:45:26",
-                "safety_level": 2,
-                "block_set": [],
-                "owner": 2,
-                "date_created": "2012-02-23 18:19:53",
-                "section_set": [
-                    "metadata/section/4",
-                    "metadata/section/6"
-                ],
-                "user_custom": null,
-                "description": ""
-            },
-            "model": "metadata.section",
-            "permalink": "metadata/section/2"
-        }],
+        "selected": [
+            {
+                "permalink": "metadata/section/GMNO16AUC1/",
+                "fields": {
+                    "parent_section": null,
+                    "tree_position": 0,
+                    "odml_type": "experiment",
+                    "description": null,
+                    "datafile_set": [],
+                    "property_set": [
+                        "metadata/property/HB069BDMPG/",
+                        "metadata/property/I2ULSJNMPS/",
+                        "metadata/property/I2LRTPT48R/",
+                        "metadata/property/JEU51HG3A9/"
+                    ],
+                    "shared_with": null,
+                    "is_template": false,
+                    "section_set": [
+                        "metadata/section/G0BA3J54JU/",
+                        "metadata/section/47CIVO13NM/",
+                        "metadata/section/HNOPSADMHV/"
+                    ],
+                    "safety_level": 3,
+                    "block_set": [],
+                    "owner": "user/4/",
+                    "date_created": "2013-11-09 15:36:49",
+                    "guid": "2a0b5c0a769825cd45f44e4ca40cf1e7f776581f",
+                    "user_custom": null,
+                    "name": "Local Field Potential and Spike Data in Saccade and Fixation Tasks"
+                },
+                "model": "metadata.section",
+                "id": "GMNO16AUC1",
+                "location": "/metadata/section/GMNO16AUC1"
+            }
+        ],
         "message": "Here is the list of requested objects.",
-        "selected_range": [0, 0],
+        "logged_in_as": {
+            "username": "demo",
+            "permalink": "user/4/"
+        },
         "message_type": "object_selected"
     }
+
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Access direct and reverse relationships
@@ -342,20 +345,20 @@ Direct (foreign key) relationships are represented in the response as object per
 
     {
         ...
-        "block": "/electrophysiology/block/1",
+        "block": "/electrophysiology/block/HNOPSADMHV",
         ...
     }
 
-so you can directly access parent objects and go up the hierarchy. Besides object parents, the :ref:`full <q_parameter>` response typically contains reversed relations, e.g. permalinks to the objects that reference the requested object. In the response they are usually represented in as a list of permalinks within object fields, having a key like "<reversed_object_type>_set":
+so you can directly access parent objects and go up the hierarchy. Besides object parents, the response typically contains reversed relations, e.g. permalinks to the objects that reference the requested object. In the response they are usually represented in as a list of permalinks within object fields, having a key like "<reversed_object_type>_set":
 
 ::
 
     {
         ...
         "property_set": [
-            "metadata/property/10",
-            "metadata/property/11",
-            "metadata/property/15"
+            "metadata/property/H3BTS8TCMF",
+            "metadata/property/COSHS8849H",
+            "metadata/property/2BPLFB567R"
         ],
         ...
     }
@@ -370,11 +373,11 @@ Updating an object or making bulk update
 Attribute updates
 ^^^^^^^^^^^^^^^^^
 
-To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2:
+To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2BPLFB567R:
 
 ::
 
-    Request: POST /metadata/property/2/
+    Request: POST /metadata/property/2BPLFB567R/
 
     {
         "name": "15 - here is new name",
@@ -386,14 +389,14 @@ To update one or several attributes of an object send POST to the object permali
 Bulk update
 ^^^^^^^^^^^
 
-Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /<namespace>/<object_type>/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all property with name having "sampling" to the section with ID 146:
+Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /<namespace>/<object_type>/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all property with name having "sampling" to the section with ID ANDJRU7AG2:
 
 ::
 
-    Request: POST /metadata/property/2/?name__icontains=sampling&bulk_update=1
+    Request: POST /metadata/property/2BPLFB567R/?name__icontains=sampling&bulk_update=1
 
     {
-        "section": 146
+        "section": ANDJRU7AG2
     }
 
 A good use case is nicely illustrated in the paragraph below.
@@ -408,25 +411,25 @@ Standard one-to-many relationships (like (one) :ref:`recording channel <Recordin
 
 ::
 
-    Request: POST /metadata/property/2/
+    Request: POST /metadata/property/2BPLFB567R/
 
     {
-        "section": "metadata/section/2"
+        "section": "metadata/section/ANDJRU7AG2"
     }
 
-There are 2 options to update a foreing key: you may provide a permalink (shown above), or just an ID (2 in this example).
+There are 2 options to update a foreing key: you may provide a permalink (shown above), or just an ID (22BPLFB567R in this example).
 
 Important to mention, updating the reverse relationship is not supported. That means, request like:
 
 ::
 
-    Request: POST /metadata/section/2/
+    Request: POST /metadata/section/ANDJRU7AG2/
 
     {
         "property_set": [
-            "metadata/property/10",
-            "metadata/property/11",
-            "metadata/property/15"
+            "metadata/property/H3BTS8TCMF",
+            "metadata/property/COSHS8849H",
+            "metadata/property/2BPLFB567R"
         ]
     }
 
@@ -434,10 +437,10 @@ will not work, instead it is better to do something like:
 
 ::
 
-    Request: POST /metadata/property/?id__in=[10,11,15]&bulk_update=1
+    Request: POST /metadata/property/?id__in=[H3BTS8TCMF,COSHS8849H,2BPLFB567R]&bulk_update=1
 
     {
-        "section": "metadata/section/2"
+        "section": "metadata/section/ANDJRU7AG2"
     }
 
 
@@ -472,7 +475,7 @@ The response should look like this:
     {
     "logged_in_as": "jeff",
     "objects_selected": 1,
-    "selected": [(1)
+    "selected": [
     {
         "fields": {
             "id": 2,
@@ -485,11 +488,11 @@ The response should look like this:
             },
             "date_created": "2012-10-31T13:29:28",
             "guid": "b5aeacbcbbe19bc52ce71d0501b3b2cea3e89c0e",
-            "segment": "/electrophysiology/segment/1",
+            "segment": "/electrophysiology/segment/92LHF6H0I5",
             ...
         },
         "model": "neo_api.event",
-        "permalink": "/electrophysiology/event/2"
+        "permalink": "/electrophysiology/event/20TT2P5RV6"
     }
     ],
     ...
@@ -501,11 +504,11 @@ Objects, having ARRAY DATA  associated with them (like :ref:`AnalogSignal <Analo
 Delete object(s)
 ----------------
 
-Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a :ref:`list <api_principles_list>` will archive all objects within the list. For example, to remove all :ref:`events <Event>` from a particular :ref:`segment <Segment>` with ID = 12 send
+Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a :ref:`list <api_principles_list>` will archive all objects within the list. For example, to remove all :ref:`events <Event>` from a particular :ref:`segment <Segment>` with ID = L492QR03TV send
 
 ::
 
-    Request: DELETE /electrophysiology/event/?segment=12
+    Request: DELETE /electrophysiology/event/?segment=L492QR03TV
 
 -----------
 Permissions
@@ -515,7 +518,7 @@ By default all objects in the system are private and belong to the author. At th
 
 ::
 
-    Request: GET /electrophysiology/event/1345/acl/
+    Request: GET /electrophysiology/event/5IBVVOR9JQ/acl/
 
 A typical ACL looks like
 

@@ -241,39 +241,44 @@ You may request object metadata directly by sending a GET to
 
 You will get a list of [<property>, <value>] pairs in the response:
 
-{
-    ...
-    "metadata": [
-        [
-            {
-                "fields": {
-                    "comment": "",
-                    "definition": "",
-                    "name": "bla22!",
-                    "section": "/metadata/section/2",
-                    "id": 1,
-                    "safety_level": 3,
-                    ...
-                },
-                "model": "metadata.property",
-                "permalink": "/metadata/property/1"
-            },
-            {
-                "fields": {
-                    "id": 1,
-                    "safety_level": 3,
-                    "owner": "/profiles/profile/5",
-                    "data": "1584",
-                    "parent_property": "/metadata/property/1"
-                    ...
-                },
-                "model": "metadata.value",
-                "permalink": "/metadata/value/1"
-            }
-        ],
+
+::
+
+    HTTP SUCCESS (200)
+    
+    {
         ...
-    ]
-}
+        "metadata": [
+            [
+                {
+                    "fields": {
+                        "comment": "",
+                        "definition": "",
+                        "name": "bla22!",
+                        "section": "/metadata/section/2",
+                        "id": 1,
+                        "safety_level": 3,
+                        ...
+                    },
+                    "model": "metadata.property",
+                    "permalink": "/metadata/property/1"
+                },
+                {
+                    "fields": {
+                        "id": 1,
+                        "safety_level": 3,
+                        "owner": "/profiles/profile/5",
+                        "data": "1584",
+                        "parent_property": "/metadata/property/1"
+                        ...
+                    },
+                    "model": "metadata.value",
+                    "permalink": "/metadata/value/1"
+                }
+            ],
+            ...
+        ]
+    }
 
 or an empty list if no metadata is assigned.
 
