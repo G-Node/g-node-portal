@@ -3,28 +3,28 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-*****************************
-Welcome to the G-Node Portal!
-*****************************
+**********************************
+Welcome to the G-Node Data Portal!
+**********************************
 
-G-Node Portal is a platform for Neuroscientists to facilitate data access, data storage, data analysis and exchange. With G-Node Portal you may store and efficiently organize your experimental data, exchange data with collaborators, search for published data or scientists with similar interests. 
+G-Node Data Portal (GNData) is a platform for Neuroscientists to facilitate data access, data storage, data analysis and exchange. With GNData you may store and efficiently organize your experimental data, exchange data with collaborators, search for published data or scientists with similar interests. 
 
-Start by reading the G-Node Portal :doc:`overview <overview>`.
+Start by reading the GNData :doc:`overview <overview>`.
 
-You may sign up and instantly `try the platform <https://portal.g-node.org/data/>`_ using the web browser. If you are interested in using the platform from the Matlab or Python, consider our tutorials (:doc:`matlab <tutorial/_matlab>`, :doc:`python <tutorial/_python>` - coming soon). If you are interested in the common DATA API, please start exploring :doc:`the principles here <key_functions/data_api/principles>`.
+You may sign up and instantly `try the platform <http://test.g-node.org>`_ via web browser with the user "demo" and password "demo". If you are interested in using the platform from the Matlab or Python, consider our tutorials (`matlab <https://github.com/G-Node/gnode-client-matlab/wiki/Getting-started>`_, `python <http://g-node.github.io/python-gnode-client/getting_started.html>`_). If you are interested in the common DATA API, please start exploring :doc:`the principles here <key_functions/data_api/principles>`.
 
-Everything you want to know about G-Node Platform:
+Everything you want to know about GNData Platform:
 
 """""""""""
 First steps
 """"""""""" 
  * get started: 
 
-   * :doc:`overview <overview>` | `sign up and try <https://portal.g-node.org/data/>`_
+   * :doc:`overview <overview>` | `try the web demo (with "demo", "demo") <http://test.g-node.org>`_
 
- * tutorial :doc:`(coming soon) <tutorial/_web_access>`:
+ * tutorials:
 
-   * :doc:`web access <tutorial/_web_access>` | `tutorial for Matlab users <https://github.com/G-Node/gnode-client-matlab/wiki/Getting-started>`_ | `tutorial for Python users <http://g-node.github.io/python-gnode-client/getting_started.html>`_
+   * `tutorial for Matlab users <https://github.com/G-Node/gnode-client-matlab/wiki/Getting-started>`_ | `tutorial for Python users <http://g-node.github.io/python-gnode-client/getting_started.html>`_
 
 """"""""""""""""""
 Download & Install
@@ -36,7 +36,7 @@ Key functions
 """""""""""""
  * Introduction: 
 
-   * :doc:`key concepts <key_functions/terminology>` | :doc:`core functions <key_functions/functions>` | :doc:`objects and data model <key_functions/object_model>`
+   * :doc:`key concepts <key_functions/terminology>` | :doc:`objects and data model <key_functions/object_model>`
 
  * Matlab:
 
@@ -71,3 +71,4 @@ Labs using G-Node
    overview.rst
    tutorial/tutorial_index.rst
    data_api/data_api_index.rst
+   
