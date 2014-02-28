@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>METADATA MANAGEMENT &mdash; g-node-portal v0.6 documentation</title>
+    <title>METADATA MANAGEMENT &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -75,7 +78,7 @@
             
   <div class="section" id="metadata-management">
 <h1>METADATA MANAGEMENT<a class="headerlink" href="#metadata-management" title="Permalink to this headline">¶</a></h1>
-<p>You may organize your experimental data using <a class="reference internal" href="../terminology.html#id11"><em>odML Sections and Properties</em></a>. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Below we describe actions available for you to manage your experimental metadata. To better understand our metadata concept please consider a nice example in the <a class="reference internal" href="../../overview.html#overview-metadata"><em>overview</em></a>. For object specification refer to the <a class="reference internal" href="../terminology.html#id11"><em>object model</em></a>.</p>
+<p>You may organize your experimental data using <a class="reference internal" href="../terminology.html#metadata"><em>odML Sections and Properties</em></a>. They are useful elements to created flexible nested structures, containing key-value pairs, aimed to help scientists to describe their experiments and annotate recorded data. Below we describe actions available for you to manage your experimental metadata. To better understand our metadata concept please consider a nice example in the <a class="reference internal" href="../../overview.html#overview-metadata"><em>overview</em></a>. For object specification refer to the <a class="reference internal" href="../terminology.html#metadata"><em>object model</em></a>.</p>
 <div class="section" id="getting-list-of-sections">
 <h2>Getting list of sections<a class="headerlink" href="#getting-list-of-sections" title="Permalink to this headline">¶</a></h2>
 <blockquote>
@@ -164,7 +167,7 @@
 }</pre>
 </div>
 </div></blockquote>
-<p>In this example you can see the <a class="reference internal" href="../terminology.html#section"><em>section</em></a> with ID = 1 has a couple of <a class="reference internal" href="../terminology.html#datafile"><em>datafiles</em></a> inside plus a couple of <a class="reference internal" href="../terminology.html#block"><em>blocks</em></a> linked to it. The second section (ID = 2) has no data inside however holds several properties, which describe the experiment.</p>
+<p>In this example you can see the <a class="reference internal" href="../object_model.html#section"><em>section</em></a> with ID = 1 has a couple of <a class="reference internal" href="../object_model.html#datafile"><em>datafiles</em></a> inside plus a couple of <a class="reference internal" href="../object_model.html#block"><em>blocks</em></a> linked to it. The second section (ID = 2) has no data inside however holds several properties, which describe the experiment.</p>
 </div>
 <div class="section" id="section-create-or-update">
 <h2>Section: create or update<a class="headerlink" href="#section-create-or-update" title="Permalink to this headline">¶</a></h2>
@@ -489,7 +492,7 @@ if you need to create a section from the template (or from other section) provid
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>FILE MANAGEMENT &mdash; g-node-portal v0.6 documentation</title>
+    <title>FILE MANAGEMENT &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -78,7 +81,7 @@
 <p>In this section we describe how to upload, download and convert files.</p>
 <div class="section" id="file-types-and-supported-formats">
 <span id="file-types"></span><h2>File types and supported formats<a class="headerlink" href="#file-types-and-supported-formats" title="Permalink to this headline">¶</a></h2>
-<p>We support data conversion from several open and proprietary formats, available in the domain of neuroscience. If you upload a file of the supported format, you may request to extract data from it further to be able to directly access your experimental data and metadata or export and download it in different format. We do support data extraction from ZIP/TAR archives too. Here is the list of supported formats:</p>
+<p>We support data conversion from several open and proprietary formats, available in the domain of neuroscience (feature is not available at the demo server). If you upload a file of the supported format, you may request to extract data from it further to be able to directly access your experimental data and metadata or export and download it in different format. We do support data extraction from ZIP/TAR archives too. Here is the list of supported formats:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="9%" />
@@ -86,37 +89,37 @@
 <col width="88%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Format</th>
+<tr class="row-odd"><th class="head">Format</th>
 <th class="head">Type</th>
 <th class="head">Comments</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>neuroshare*</td>
+<tr class="row-even"><td>neuroshare*</td>
 <td>1</td>
 <td><a class="reference external" href="http://neuroshare.sourceforge.net/standards.shtml">Neuroshare</a> compatible. Extracted into <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys Objects</em></a></td>
 </tr>
-<tr><td>NEO I/O*</td>
+<tr class="row-odd"><td>NEO I/O*</td>
 <td>2</td>
 <td>compatible with <a class="reference external" href="http://neo.readthedocs.org/en/latest/io.html">NEO I/O</a>. Extracted into <a class="reference internal" href="../terminology.html#ephys-objects"><em>ePhys Objects</em></a></td>
 </tr>
-<tr><td>ascii-csv</td>
+<tr class="row-even"><td>ascii-csv</td>
 <td>3</td>
 <td>a csv file where every line represents a signal as comma-separated floats. Extracted into <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> objects</td>
 </tr>
-<tr><td>odML*</td>
+<tr class="row-odd"><td>odML*</td>
 <td>4</td>
 <td>compatible with <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>. Extracts odML structure and creates the same metadata structure in the root of the metadata tree</td>
 </tr>
-<tr><td>HDF5</td>
+<tr class="row-even"><td>HDF5</td>
 <td>5</td>
 <td>a file should have an array in the root (&#8220;/&#8221;). Can be used with any <a class="reference internal" href="electrophysiology.html#array-upload-note"><em>data-containing object</em></a> as a corresponding data array.</td>
 </tr>
-<tr><td>ZIP</td>
+<tr class="row-odd"><td>ZIP</td>
 <td>6</td>
 <td>ZIP archive. Extracted folders are replicated as metadata <a class="reference internal" href="../object_model.html#section"><em>Section</em></a> objects containing original files from the archive.</td>
 </tr>
-<tr><td>TAR</td>
+<tr class="row-even"><td>TAR</td>
 <td>7</td>
 <td>TAR archive. Extracted folders are replicated as metadata <a class="reference internal" href="../object_model.html#section"><em>Section</em></a> objects containing original files from the archive.</td>
 </tr>
@@ -288,7 +291,7 @@ the file should be sent with "raw_file" key.</pre>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

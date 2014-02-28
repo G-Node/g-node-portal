@@ -10,7 +10,7 @@ In this section we describe how to upload, download and convert files.
 File types and supported formats
 --------------------------------
 
-We support data conversion from several open and proprietary formats, available in the domain of neuroscience. If you upload a file of the supported format, you may request to extract data from it further to be able to directly access your experimental data and metadata or export and download it in different format. We do support data extraction from ZIP/TAR archives too. Here is the list of supported formats:
+We support data conversion from several open and proprietary formats, available in the domain of neuroscience (feature is not available at the demo server). If you upload a file of the supported format, you may request to extract data from it further to be able to directly access your experimental data and metadata or export and download it in different format. We do support data extraction from ZIP/TAR archives too. Here is the list of supported formats:
 
 =================   ====    ==================================
 Format              Type    Comments

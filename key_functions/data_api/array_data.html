@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Working with Arrays &mdash; g-node-portal v0.6 documentation</title>
+    <title>Working with Arrays &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -78,7 +81,7 @@
 <p>This section is about objects that have any data associated with them. It provides details on how to handle the data - how to create a new object, how to access related data, what are the possibilities when making data queries.</p>
 <div class="section" id="data-is-stored-in-files">
 <h2>Data is stored in Files<a class="headerlink" href="#data-is-stored-in-files" title="Permalink to this headline">¶</a></h2>
-<p>We use <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 file format</a> to store any array data. We made several performance tests which showed this is the optimal way of managing large data arrays. Practically that means that for every object, that has an array data associated with it (like <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../terminology.html#spiketrain"><em>SpikeTrain</em></a>) we store the data in related HDF5 file. In order to access the data using the API you basically have to access the associated file. There are several format options, explained in the <a class="reference internal" href="#data-format"><em>sections below</em></a>.</p>
+<p>We use <a class="reference external" href="http://www.hdfgroup.org/HDF5/">HDF5 file format</a> to store any array data. We made several performance tests which showed this is the optimal way of managing large data arrays. Practically that means that for every object, that has an array data associated with it (like <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> or <a class="reference internal" href="../object_model.html#spiketrain"><em>SpikeTrain</em></a>) we store the data in related HDF5 file. In order to access the data using the API you basically have to access the associated file. There are several format options, explained in the <a class="reference internal" href="#data-format"><em>sections below</em></a>.</p>
 <div class="section" id="create-data-related-object">
 <span id="create-array-routine"></span><h3>Create data-related object<a class="headerlink" href="#create-data-related-object" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
@@ -125,7 +128,7 @@
 <div><div class="highlight-python"><pre>Request: GET /electrophysiology/analogsignal/11/?start_time=50&amp;duration=100&amp;downsample=20</pre>
 </div>
 </div></blockquote>
-<p>to get the 100ms time window of the <a class="reference internal" href="../terminology.html#analogsignal"><em>AnalogSignal</em></a> with ID = 11 starting from 50ms, downsampled from to 20 datapoints, first request the object:</p>
+<p>to get the 100ms time window of the <a class="reference internal" href="../object_model.html#analogsignal"><em>AnalogSignal</em></a> with ID = 11 starting from 50ms, downsampled from to 20 datapoints, first request the object:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>HTTP SUCCESS (200)
 
@@ -227,7 +230,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

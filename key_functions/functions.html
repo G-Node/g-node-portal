@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Core functions &mdash; g-node-portal v0.6 documentation</title>
+    <title>Core functions &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -86,7 +89,7 @@
 <col width="5%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Action</th>
+<tr class="row-odd"><th class="head">Action</th>
 <th class="head">Description</th>
 <th class="head">API</th>
 <th class="head">Web</th>
@@ -95,14 +98,14 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>Authentication</td>
+<tr class="row-even"><td>Authentication</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/authentication.html"><em>authentication</em></a></td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>File Upload</td>
+<tr class="row-odd"><td>File Upload</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/files.html"><em>files and formats</em></a> |
 <a class="reference internal" href="data_api/array_data.html"><em>array data</em></a> |
@@ -111,14 +114,14 @@
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Data Conversion</td>
+<tr class="row-even"><td>Data Conversion</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/files.html"><em>files and formats</em></a></td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Working with raw ePhys data</td>
+<tr class="row-odd"><td>Working with raw ePhys data</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/electrophysiology.html"><em>electrophysiology</em></a> |
 <a class="reference internal" href="data_api/annotation.html"><em>data annotation</em></a></td>
@@ -126,7 +129,7 @@
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Organize experimental metadata</td>
+<tr class="row-even"><td>Organize experimental metadata</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/metadata.html"><em>metadata</em></a> |
 <a class="reference internal" href="data_api/annotation.html"><em>data annotation</em></a></td>
@@ -134,14 +137,14 @@
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Data annotation for analysis</td>
+<tr class="row-odd"><td>Data annotation for analysis</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/annotation.html"><em>data annotation</em></a></td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Search data</td>
+<tr class="row-even"><td>Search data</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="../overview.html#search-overview"><em>search overview</em></a> |
 <a class="reference internal" href="data_api/query.html"><em>search and query</em></a></td>
@@ -149,7 +152,7 @@
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Build queries</td>
+<tr class="row-odd"><td>Build queries</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/query.html"><em>search and query</em></a> |
 <a class="reference internal" href="../overview.html#query-overview"><em>query overview</em></a></td>
@@ -157,16 +160,16 @@
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Share datasets</td>
+<tr class="row-even"><td>Share datasets</td>
 <td>&nbsp;</td>
 <td><a class="reference internal" href="data_api/permissions.html"><em>permissions</em></a></td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
-<tr><td>Access older object versions</td>
+<tr class="row-odd"><td>Access older object versions</td>
 <td>&nbsp;</td>
-<td><a class="reference internal" href="data_api/back.html"><em>going back in time</em></a></td>
+<td><tt class="xref doc docutils literal"><span class="pre">going</span> <span class="pre">back</span> <span class="pre">in</span> <span class="pre">time</span></tt></td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
@@ -193,7 +196,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

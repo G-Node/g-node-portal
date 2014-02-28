@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>AUTHENTICATION &mdash; g-node-portal v0.6 documentation</title>
+    <title>AUTHENTICATION &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -75,7 +78,7 @@
             
   <div class="section" id="authentication">
 <h1>AUTHENTICATION<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h1>
-<p><em>Note. You maybe want to just try the API from the usual web-browser (like Firefox, Chrome, Safari etc.). In this case you may just go to the</em> <a class="reference external" href="https://portal.g-node.org/data/account/login/">login page</a> <em>, fill in the login form and submit to authenticate. After successful authentication your sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example</em> <a class="reference external" href="https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo">Advanced REST Client for Chrome</a> <em>) to query the API.</em></p>
+<p><em>Note. You maybe want to just try the API from the usual web-browser (like Firefox, Chrome, Safari etc.). In this case you may just go to the</em> <a class="reference external" href="http://test.g-node.org/account/login/">login page</a> <em>, fill in the login form and submit to authenticate. After successful authentication your sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example</em> <a class="reference external" href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm">Postman REST Client for Chrome</a> <em>) to query the API.</em></p>
 <p>In general, for authenticatation, please use the following request:</p>
 <blockquote>
 <div><div class="highlight-python"><pre>Request: POST /account/authenticate/
@@ -112,7 +115,7 @@ POST parameters:
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

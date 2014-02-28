@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Key concepts &mdash; g-node-portal v0.6 documentation</title>
+    <title>Key concepts &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -79,17 +82,21 @@
 <div class="section" id="permalink">
 <span id="common-terms"></span><h2>permalink<a class="headerlink" href="#permalink" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a <a class="reference internal" href="object_model.html#datafile"><em>Datafile</em></a> could have a permalink like <a class="reference external" href="https://portal.g-node.org/data/datafiles/15">https://portal.g-node.org/data/datafiles/15</a></div></blockquote>
+<div><blockquote>
+<div>A permanent link to an object, similar to the URL. Every object in this context has a permalink. For example, a <a class="reference internal" href="object_model.html#datafile"><em>Datafile</em></a> could have a permalink like</div></blockquote>
+<div class="highlight-python"><pre>https://portal.g-node.org/data/datafiles/3ABETEVKFI/</pre>
+</div>
+</div></blockquote>
 </div>
 <div class="section" id="object-identifier">
 <h2>object identifier<a class="headerlink" href="#object-identifier" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Every object has two IDs: a &#8220;local&#8221; ID - an integer number, unique within the object type namespace (like there is only one <a class="reference internal" href="object_model.html#event"><em>Event</em></a> with ID 15 but there could be other objects, say, a <a class="reference internal" href="object_model.html#segment"><em>Segment</em></a> with id 15 too), which is used in permalinks to access an object, and a global ID (guid) - a 40 symbols hash code (like <em>c30fb5dee94e44930abc572e1b3e4847a0f51dd3</em>), unique across all objects.</div></blockquote>
+<div>Every object has base 32 string ID of a length 10 (like 3ABETEVKFI), unique within the object type namespace, used to identify this object. It is also used in permalinks to access an object. There is also a &#8220;global&#8221; unique ID (guid) - a 40 symbols hash code (like c30fb5dee94e44930abc572e1b3e4847a0f51dd3), used to identify a certain version of the same object.</div></blockquote>
 </div>
 <div class="section" id="electrophysiology-ephys-objects">
 <span id="ephys-objects"></span><h2>electrophysiology ( ePhys Objects )<a class="headerlink" href="#electrophysiology-ephys-objects" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects directly represent raw data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). An original concept is described <a class="reference external" href="http://neo.readthedocs.org/en/latest/core.html">here</a>, however we provide all descriptions down below for convenience. A good example <a class="reference internal" href="../overview.html#overview-ephys"><em>is described in the overview</em></a>.</div></blockquote>
+<div>ePhys Objects are used to represent the recorded (raw) electrophysiological data in a flexible, but consistent way. ePhys Objects represent data structure with data as arrays of numerical values with associated mandatory attributes (units, sampling frequency, etc.). These objects are based on NEO data model (an original concept is described <a class="reference external" href="http://neo.readthedocs.org/en/latest/core.html">here</a> ), we provide all descriptions down below for convenience. A good example explaining supported electrophisyology objects <a class="reference internal" href="../overview.html#overview-ephys"><em>is described in the overview</em></a>.</div></blockquote>
 <p>The following objects in the domain of electrophysiology are supported:</p>
 <blockquote>
 <div><ul class="simple">
@@ -109,24 +116,24 @@
 <li><a class="reference internal" href="object_model.html#recordingchannel"><em>RecordingChannel</em></a></li>
 </ul>
 </div></blockquote>
-<p>Every object serves a specific purpose to organize your electrophysiological data. <a class="reference internal" href="object_model.html#block"><em>Block</em></a> mainly represent one experiment (or the whole data, recorded within one experiment). A <a class="reference internal" href="object_model.html#segment"><em>Segment</em></a> represents an experimental trial, a &#8220;time frame&#8221; within an experiment with unique experimental conditions. Blocks may contain several segments, like an experiment consists of several trials. A segment may contain <a class="reference internal" href="object_model.html#analogsignal"><em>AnalogSignal</em></a>, <a class="reference internal" href="object_model.html#event"><em>Event</em></a> or <a class="reference internal" href="object_model.html#epoch"><em>Epoch</em></a> objects, which are used to organize recorded signals, single time events, or events with duration inside one experimental time-frame. Segment may also contain <a class="reference internal" href="object_model.html#spiketrain"><em>SpikeTrain</em></a> objects to accommodate the spike data. For every block one may define a set of <a class="reference internal" href="object_model.html#recordingchannel"><em>Recording Channels</em></a> according to the experimental setup. These channels can be organized under a <a class="reference internal" href="object_model.html#recordingchannelgroup"><em>RecordingChannelGroup</em></a>, to keep track of tethrodes. AnalogSignals can be linked to the appropriate RecordingChannels to make the dataset consistent.</p>
-<p>Having <a class="reference internal" href="#ephys-objects">ePhys Objects</a> is usually not enough to describe the experiment or evenmore the whole project. For other information, like the description of an Animal or a Stimuli, we use <a class="reference internal" href="#metadata">Metadata</a>.</p>
+<p>Every object serves a specific purpose to organize your electrophysiological data. <a class="reference internal" href="object_model.html#block"><em>Block</em></a> mainly represents one experiment (or the whole data, recorded within one experiment). A <a class="reference internal" href="object_model.html#segment"><em>Segment</em></a> represents an experimental trial, a &#8220;time frame&#8221; within an experiment with unique experimental conditions. Blocks may contain several segments, like an experiment consists of several trials. A segment may contain <a class="reference internal" href="object_model.html#analogsignal"><em>AnalogSignal</em></a>, <a class="reference internal" href="object_model.html#event"><em>Event</em></a> or <a class="reference internal" href="object_model.html#epoch"><em>Epoch</em></a> objects, which are used to organize recorded signals, single time events, or events with duration inside one experimental time-frame. Segment may also contain <a class="reference internal" href="object_model.html#spiketrain"><em>SpikeTrain</em></a> objects to accommodate the spike data. For every block one may define a set of <a class="reference internal" href="object_model.html#recordingchannel"><em>Recording Channels</em></a> according to the experimental setup. These channels can be organized under a <a class="reference internal" href="object_model.html#recordingchannelgroup"><em>RecordingChannelGroup</em></a>, to keep track of tethrodes. AnalogSignals can be linked to the appropriate RecordingChannels to make the dataset consistent. The whole NEO concept at its best is described <a class="reference external" href="http://neo.readthedocs.org/">here</a>.</p>
+<p>Having <a class="reference internal" href="#ephys-objects">ePhys Objects</a> is usually not enough to describe the experiment or even more the whole project. For other information, like the description of an Animal or a Stimuli, a set of <a class="reference internal" href="#metadata">Metadata</a> objects is used.</p>
 </div>
 <div class="section" id="metadata">
-<span id="id1"></span><h2>metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>In this context metadata is any information about an experiment, EXcluding the information, described using <a class="reference internal" href="#ephys-objects">ePhys Objects</a>. Our metadata concept is based on <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>, which is essentially a flexible way to describe your experimental parameters using <a class="reference internal" href="object_model.html#section"><em>Section</em></a> (simple container) tree with <a class="reference internal" href="object_model.html#properties-with-values"><em>Properties with Values</em></a> (key-value pairs). Take a look on the <a class="reference internal" href="../overview.html#overview-metadata"><em>example</em></a> in the overview.</div></blockquote>
+<div>In this context metadata is any information about an experiment, excluding the information, described using <a class="reference internal" href="#ephys-objects">ePhys Objects</a>. Our metadata concept is based on <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a>, which is essentially a flexible way to describe experimental parameters using <a class="reference internal" href="object_model.html#section"><em>Section</em></a> (simple container) tree with <a class="reference internal" href="object_model.html#properties-with-values"><em>Properties with Values</em></a> (key-value pairs). Take a look on the <a class="reference internal" href="../overview.html#overview-metadata"><em>example</em></a> in the overview.</div></blockquote>
 </div>
 <div class="section" id="data-annotation">
-<span id="id2"></span><h2>data annotation<a class="headerlink" href="#data-annotation" title="Permalink to this headline">¶</a></h2>
+<span id="id3"></span><h2>data annotation<a class="headerlink" href="#data-annotation" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div>Data annotation is the process of assinging metadata to the data, when some special connection is required. It is needed basically in order to establish a connection between data and metadata for easy search and generic access. An example could be a case when you, say, described the color of your Stimuli as a property in a Stimuli section, and after you acquire the data you need to indicate, which particular signals were recorded at which particular color frequency. In this case, data annotation means establishing a link between particular signals and particular values of the color property.</div></blockquote>
+<div>Data annotation is the process of assinging metadata to the data, when some special connection is required. It is needed basically in order to establish a connection between data and metadata for easy search and generic access. A good example could be a case with an experiment having stimulus changing its property (say, color for visual stimuli), when for every trial the appropriate stimulus color has to be indicated. In this case, data annotation means establishing a link between particular time segments (trials) and particular values of the color property, stored in the stimuli-type odML section.</div></blockquote>
 </div>
 <div class="section" id="access-control-list">
 <span id="acl-term"></span><h2>access control list<a class="headerlink" href="#access-control-list" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><blockquote>
-<div>Access Control List (ACL) is a property of an object that is used to keep a list of users, having access to the object. Every user in this list can have either read-only or read-write permissions. ACL is independent from basic sharing state (safety level) for an object: even if an object is private, people, listed in the ACL, <strong>will be able to access</strong> an object. Not all objects can have ACLs, here is a list of objects with sharing support:</div></blockquote>
+<div>Access Control List (ACL) is a property of an object that is used to keep a list of users, having access to the object. Every user in this list can have either read-only or read-write permissions. Besides defined ACL and object has its own publication state, which indicates whether an object is open for all other users or not (private by default). ACL is independent from a publication state: if an object is private, people, listed in the ACL, <strong>will be able to access</strong> an object. Not all objects can have ACLs, here is a list of objects with ACL support:</div></blockquote>
 <ul class="simple">
 <li>all ePhys objects:
 * <a class="reference internal" href="object_model.html#analogsignal"><em>AnalogSignal</em></a>
@@ -183,7 +190,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

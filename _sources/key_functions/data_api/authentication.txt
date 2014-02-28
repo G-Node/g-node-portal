@@ -2,10 +2,10 @@
 AUTHENTICATION
 ==============
 
-*Note. You maybe want to just try the API from the usual web-browser (like Firefox, Chrome, Safari etc.). In this case you may just go to the* `login page`_ *, fill in the login form and submit to authenticate. After successful authentication your sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example* `Advanced REST Client for Chrome`_ *) to query the API.*
+*Note. You maybe want to just try the API from the usual web-browser (like Firefox, Chrome, Safari etc.). In this case you may just go to the* `login page`_ *, fill in the login form and submit to authenticate. After successful authentication your sessionid will be stored in the browser, and you may use the address bar (or any REST-client, for example* `Postman REST Client for Chrome`_ *) to query the API.*
 
-.. _Advanced REST Client for Chrome: https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo
-.. _login page: https://portal.g-node.org/data/account/login/
+.. _Postman REST Client for Chrome: https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm
+.. _login page: http://test.g-node.org/account/login/
 
 In general, for authenticatation, please use the following request:
 

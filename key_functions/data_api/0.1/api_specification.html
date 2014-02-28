@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DATA API Specification &mdash; g-node-portal v0.6 documentation</title>
+    <title>DATA API Specification &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../../../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../../../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../../../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../../../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../../../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../../../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../../../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -287,51 +290,51 @@
 <col width="61%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Attributes</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>block</td>
+<tr class="row-even"><td>block</td>
 <td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-odd"><td>segment</td>
 <td>&#8216;name&#8217;*, &#8216;filedatetime&#8217;, &#8216;index&#8217;</td>
 </tr>
-<tr><td>event</td>
+<tr class="row-even"><td>event</td>
 <td>&#8216;label&#8217;*</td>
 </tr>
-<tr><td>eventarray</td>
+<tr class="row-odd"><td>eventarray</td>
 <td>No attributes</td>
 </tr>
-<tr><td>epoch</td>
+<tr class="row-even"><td>epoch</td>
 <td>&#8216;label&#8217;*</td>
 </tr>
-<tr><td>epocharray</td>
+<tr class="row-odd"><td>epocharray</td>
 <td>No attributes</td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-even"><td>unit</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>spiketrain</td>
+<tr class="row-odd"><td>spiketrain</td>
 <td>No attributes</td>
 </tr>
-<tr><td>analogsignal</td>
+<tr class="row-even"><td>analogsignal</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>analogsignalarray</td>
+<tr class="row-odd"><td>analogsignalarray</td>
 <td>No attributes</td>
 </tr>
-<tr><td>irsaanalogsignal</td>
+<tr class="row-even"><td>irsaanalogsignal</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>spike</td>
+<tr class="row-odd"><td>spike</td>
 <td>No attributes</td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-even"><td>recordingchannelgroup</td>
 <td>&#8216;name&#8217;*</td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-odd"><td>recordingchannel</td>
 <td>&#8216;name&#8217;*, &#8216;index&#8217;</td>
 </tr>
 </tbody>
@@ -344,27 +347,27 @@
 <col width="75%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Data fields</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>event</td>
+<tr class="row-even"><td>event</td>
 <td>&#8216;time&#8217;</td>
 </tr>
-<tr><td>epoch</td>
+<tr class="row-odd"><td>epoch</td>
 <td>&#8216;time&#8217;, &#8216;duration&#8217;</td>
 </tr>
-<tr><td>spiketrain</td>
+<tr class="row-even"><td>spiketrain</td>
 <td>&#8216;t_start&#8217;, &#8216;t_stop&#8217;, &#8216;times&#8217;, &#8216;waveforms&#8217;</td>
 </tr>
-<tr><td>analogsignal</td>
+<tr class="row-odd"><td>analogsignal</td>
 <td>&#8216;sampling_rate&#8217;, &#8216;t_start&#8217;, &#8216;signal&#8217;</td>
 </tr>
-<tr><td>irsaanalogsignal</td>
+<tr class="row-even"><td>irsaanalogsignal</td>
 <td>&#8216;t_start&#8217;, &#8216;signal&#8217;, &#8216;times&#8217;</td>
 </tr>
-<tr><td>spike</td>
+<tr class="row-odd"><td>spike</td>
 <td>&#8216;left_sweep&#8217;, &#8216;time&#8217;, &#8216;sampling_rate&#8217;, &#8216;waveforms&#8217;</td>
 </tr>
 </tbody>
@@ -376,33 +379,33 @@
 <col width="86%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Children</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>block</td>
+<tr class="row-even"><td>block</td>
 <td>&#8216;segment&#8217;, &#8216;recordingchannelgroup&#8217;</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-odd"><td>segment</td>
 <td>&#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;, &#8216;analogsignalarray&#8217;, &#8216;spiketrain&#8217;, &#8216;spike&#8217;, &#8216;event&#8217;, &#8216;eventarray&#8217;, &#8216;epoch&#8217;, &#8216;epocharray&#8217;</td>
 </tr>
-<tr><td>eventarray</td>
+<tr class="row-even"><td>eventarray</td>
 <td>&#8216;event&#8217;</td>
 </tr>
-<tr><td>epocharray</td>
+<tr class="row-odd"><td>epocharray</td>
 <td>&#8216;epoch&#8217;</td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-even"><td>unit</td>
 <td>&#8216;spiketrain&#8217;,&#8217;spike&#8217;</td>
 </tr>
-<tr><td>analogsignalarray</td>
+<tr class="row-odd"><td>analogsignalarray</td>
 <td>&#8216;analogsignal&#8217;</td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-even"><td>recordingchannelgroup</td>
 <td>&#8216;recordingchannel&#8217;, &#8216;analogsignalarray&#8217;</td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-odd"><td>recordingchannel</td>
 <td>&#8216;unit&#8217;, &#8216;analogsignal&#8217;, &#8216;irsaanalogsignal&#8217;</td>
 </tr>
 </tbody>
@@ -414,48 +417,48 @@
 <col width="70%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Object Type</th>
+<tr class="row-odd"><th class="head">Object Type</th>
 <th class="head">Parents</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>segment</td>
+<tr class="row-even"><td>segment</td>
 <td>&#8216;block&#8217;</td>
 </tr>
-<tr><td>event</td>
+<tr class="row-odd"><td>event</td>
 <td>&#8216;segment&#8217;, &#8216;eventarray&#8217;</td>
 </tr>
-<tr><td>eventarray</td>
+<tr class="row-even"><td>eventarray</td>
 <td>&#8216;segment&#8217;</td>
 </tr>
-<tr><td>epoch</td>
+<tr class="row-odd"><td>epoch</td>
 <td>&#8216;segment&#8217;, &#8216;epocharray&#8217;</td>
 </tr>
-<tr><td>epocharray</td>
+<tr class="row-even"><td>epocharray</td>
 <td>&#8216;segment&#8217;</td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-odd"><td>unit</td>
 <td>&#8216;recordingchannel&#8217;</td>
 </tr>
-<tr><td>spiketrain</td>
+<tr class="row-even"><td>spiketrain</td>
 <td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
 </tr>
-<tr><td>analogsignal</td>
+<tr class="row-odd"><td>analogsignal</td>
 <td>&#8216;segment&#8217;, &#8216;analogsignalarray&#8217;, &#8216;recordingchannel&#8217;</td>
 </tr>
-<tr><td>analogsignalarray</td>
+<tr class="row-even"><td>analogsignalarray</td>
 <td>&#8216;segment&#8217;</td>
 </tr>
-<tr><td>irsaanalogsignal</td>
+<tr class="row-odd"><td>irsaanalogsignal</td>
 <td>&#8216;segment&#8217;, &#8216;recordingchannel&#8217;</td>
 </tr>
-<tr><td>spike</td>
+<tr class="row-even"><td>spike</td>
 <td>&#8216;segment&#8217;, &#8216;unit&#8217;</td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-odd"><td>recordingchannelgroup</td>
 <td>&#8216;block&#8217;</td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-even"><td>recordingchannel</td>
 <td>&#8216;recordingchannelgroup&#8217;</td>
 </tr>
 </tbody>
@@ -1448,7 +1451,7 @@ TBD</pre>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

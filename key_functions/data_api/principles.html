@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>KEY API PRINCIPLES &mdash; g-node-portal v0.6 documentation</title>
+    <title>KEY API PRINCIPLES &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -79,25 +82,24 @@
 <div class="section" id="request-and-response">
 <h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
 <p>All operations are made using HTTP requests with JSON as a main request and response format. The API supports GET, POST and DELETE request types. Generally, GET requests are used to query objects and related data, POST requests create or update RESTful objects, DELETE requests move objects to the archive. Specifically, the following matrix summarizes which example URLs you should use to request a certain operation:</p>
-<div align="center" class="align-center"><object data="../../_images/api_principles_crud20.svg" type="image/svg+xml"><embed src="../../_images/api_principles_crud20.svg" type="image/svg+xml" /></object>
-</div>
-<p>All URLs must have a host prefix, e.g. <a class="reference external" href="https://portal.g-node.org/data/">https://portal.g-node.org/data/</a>. These operations are described in detail within document sections below.</p>
+<div align="center" class="align-center"><img src="../../_images/api_principles_crud.svg" /></div>
+<p>All URLs must have a host prefix, e.g. <a class="reference external" href="http://test.g-node.org">http://test.g-node.org</a>. These operations are described in detail within document sections below.</p>
 <p>A typical GET request should have a form like</p>
 <div class="highlight-python"><pre>Request: GET /&lt;namespace&gt;/&lt;object_type&gt;/[&lt;object_id&gt;]/[?&lt;params&gt;]</pre>
 </div>
 <p>for example,</p>
-<div class="highlight-python"><pre>Request: GET /electrophysiology/spiketrain/1546/</pre>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/spiketrain/88CAVT7ACC/</pre>
 </div>
-<p>returns the spiketrain object with an ID = 1546 in JSON format.</p>
+<p>returns the spiketrain object with an ID = 88CAVT7ACC in JSON format.</p>
 <p>When you need to create or update object(s), you send a POST request with the same URL syntax. Data, sent together with the POST request should be in a JSON format, for example:</p>
-<div class="highlight-python"><pre>Request: POST /electrophysiology/spiketrain/1546/
+<div class="highlight-python"><pre>Request: POST /electrophysiology/spiketrain/88CAVT7ACC/
 
 {
-    "name": "SP-1546",
+    "name": "SP-88CAVT7ACC",
     "comment": "spiketrain computed using Quiroga et al."
 }</pre>
 </div>
-<p>will make an update fields &#8220;name&#8221; and &#8220;comment&#8221; in the spiketrain object with an ID = 1546.</p>
+<p>will make an update fields &#8220;name&#8221; and &#8220;comment&#8221; in the spiketrain object with an ID = 88CAVT7ACC.</p>
 <p>A typical response will look like this:</p>
 <div class="highlight-python"><pre>HTTP SUCCESS (200)
 
@@ -111,18 +113,18 @@
                 "guid": "88aa2089cfc73e9279231c5518702222e5b8bb0d",
                 "name": "V1 FIX signals, trial 1",
                 "analogsignal_set": [
-                    "/electrophysiology/analogsignal/2",
-                    "/electrophysiology/analogsignal/178",
+                    "/electrophysiology/analogsignal/MR463EC50D",
+                    "/electrophysiology/analogsignal/RD5BKU7M83",
                 ],
                 "current_state": 10,
                 "safety_level": 3,
                 "owner": "/profiles/profile/5",
                 "date_created": "2012-07-26 17:16:07",
-                "block": "/electrophysiology/block/1",
+                "block": "/electrophysiology/block/M37HBUFDRU",
                 "metadata": []
             },
             "model": "neo_api.segment",
-            "permalink": "/electrophysiology/segment/2"
+            "permalink": "/electrophysiology/segment/7H28KRP9O8"
         },
         {
             ...
@@ -208,8 +210,8 @@ Vary:Accept-Language, Cookie</pre>
         "odml_type": 0,
         "name": "bla",
         "datafile_set": [
-            "/datafiles/4",
-            "/datafiles/10"
+            "/datafiles/RD5BKU7M83",
+            "/datafiles/MR463EC50D"
         ],
         "property_set": [(0)],
         "current_state": 10,
@@ -217,31 +219,31 @@ Vary:Accept-Language, Cookie</pre>
         "local_id": 1,
         "safety_level": 3,
         "block_set": [
-            "/electrophysiology/block/2",
-            "/electrophysiology/block/3"
+            "/electrophysiology/block/DS7VO7IBIM",
+            "/electrophysiology/block/PQPHG4O2BB"
         ],
         "owner": "/profiles/profile/5",
         "date_created": "2012-08-30T16:18:02",
         "section_set": [
-            "/metadata/section/2"
+            "/metadata/section/45P1V1LP3M"
         ],
         "guid": "bef93665387c2702f8eff6302e9ac83d600ae56b",
         "user_custom": null,
         "description": ""
     },
     "model": "metadata.section",
-    "permalink": "/metadata/section/1"
+    "permalink": "/metadata/section/68H8MHGM6S"
     },
     ...
     {
     "fields": {
-        "parent_section": "/metadata/section/1",
+        "parent_section": "/metadata/section/68H8MHGM6S",
         "tree_position": 0,
         "odml_type": 0,
         "name": "fre",
         "datafile_set": [],
         "property_set": [
-            "/metadata/property/1"
+            "/metadata/property/A90M0KGMOE"
         ],
         "current_state": 10,
         "is_template": false,
@@ -256,7 +258,7 @@ Vary:Accept-Language, Cookie</pre>
         "description": ""
     },
     "model": "metadata.section",
-    "permalink": "/metadata/section/2"
+    "permalink": "/metadata/section/MBDA6LQI62"
     }
 ],
 "message": "Here is the list of requested objects.",
@@ -285,56 +287,57 @@ Vary:Accept-Language, Cookie</pre>
 <div class="section" id="access-single-object">
 <span id="get-single-object"></span><h3>Access single object<a class="headerlink" href="#access-single-object" title="Permalink to this headline">¶</a></h3>
 <p>To get a single object you should specify its ID at the end of the URL:</p>
-<div class="highlight-python"><pre>Request: GET /metadata/section/10/</pre>
+<div class="highlight-python"><pre>Request: GET /metadata/section/MBDA6LQI62/</pre>
 </div>
-<dl class="docutils" id="q-parameter">
-<dt>You may also control the amount of the information about avery object you receive using the &#8216;q&#8217; parameter. You may provide q=</dt>
-<dd><ul class="first last simple">
-<li>&#8216;link&#8217; - just permalink and some basic fields</li>
-<li>&#8216;full&#8217; - everything: all attributes plus direct and reverse relations</li>
-</ul>
-</dd>
-</dl>
-<p>This works with both list of objects and single objects. For example</p>
-<div class="highlight-python"><pre>Request: GET /metadata/section/2/?q=full</pre>
-</div>
-<p>will retrieve the full information about the section:</p>
+<p>This will retrieve the full information about the section:</p>
 <div class="highlight-python"><pre>HTTP SUCCESS (200)
 
 {
-    "logged_in_as": "bob",
+    "selected_range": [
+        0,
+        0
+    ],
     "objects_selected": 1,
-    "selected": [{
-        "fields": {
-            "parent_section": null,
-            "tree_position": 1,
-            "odml_type": 20,
-            "name": "stimulus",
-            "datafile_set": [],
-            "property_set": [
-                "metadata/property/10",
-                "metadata/property/11",
-                "metadata/property/15"
-            ],
-            "current_state": 10,
-            "is_template": false,
-            "last_modified": "2012-03-05 16:45:26",
-            "safety_level": 2,
-            "block_set": [],
-            "owner": 2,
-            "date_created": "2012-02-23 18:19:53",
-            "section_set": [
-                "metadata/section/4",
-                "metadata/section/6"
-            ],
-            "user_custom": null,
-            "description": ""
-        },
-        "model": "metadata.section",
-        "permalink": "metadata/section/2"
-    }],
+    "selected": [
+        {
+            "permalink": "metadata/section/GMNO16AUC1/",
+            "fields": {
+                "parent_section": null,
+                "tree_position": 0,
+                "odml_type": "experiment",
+                "description": null,
+                "datafile_set": [],
+                "property_set": [
+                    "metadata/property/HB069BDMPG/",
+                    "metadata/property/I2ULSJNMPS/",
+                    "metadata/property/I2LRTPT48R/",
+                    "metadata/property/JEU51HG3A9/"
+                ],
+                "shared_with": null,
+                "is_template": false,
+                "section_set": [
+                    "metadata/section/G0BA3J54JU/",
+                    "metadata/section/47CIVO13NM/",
+                    "metadata/section/HNOPSADMHV/"
+                ],
+                "safety_level": 3,
+                "block_set": [],
+                "owner": "user/4/",
+                "date_created": "2013-11-09 15:36:49",
+                "guid": "2a0b5c0a769825cd45f44e4ca40cf1e7f776581f",
+                "user_custom": null,
+                "name": "Local Field Potential and Spike Data in Saccade and Fixation Tasks"
+            },
+            "model": "metadata.section",
+            "id": "GMNO16AUC1",
+            "location": "/metadata/section/GMNO16AUC1"
+        }
+    ],
     "message": "Here is the list of requested objects.",
-    "selected_range": [0, 0],
+    "logged_in_as": {
+        "username": "demo",
+        "permalink": "user/4/"
+    },
     "message_type": "object_selected"
 }</pre>
 </div>
@@ -344,17 +347,17 @@ Vary:Accept-Language, Cookie</pre>
 <p>Direct (foreign key) relationships are represented in the response as object permalink:</p>
 <div class="highlight-python"><pre>{
     ...
-    "block": "/electrophysiology/block/1",
+    "block": "/electrophysiology/block/HNOPSADMHV",
     ...
 }</pre>
 </div>
-<p>so you can directly access parent objects and go up the hierarchy. Besides object parents, the <a class="reference internal" href="#q-parameter"><em>full</em></a> response typically contains reversed relations, e.g. permalinks to the objects that reference the requested object. In the response they are usually represented in as a list of permalinks within object fields, having a key like &#8220;&lt;reversed_object_type&gt;_set&#8221;:</p>
+<p>so you can directly access parent objects and go up the hierarchy. Besides object parents, the response typically contains reversed relations, e.g. permalinks to the objects that reference the requested object. In the response they are usually represented in as a list of permalinks within object fields, having a key like &#8220;&lt;reversed_object_type&gt;_set&#8221;:</p>
 <div class="highlight-python"><pre>{
     ...
     "property_set": [
-        "metadata/property/10",
-        "metadata/property/11",
-        "metadata/property/15"
+        "metadata/property/H3BTS8TCMF",
+        "metadata/property/COSHS8849H",
+        "metadata/property/2BPLFB567R"
     ],
     ...
 }</pre>
@@ -366,8 +369,8 @@ Vary:Accept-Language, Cookie</pre>
 <h2>Updating an object or making bulk update<a class="headerlink" href="#updating-an-object-or-making-bulk-update" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="attribute-updates">
 <h3>Attribute updates<a class="headerlink" href="#attribute-updates" title="Permalink to this headline">¶</a></h3>
-<p>To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/property/2/
+<p>To update one or several attributes of an object send POST to the object permalink, providing new parameters / values in the POST body. For example, this request updates the name and comment for the property with ID 2BPLFB567R:</p>
+<div class="highlight-python"><pre>Request: POST /metadata/property/2BPLFB567R/
 
 {
     "name": "15 - here is new name",
@@ -377,11 +380,11 @@ Vary:Accept-Language, Cookie</pre>
 </div>
 <div class="section" id="bulk-update">
 <h3>Bulk update<a class="headerlink" href="#bulk-update" title="Permalink to this headline">¶</a></h3>
-<p>Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all property with name having &#8220;sampling&#8221; to the section with ID 146:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/property/2/?name__icontains=sampling&amp;bulk_update=1
+<p>Bulk object update is also possible. To make changes to several objects at once, you need to use the object type URL (like /&lt;namespace&gt;/&lt;object_type&gt;/) and provide bulk_update=1 parameter. Changes will be applied to all objects in the selection; use filters so select only objects, that are needed to be changed. The following resuest moves all property with name having &#8220;sampling&#8221; to the section with ID ANDJRU7AG2:</p>
+<div class="highlight-python"><pre>Request: POST /metadata/property/2BPLFB567R/?name__icontains=sampling&amp;bulk_update=1
 
 {
-    "section": 146
+    "section": ANDJRU7AG2
 }</pre>
 </div>
 <p>A good use case is nicely illustrated in the paragraph below.</p>
@@ -389,29 +392,29 @@ Vary:Accept-Language, Cookie</pre>
 <div class="section" id="manage-relationships">
 <span id="manage-relations"></span><h3>Manage relationships<a class="headerlink" href="#manage-relationships" title="Permalink to this headline">¶</a></h3>
 <p>Standard one-to-many relationships (like (one) <a class="reference internal" href="../object_model.html#recordingchannel"><em>recording channel</em></a> contains (many) <a class="reference internal" href="../object_model.html#analogsignal"><em>analog signals</em></a> from different experimental trials) are managed by updating the foreign key field of the &#8220;child&#8221; object. For that you send the usual POST request to update the foreign key attribute:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/property/2/
+<div class="highlight-python"><pre>Request: POST /metadata/property/2BPLFB567R/
 
 {
-    "section": "metadata/section/2"
+    "section": "metadata/section/ANDJRU7AG2"
 }</pre>
 </div>
-<p>There are 2 options to update a foreing key: you may provide a permalink (shown above), or just an ID (2 in this example).</p>
+<p>There are 2 options to update a foreing key: you may provide a permalink (shown above), or just an ID (22BPLFB567R in this example).</p>
 <p>Important to mention, updating the reverse relationship is not supported. That means, request like:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/section/2/
+<div class="highlight-python"><pre>Request: POST /metadata/section/ANDJRU7AG2/
 
 {
     "property_set": [
-        "metadata/property/10",
-        "metadata/property/11",
-        "metadata/property/15"
+        "metadata/property/H3BTS8TCMF",
+        "metadata/property/COSHS8849H",
+        "metadata/property/2BPLFB567R"
     ]
 }</pre>
 </div>
 <p>will not work, instead it is better to do something like:</p>
-<div class="highlight-python"><pre>Request: POST /metadata/property/?id__in=[10,11,15]&amp;bulk_update=1
+<div class="highlight-python"><pre>Request: POST /metadata/property/?id__in=[H3BTS8TCMF,COSHS8849H,2BPLFB567R]&amp;bulk_update=1
 
 {
-    "section": "metadata/section/2"
+    "section": "metadata/section/ANDJRU7AG2"
 }</pre>
 </div>
 </div>
@@ -436,7 +439,7 @@ Vary:Accept-Language, Cookie</pre>
 {
 "logged_in_as": "jeff",
 "objects_selected": 1,
-"selected": [(1)
+"selected": [
 {
     "fields": {
         "id": 2,
@@ -449,11 +452,11 @@ Vary:Accept-Language, Cookie</pre>
         },
         "date_created": "2012-10-31T13:29:28",
         "guid": "b5aeacbcbbe19bc52ce71d0501b3b2cea3e89c0e",
-        "segment": "/electrophysiology/segment/1",
+        "segment": "/electrophysiology/segment/92LHF6H0I5",
         ...
     },
     "model": "neo_api.event",
-    "permalink": "/electrophysiology/event/2"
+    "permalink": "/electrophysiology/event/20TT2P5RV6"
 }
 ],
 ...
@@ -463,14 +466,14 @@ Vary:Accept-Language, Cookie</pre>
 </div>
 <div class="section" id="delete-object-s">
 <h2>Delete object(s)<a class="headerlink" href="#delete-object-s" title="Permalink to this headline">¶</a></h2>
-<p>Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a <em class="xref std std-ref">list</em> will archive all objects within the list. For example, to remove all <a class="reference internal" href="../object_model.html#event"><em>events</em></a> from a particular <a class="reference internal" href="../object_model.html#segment"><em>segment</em></a> with ID = 12 send</p>
-<div class="highlight-python"><pre>Request: DELETE /electrophysiology/event/?segment=12</pre>
+<p>Send the DELETE request to an object permalink to permanently archive it. A DELETE request to a <em class="xref std std-ref">list</em> will archive all objects within the list. For example, to remove all <a class="reference internal" href="../object_model.html#event"><em>events</em></a> from a particular <a class="reference internal" href="../object_model.html#segment"><em>segment</em></a> with ID = L492QR03TV send</p>
+<div class="highlight-python"><pre>Request: DELETE /electrophysiology/event/?segment=L492QR03TV</pre>
 </div>
 </div>
 <div class="section" id="permissions">
 <h2>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h2>
 <p>By default all objects in the system are private and belong to the author. At the same time almost all objects can have different permissions assigned via so-called Access Lists (ACL). To get an access list for a particular object use</p>
-<div class="highlight-python"><pre>Request: GET /electrophysiology/event/1345/acl/</pre>
+<div class="highlight-python"><pre>Request: GET /electrophysiology/event/5IBVVOR9JQ/acl/</pre>
 </div>
 <p>A typical ACL looks like</p>
 <div class="highlight-python"><pre>{
@@ -501,37 +504,37 @@ Vary:Accept-Language, Cookie</pre>
 <col width="94%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Response</th>
+<tr class="row-odd"><th class="head">Response</th>
 <th class="head">Code</th>
 <th class="head">Information</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>Success</td>
+<tr class="row-even"><td>Success</td>
 <td>200</td>
 <td>successful operation, typically GET or DELETE</td>
 </tr>
-<tr><td>Created</td>
+<tr class="row-odd"><td>Created</td>
 <td>201</td>
 <td>object was created successfuly</td>
 </tr>
-<tr><td>BadRequest</td>
+<tr class="row-even"><td>BadRequest</td>
 <td>400</td>
 <td>an exception occured. It could happen if a non-existing object is referenced, or any index for a list was incorrect. Any parsing error of the incoming JSON will lead to this response type. Any validation exception will return this response too.</td>
 </tr>
-<tr><td>Unauthorized</td>
+<tr class="row-odd"><td>Unauthorized</td>
 <td>401</td>
 <td>user is not logged in</td>
 </tr>
-<tr><td>Forbidden</td>
+<tr class="row-even"><td>Forbidden</td>
 <td>403</td>
 <td>a currently logged-in user has no permissions to access or modify an object</td>
 </tr>
-<tr><td>NotFound</td>
+<tr class="row-odd"><td>NotFound</td>
 <td>404</td>
 <td>a wrong URL or object was not found</td>
 </tr>
-<tr><td>NotSupported</td>
+<tr class="row-even"><td>NotSupported</td>
 <td>405</td>
 <td>this type of HTTP request is not supported</td>
 </tr>
@@ -604,7 +607,7 @@ Vary:Accept-Language, Cookie</pre>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />

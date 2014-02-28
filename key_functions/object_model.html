@@ -2,13 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Objects and data model &mdash; g-node-portal v0.6 documentation</title>
+    <title>Objects and data model &mdash; g-node-portal 0.6 documentation</title>
+    
     <link rel="stylesheet" href="../_static/flasky.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="g-node-portal v0.6 documentation" href="../index.html" />
+    <link rel="top" title="g-node-portal 0.6 documentation" href="../index.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -30,28 +33,28 @@
   <body>
 
 <div id="tabhead">
-	<div class="logo">
+  <div class="logo">
+    <!-- HEADER -->
+    <div id="header">
 
-	<!-- HEADER -->
-	<div id="header">
-		
-		<!-- LOGO -->
-		<div id="logo">
-			<a href="/"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
-		</div>
-		
-		<!-- LOGO PARTNER -->
-		<div id="logo_partner">
-			<a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
-		</div>
+      <!-- LOGO -->
+      <div id="logo">
+        <a href="http://www.g-node.org"><img src="../_static/logo.gif" alt="G-Node" border="0" /></a>
+      </div>
 
-		<!-- KEYVISUAL -->
-		<div id="keyvisual">
-			<img src="../_static/default.jpg" alt="" border="0" />
-		</div>
+      <!-- LOGO PARTNER -->
+      <div id="logo_partner">
+        <a href="http://www.incf.org/" target="_blank"><img src="../_static/logopartner.gif" alt="INCF" border="0" /></a>
+      </div>
+
+       <!-- KEYVISUAL -->
+      <div id="keyvisual">
+        <img src="../_static/default.jpg" alt="" border="0" />
+      </div>
     </div>
-    </div>
+  </div>
 </div>
+
 
   
   
@@ -61,7 +64,7 @@
         <ul class="tabs">
           <li><a href="http://www.g-node.org">G-Node Website</a></li>
           <li class="last">
-            <a href="https://portal.g-node.org/data/" title="G-NODE PORTAL">Back to the Portal</a>
+            <a href="http://test.g-node.org" title="G-NODE PORTAL">G-Node Data Portal (Beta)</a>
           </li>
         </ul>
         </div>
@@ -78,7 +81,7 @@
 <div class="section" id="electrophysiology">
 <h2>Electrophysiology<a class="headerlink" href="#electrophysiology" title="Permalink to this headline">¶</a></h2>
 <p>The overall data model for electrophysiology looks like this:</p>
-<div align="center" class="align-center"><img alt="../_images/ephys_om37.png" class="align-center" src="../_images/ephys_om37.png" style="width: 800px;" /></div>
+<img alt="../_images/ephys_om.png" class="align-center" src="../_images/ephys_om.png" style="width: 800px;" />
 <p>Every object in this context has a set of <em>attributes</em> and <em>data fields</em>, it may also have relationships, like <em>parents</em> and <em>children</em>. For example, a <a class="reference internal" href="#segment">Segment</a> has to have an attribute &#8216;name&#8217;. <a class="reference internal" href="#analogsignal">AnalogSignal</a> should have a &#8216;sampling_rate&#8217; data field, which consists of the unit (like Hz or KHz) and a value (like 20000). A <a class="reference internal" href="#block">Block</a> consists of <a class="reference internal" href="#segment">Segment</a> objects, which means the <a class="reference internal" href="#block">Block</a> has a child <a class="reference internal" href="#segment">Segment</a>, and a <a class="reference internal" href="#segment">Segment</a> has a parent <a class="reference internal" href="#block">Block</a>. Below for each object you can find its definition, as well as the detailed listing of its attributes and relationships.</p>
 <p id="available-units"><em>Note. Some attributes have units. Here is the list of available units values:</em></p>
 <blockquote>
@@ -103,32 +106,32 @@
 <col width="64%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>sampling_rate*</td>
+<tr class="row-odd"><td>sampling_rate*</td>
 <td>float + units</td>
 </tr>
-<tr><td>t_start*</td>
+<tr class="row-even"><td>t_start*</td>
 <td>float + units</td>
 </tr>
-<tr><td>signal*</td>
+<tr class="row-odd"><td>signal*</td>
 <td>array of floats 1D + units</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-even"><td>segment</td>
 <td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-odd"><td>recordingchannel</td>
 <td>foreign key to <a class="reference internal" href="#recordingchannel">RecordingChannel</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="irsaanalogsignal">
 <span id="id2"></span><h3>IrSaAnalogSignal<a class="headerlink" href="#irsaanalogsignal" title="Permalink to this headline">¶</a></h3>
@@ -140,32 +143,32 @@
 <col width="64%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>t_start*</td>
+<tr class="row-odd"><td>t_start*</td>
 <td>float + units</td>
 </tr>
-<tr><td>signal*</td>
+<tr class="row-even"><td>signal*</td>
 <td>array of floats 1D + units</td>
 </tr>
-<tr><td>times*</td>
+<tr class="row-odd"><td>times*</td>
 <td>array of floats 1D + units</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-even"><td>segment</td>
 <td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-odd"><td>recordingchannel</td>
 <td>foreign key to <a class="reference internal" href="#recordingchannel">RecordingChannel</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="analogsignalarray">
 <span id="id3"></span><h3>AnalogSignalArray<a class="headerlink" href="#analogsignalarray" title="Permalink to this headline">¶</a></h3>
@@ -177,29 +180,29 @@
 <col width="64%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>t_start*</td>
+<tr class="row-even"><td>t_start*</td>
 <td>float + units</td>
 </tr>
-<tr><td>sampling_rate*</td>
+<tr class="row-odd"><td>sampling_rate*</td>
 <td>float + units</td>
 </tr>
-<tr><td>signal*</td>
+<tr class="row-even"><td>signal*</td>
 <td>array of floats 2D + units</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-odd"><td>segment</td>
 <td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-even"><td>recordingchannelgroup</td>
 <td>foreign key to <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="spike">
 <span id="id4"></span><h3>Spike<a class="headerlink" href="#spike" title="Permalink to this headline">¶</a></h3>
@@ -211,32 +214,32 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>time*</td>
+<tr class="row-even"><td>time*</td>
 <td>float + units</td>
 </tr>
-<tr><td>sampling_rate*</td>
+<tr class="row-odd"><td>sampling_rate*</td>
 <td>float + units</td>
 </tr>
-<tr><td>left_sweep</td>
+<tr class="row-even"><td>left_sweep</td>
 <td>float + units</td>
 </tr>
-<tr><td>waveform*</td>
+<tr class="row-odd"><td>waveform*</td>
 <td>array of floats 2D + units</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-even"><td>segment</td>
 <td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-odd"><td>unit</td>
 <td>foreign key to <a class="reference internal" href="#unit">Unit</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="spiketrain">
 <span id="id5"></span><h3>SpikeTrain<a class="headerlink" href="#spiketrain" title="Permalink to this headline">¶</a></h3>
@@ -248,32 +251,32 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>t_start*</td>
+<tr class="row-even"><td>t_start*</td>
 <td>float + units</td>
 </tr>
-<tr><td>t_stop*</td>
+<tr class="row-odd"><td>t_stop*</td>
 <td>float + units</td>
 </tr>
-<tr><td>times*</td>
+<tr class="row-even"><td>times*</td>
 <td>array of floats 1D + units</td>
 </tr>
-<tr><td>waveforms</td>
+<tr class="row-odd"><td>waveforms</td>
 <td>array of floats 3D + units</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-even"><td>segment</td>
 <td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-odd"><td>unit</td>
 <td>foreign key to <a class="reference internal" href="#unit">Unit</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="event-and-eventarray">
 <span id="event"></span><h3>Event and EventArray<a class="headerlink" href="#event-and-eventarray" title="Permalink to this headline">¶</a></h3>
@@ -285,23 +288,23 @@
 <col width="60%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>label(s)*</td>
+<tr class="row-even"><td>label(s)*</td>
 <td>string/array of strings 1D</td>
 </tr>
-<tr><td>time(s)*</td>
+<tr class="row-odd"><td>time(s)*</td>
 <td>float/array of floats 1D + units</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-even"><td>segment</td>
 <td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="epoch-and-epocharray">
 <span id="epoch"></span><h3>Epoch and EpochArray<a class="headerlink" href="#epoch-and-epocharray" title="Permalink to this headline">¶</a></h3>
@@ -313,26 +316,26 @@
 <col width="60%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>label(s)*</td>
+<tr class="row-even"><td>label(s)*</td>
 <td>string/array of strings 1D</td>
 </tr>
-<tr><td>time(s)*</td>
+<tr class="row-odd"><td>time(s)*</td>
 <td>float/array of floats 1D + units</td>
 </tr>
-<tr><td>duration(s)*</td>
+<tr class="row-even"><td>duration(s)*</td>
 <td>float/array of floats 1D + units</td>
 </tr>
-<tr><td>segment</td>
+<tr class="row-odd"><td>segment</td>
 <td>foreign key to <a class="reference internal" href="#segment">Segment</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 <p><a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys Objects</em></a> comprise a simple hierarchy of containers:</p>
 </div>
 <div class="section" id="segment">
@@ -345,21 +348,21 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>filedatetime</td>
+<tr class="row-odd"><td>filedatetime</td>
 <td>datetime</td>
 </tr>
-<tr><td>index</td>
+<tr class="row-even"><td>index</td>
 <td>int</td>
 </tr>
-<tr><td>block</td>
+<tr class="row-odd"><td>block</td>
 <td>foreign key to <a class="reference internal" href="#block">Block</a></td>
 </tr>
 </tbody>
@@ -377,7 +380,7 @@
 </ul>
 </dd>
 </dl>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="block">
 <span id="id7"></span><h3>Block<a class="headerlink" href="#block" title="Permalink to this headline">¶</a></h3>
@@ -389,21 +392,21 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>filedatetime</td>
+<tr class="row-odd"><td>filedatetime</td>
 <td>datetime</td>
 </tr>
-<tr><td>index</td>
+<tr class="row-even"><td>index</td>
 <td>int</td>
 </tr>
-<tr><td>section</td>
+<tr class="row-odd"><td>section</td>
 <td>foreign key to <a class="reference internal" href="#section">Section</a></td>
 </tr>
 </tbody>
@@ -416,7 +419,7 @@
 </ul>
 </dd>
 </dl>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 <p><a class="reference internal" href="terminology.html#ephys-objects"><em>ePhys Objects</em></a> also include <em>Grouping objects</em>. These objects express the relationships between data items, such as which signals were recorded on which electrodes, which spike trains were obtained from which membrane potential signals, etc. They contain references to data objects that cut across the simple container hierarchy.</p>
 </div>
 <div class="section" id="recordingchannel">
@@ -429,18 +432,18 @@
 <col width="64%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>index</td>
+<tr class="row-odd"><td>index</td>
 <td>int</td>
 </tr>
-<tr><td>recordingchannelgroup</td>
+<tr class="row-even"><td>recordingchannelgroup</td>
 <td>foreign key to <a class="reference internal" href="#recordingchannelgroup">RecordingChannelGroup</a></td>
 </tr>
 </tbody>
@@ -454,7 +457,7 @@
 </ul>
 </dd>
 </dl>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="recordingchannelgroup">
 <span id="id9"></span><h3>RecordingChannelGroup<a class="headerlink" href="#recordingchannelgroup" title="Permalink to this headline">¶</a></h3>
@@ -466,15 +469,15 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>block</td>
+<tr class="row-odd"><td>block</td>
 <td>foreign key to <a class="reference internal" href="#block">Block</a></td>
 </tr>
 </tbody>
@@ -487,7 +490,7 @@
 </ul>
 </dd>
 </dl>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="unit">
 <span id="id10"></span><h3>Unit<a class="headerlink" href="#unit" title="Permalink to this headline">¶</a></h3>
@@ -499,15 +502,15 @@
 <col width="60%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>recordingchannel</td>
+<tr class="row-odd"><td>recordingchannel</td>
 <td>foreign key to <a class="reference internal" href="#recordingchannel">RecordingChannel</a></td>
 </tr>
 </tbody>
@@ -520,13 +523,13 @@
 </ul>
 </dd>
 </dl>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 </div>
 <div class="section" id="metadata">
 <h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
 <p>The general metadata object model looks like:</p>
-<div align="center" class="align-center"><img alt="../_images/metadata_om39.png" class="align-center" src="../_images/metadata_om39.png" /></div>
+<img alt="../_images/metadata_om.png" class="align-center" src="../_images/metadata_om.png" />
 <p>it is implemented inline with <a class="reference external" href="http://www.g-node.org/projects/odml">odML</a> concept and consists of objects like <a class="reference internal" href="#section">Section</a>, <a class="reference internal" href="#properties-with-values">Properties with Values</a>.  Here goes the complete metadata objects specification.</p>
 <div class="section" id="section">
 <span id="id11"></span><h3>Section<a class="headerlink" href="#section" title="Permalink to this headline">¶</a></h3>
@@ -538,24 +541,24 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>description</td>
+<tr class="row-odd"><td>description</td>
 <td>string</td>
 </tr>
-<tr><td>odml_type</td>
+<tr class="row-even"><td>odml_type</td>
 <td>int (0-99)</td>
 </tr>
-<tr><td>tree_position</td>
+<tr class="row-odd"><td>tree_position</td>
 <td>int</td>
 </tr>
-<tr><td>parent_section</td>
+<tr class="row-even"><td>parent_section</td>
 <td>foreign key to <a class="reference internal" href="#section">Section</a></td>
 </tr>
 </tbody>
@@ -569,7 +572,7 @@
 </ul>
 </dd>
 </dl>
-<p>See exact object representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 <div class="section" id="properties-and-values">
 <span id="properties-with-values"></span><h3>Properties and Values<a class="headerlink" href="#properties-and-values" title="Permalink to this headline">¶</a></h3>
@@ -582,39 +585,39 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>definition</td>
+<tr class="row-odd"><td>definition</td>
 <td>string</td>
 </tr>
-<tr><td>dependency</td>
+<tr class="row-even"><td>dependency</td>
 <td>string</td>
 </tr>
-<tr><td>dependency_value</td>
+<tr class="row-odd"><td>dependency_value</td>
 <td>string</td>
 </tr>
-<tr><td>mapping</td>
+<tr class="row-even"><td>mapping</td>
 <td>string</td>
 </tr>
-<tr><td>unit</td>
+<tr class="row-odd"><td>unit</td>
 <td>string</td>
 </tr>
-<tr><td>dtype</td>
+<tr class="row-even"><td>dtype</td>
 <td>string</td>
 </tr>
-<tr><td>uncertainty</td>
+<tr class="row-odd"><td>uncertainty</td>
 <td>string</td>
 </tr>
-<tr><td>comment</td>
+<tr class="row-even"><td>comment</td>
 <td>string</td>
 </tr>
-<tr><td>section*</td>
+<tr class="row-odd"><td>section*</td>
 <td>foreign key to <a class="reference internal" href="#section">Section</a></td>
 </tr>
 </tbody>
@@ -627,20 +630,20 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>data*</td>
+<tr class="row-even"><td>data*</td>
 <td>string</td>
 </tr>
-<tr><td>parent_property*</td>
+<tr class="row-odd"><td>parent_property*</td>
 <td>foreign key to <a class="reference internal" href="#section">Section</a></td>
 </tr>
 </tbody>
 </table>
-<p>See exact objects representation in <a class="reference internal" href="../reference/matlab_examples.html"><em>Matlab</em></a>, <a class="reference internal" href="../reference/python_examples.html"><em>Python</em></a> or <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
+<p>See exact JSON object representation in <a class="reference internal" href="data_api/object_examples.html"><em>JSON DATA API</em></a>.</p>
 </div>
 </div>
 <div class="section" id="files">
@@ -655,18 +658,18 @@
 <col width="55%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Parameter</th>
+<tr class="row-odd"><th class="head">Parameter</th>
 <th class="head">Type</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>name*</td>
+<tr class="row-even"><td>name*</td>
 <td>string</td>
 </tr>
-<tr><td>caption</td>
+<tr class="row-odd"><td>caption</td>
 <td>string</td>
 </tr>
-<tr><td>section*</td>
+<tr class="row-even"><td>section*</td>
 <td>foreign key to <a class="reference internal" href="#section">Section</a></td>
 </tr>
 </tbody>
@@ -677,7 +680,7 @@
 <div class="section" id="full-model-overview">
 <h2>Full model overview<a class="headerlink" href="#full-model-overview" title="Permalink to this headline">¶</a></h2>
 <p>Just to summarize this document, the data model for the whole system looks like:</p>
-<div align="center" class="align-center"><img alt="../_images/common_om30.png" class="align-center" src="../_images/common_om30.png" style="width: 800px;" /></div>
+<img alt="../_images/common_om.png" class="align-center" src="../_images/common_om.png" style="width: 800px;" />
 </div>
 </div>
 
@@ -731,7 +734,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
