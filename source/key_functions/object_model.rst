@@ -48,7 +48,7 @@ segment              foreign key to Segment_
 recordingchannel     foreign key to RecordingChannel_
 ==================   ==========================
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
  
 
 .. _IrSaAnalogSignal:
@@ -70,7 +70,7 @@ segment              foreign key to Segment_
 recordingchannel     foreign key to RecordingChannel_
 ==================   ==========================
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
  
 
 .. _AnalogSignalArray:
@@ -91,7 +91,7 @@ segment                 foreign key to Segment_
 recordingchannelgroup   foreign key to RecordingChannelGroup_
 =====================   ==========================
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
  
 
 .. _Spike:
@@ -113,7 +113,7 @@ segment                 foreign key to Segment_
 unit                    foreign key to Unit_
 =====================   ==========================
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _SpikeTrain:
@@ -135,7 +135,7 @@ segment                 foreign key to Segment_
 unit                    foreign key to Unit_
 =====================   ==========================
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _Event:
@@ -154,7 +154,7 @@ time(s)\*               float/array of floats 1D + units
 segment                 foreign key to Segment_
 =====================   ==========================
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _Epoch:
@@ -173,7 +173,7 @@ duration(s)\*           float/array of floats 1D + units
 segment                 foreign key to Segment_
 =====================   ==========================
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 :ref:`ePhys Objects <ePhys Objects>` comprise a simple hierarchy of containers:
@@ -205,7 +205,7 @@ Segment can contain objects of the following types:
  * Epoch_ and array of epochs
 
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 .. _Block:
 
@@ -228,7 +228,7 @@ Block can contain objects of the following types:
  * Segment_
  * RecordingChannelGroup_
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 :ref:`ePhys Objects <ePhys Objects>` also include *Grouping objects*. These objects express the relationships between data items, such as which signals were recorded on which electrodes, which spike trains were obtained from which membrane potential signals, etc. They contain references to data objects that cut across the simple container hierarchy.
@@ -254,7 +254,7 @@ RecordingChannel can contain objects of the following types:
  * AnalogSignal_
  * IrSaAnalogSignal_
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _RecordingChannelGroup:
@@ -275,7 +275,7 @@ RecordingChannelGroup can contain objects of the following types:
  * RecordingChannel_
  * AnalogSignalArray_
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _Unit:
@@ -297,7 +297,7 @@ Unit can contain objects of the following types:
  * SpikeTrain_
  * Spike_
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 --------
 Metadata
@@ -333,7 +333,7 @@ Section can contain objects of the following types:
  * Block_
  * Datafile_
 
-See exact object representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 .. _`Properties with Values`:
@@ -373,7 +373,7 @@ data\*                  string
 parent_property\*       foreign key to Section_ 
 =====================   ==========================
 
-See exact objects representation in :doc:`Matlab <../reference/matlab_examples>`, :doc:`Python <../reference/python_examples>` or :doc:`JSON DATA API <data_api/object_examples>`.
+See exact JSON object representation in :doc:`JSON DATA API <data_api/object_examples>`.
 
 
 
