@@ -78,65 +78,129 @@
             
   <div class="section" id="overview">
 <span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<p>The aim of the G-Node Portal is to provide a platform for Neuroscientists for data storage, analysis and exchange. It was designed to support normal experimental workflow, so you may use it from your familiar analytical environment, like Matlab or Python. Here we give an overview of the platform and available services.</p>
-<p>The goal of this document is to present you the potential usage of the platform for your specific experimental workflow. If you want to try it now or you&#8217;re ready for a more detailed description - please <a class="reference external" href="https://portal.g-node.org/data/">login</a> or <a class="reference external" href="https://portal.g-node.org/data/account/signup/">sign up</a>, or proceed with our tutorials (<tt class="xref doc docutils literal"><span class="pre">matlab</span></tt>, <tt class="xref doc docutils literal"><span class="pre">python</span></tt> - coming soon).</p>
-<div class="section" id="start-by-searching-public-data">
-<span id="search-overview"></span><h2>Start by searching public data<a class="headerlink" href="#start-by-searching-public-data" title="Permalink to this headline">¶</a></h2>
-<p><strong>Sorry. This section is being developed.</strong></p>
+<p>The aim of the GNData is to provide a platform for Neuroscientists for data storage, analysis and exchange. It was designed to support normal experimental workflow, so you may use it from your familiar analytical environment, like Matlab or Python.</p>
+<p>Below we provide several use case examples of the GNData platform with application to real experimental data.
+For practial illustration we use G-Node client libraries for Matlab and Python to show data management operations directly within the computational framework.
+Additionally, we provide a short description on web browser access for overview purposes.
+For proper operation a server part should be available.
+A demo environment is provided by the G-Node at <a class="reference external" href="http://test.g-node.org">test.g-node.org</a>, which can be accessed for testing or introductory purposes without user account registration (user and password &#8220;demo&#8221;).</p>
+<p>In the following examples, we consider a typical experimental study in which responses from neurons in the visual cortex of macaque monkeys are recorded (Teichert et al., 2007).
+These examples assume a dataset containing neural responses recorded with an array of electrodes that is pre-loaded on the demo server.</p>
+<div class="section" id="start-by-browsing-the-demo-beta">
+<h2>Start by browsing the Demo (Beta)<a class="headerlink" href="#start-by-browsing-the-demo-beta" title="Permalink to this headline">¶</a></h2>
+<p>Start by logging with the user &#8220;demo&#8221; and password &#8220;demo to the <a class="reference external" href="http://test.g-node.org">test.g-node.org</a> (web interface is in the Beta mode). The tree browser on the left prvides an overview of the Experiments, Data and certain experimental features (metadata like Stimulus etc.). In the middle panel one can browse metadata properties and values.</p>
+<p>To get the Data overview, one can select &#8220;All Data&#8221; in the metadata browser (tree on the left), then select the <a class="reference internal" href="key_functions/object_model.html#analogsignal"><em>AnalogSignal</em></a> in the drop down box in the search panel (middle top), and click search (also select the &#8220;Data&#8221; tab below if needed). This should provide a list of uploaded example LFP data. One can select one or several of the signals from the list by hovering over and clicking a &#8220;tick&#8221; button. The selected signals will appear in the &#8220;Selected Data&#8221; panel (bottom right). These can be plotted with the &#8220;Plot Selection&#8221; button below. Certain regions can be zoomed in on the plot.</p>
 </div>
-<div class="section" id="organize-your-experimental-data">
-<span id="overview-ephys"></span><h2>Organize your experimental Data<a class="headerlink" href="#organize-your-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p><strong>Sorry. This section is being developed.</strong></p>
-<p>Intuitively, full data model can be drawn on this diagram:</p>
-<img alt="_images/ephys_basic.png" class="align-center" src="_images/ephys_basic.png" />
+<div class="section" id="accessing-the-rest-interface-via-web-browser">
+<h2>Accessing the REST interface via web browser<a class="headerlink" href="#accessing-the-rest-interface-via-web-browser" title="Permalink to this headline">¶</a></h2>
+<p>We recommend a combination of a web browser with a REST client as a framework to execute HTTP requests (for example, <a class="reference external" href="http://google.com/chrome">Google Chrome</a> with <a class="reference external" href="http://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm">Postman</a>).
+Alternatively, HTTP requests can be also executed directly from the web browser&#8217;s address bar but with the loss of human-readable response formatting.</p>
+<p>Authentication for the demo user is done with the following POST request:</p>
+<div class="highlight-python"><pre>POST /account/authenticate/
+
+{
+    "username": "demo",
+    "password": "demo"
+}</pre>
 </div>
-<div class="section" id="create-your-metadata-structure">
-<span id="overview-metadata"></span><h2>Create your metadata structure<a class="headerlink" href="#create-your-metadata-structure" title="Permalink to this headline">¶</a></h2>
-<p><strong>Sorry. This section is being developed.</strong></p>
-<img alt="_images/metadata_example.png" class="align-center" src="_images/metadata_example.png" />
+<p>The browser saves authentication and session information automatically, allowing to execute further API requests.</p>
+<p>As a short example, the following HTTP request selects all experimental trials created on November, 11th that have &#8216;saccade&#8217; in their name.</p>
+<div class="highlight-python"><pre>GET /electrophysiology/segment/?date_created__month=11&amp;date_created__day=9&amp;name__icontains=saccade</pre>
 </div>
-<div class="section" id="annotate-datasets">
-<span id="annotation-example"></span><h2>Annotate datasets<a class="headerlink" href="#annotate-datasets" title="Permalink to this headline">¶</a></h2>
-<p><strong>Sorry. This section is being developed.</strong></p>
-<p>Imagine you have an experiment with stimulus which changes its color across experimental trials. The &#8220;color&#8221; is an arbitrary parameter, we cannot predict the exact setup of your experimental study. In your future research you want to indicate, which signals were recorded under which stimulus color, to be able to perform some valueable data analysis. Essentially this is a need to connect recorded signal data with arbitrary metadata; we call this &#8220;data annotation&#8221; process. In this section we describe how it works.</p>
-<p>The idea is that you use objects in electrophysiology ...</p>
-<p>Assume you want to group channels by some spatial property, and later compare the results from this group to the results from all channels. Bla..</p>
-<p>Assume in the experiment section tree you already defined a property, say, &#8220;Stimulus Color&#8221; with values &#8220;red, green and blue&#8221;. In that case, annotate all required Analog Signals with appropriate metadata values, assigning a &#8220;red&#8221; value to the signals recorded when the Stimulius was red etc.</p>
+<p>Further requests can be executed according to the <a class="reference internal" href="key_functions/data_api/principles.html"><em>API documentation</em></a> or the examples presented in this overview.</p>
 </div>
-<div class="section" id="query-your-experiments">
-<span id="query-overview"></span><h2>Query your experiments<a class="headerlink" href="#query-your-experiments" title="Permalink to this headline">¶</a></h2>
-<p><strong>Sorry. This section is being developed.</strong></p>
+<div class="section" id="accessing-data-with-matlab">
+<h2>Accessing data with Matlab<a class="headerlink" href="#accessing-data-with-matlab" title="Permalink to this headline">¶</a></h2>
+<p>The Matlab library is a free package accessible at the <a class="reference external" href="https://github.com/G-Node/gnode-client-matlab/">G-Node Github repository</a>.
+Installation instructions and package documentation are available at the <a class="reference external" href="https://github.com/G-Node/gnode-client-matlab/wiki/Installation">project wiki page</a>.</p>
+<p>To start using the library it is necessary to import the &#8220;gnode&#8221; functions into the current scope and initialize a session:</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span class="c">% move all library functions into scope</span>
+<span class="n">import</span> <span class="n">gnode</span><span class="o">.*</span><span class="p">;</span>
+
+<span class="c">% initialize session as user &quot;demo&quot; with password &quot;demo&quot;</span>
+<span class="n">g</span> <span class="p">=</span> <span class="n">init</span><span class="p">(</span><span class="s">&#39;demo&#39;</span><span class="p">,</span> <span class="s">&#39;demo&#39;</span><span class="p">,</span> <span class="s">&#39;test.g-node.org&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
-<div class="section" id="open-your-data-for-collaborators">
-<span id="sharing-overview"></span><h2>Open your data for Collaborators<a class="headerlink" href="#open-your-data-for-collaborators" title="Permalink to this headline">¶</a></h2>
-<p>There is a possibility to share your data with other users in the G-Node Portal. When you share an object, it immediately becomes accessible for the users depending on the access level you select. In case an object is a container (has downstream relations, like a <a class="reference internal" href="key_functions/object_model.html#segment"><em>Segment</em></a> can have <a class="reference internal" href="key_functions/object_model.html#event"><em>Events</em></a>), you may share an object recursively, which implies all children objects in the selected object with all their contents will become shared. Object sharing is controlled via the object safety level (kind of a sharing state) and <a class="reference internal" href="key_functions/terminology.html#acl-term"><em>access control list</em></a>. Object&#8217;s safety level can be</p>
-<blockquote>
-<div><ul class="simple">
-<li>private — noone, except users, specified explicitly in the Access Control List, may see the resource.</li>
-<li>friendly — all friends have a reader role, with no need to assign them for every resource.</li>
-<li>public — all users may see the contents of the resource.</li>
-</ul>
-</div></blockquote>
-<p>In addition to the common object sharing state (safety level), many objects support <a class="reference internal" href="key_functions/terminology.html#acl-term"><em>Access Control Lists</em></a>, that show who has access to a given object.</p>
-<p>Every object has an owner, which is always a person who initially created an object, and cannot be changed.</p>
-<p>With no dependence on the state, people, assigned explicitly by owner of the resource as readers or writers, have corresponding access to the resource.</p>
+<p>Data at GNData is stored in a set of object types tailored to electrophysiology, such as blocks, segments, recording channels, signals etc.
+In the Matlab environment, these objects are represented as structures.
+Here is a basic example for creating and uploading such an object.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span class="c">% create a structure containing signal data</span>
+<span class="n">signal</span> <span class="p">=</span> <span class="n">make_dummy</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;analogsignal&#39;</span><span class="p">);</span>
+
+<span class="n">signal</span><span class="p">.</span><span class="n">name</span> <span class="p">=</span> <span class="s">&#39;New signal&#39;</span><span class="p">;</span>
+<span class="n">signal</span><span class="p">.</span><span class="n">sampling_rate</span> <span class="p">=</span> <span class="n">struct</span><span class="p">(</span><span class="s">&#39;units&#39;</span><span class="p">,</span> <span class="s">&#39;Hz&#39;</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> 12000<span class="p">);</span>
+<span class="n">signal</span><span class="p">.</span><span class="n">t_start</span> <span class="p">=</span> <span class="n">struct</span><span class="p">(</span><span class="s">&#39;units&#39;</span><span class="p">,</span> <span class="s">&#39;ms&#39;</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> 0<span class="p">);</span>
+<span class="n">signal</span><span class="p">.</span><span class="n">signal</span> <span class="p">=</span> <span class="n">struct</span><span class="p">(</span><span class="s">&#39;units&#39;</span><span class="p">,</span> <span class="s">&#39;mV&#39;</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="p">[</span>3<span class="p">.</span>45<span class="p">,</span> 1<span class="p">.</span>34<span class="p">,</span> 1<span class="p">.</span>45<span class="p">,</span> 4<span class="p">.</span>22<span class="p">]);</span>
+
+<span class="c">% creates object on the server and returns its unique ID</span>
+<span class="n">new_object</span> <span class="p">=</span> <span class="n">create</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">signal</span><span class="p">);</span>
+</pre></div>
 </div>
-<div class="section" id="track-changes">
-<span id="id2"></span><h2>Track changes<a class="headerlink" href="#track-changes" title="Permalink to this headline">¶</a></h2>
-<p><strong>Sorry. This section is being developed.</strong></p>
+<p>Object retrieval is equally straightforward and supports various access methods (e.g. by object type, by array of IDs, using filters or a numeric range).
+Here is an example that requests all time segments representing experimental trials that were created on November, 11th and have &#8216;saccade&#8217; in their name:</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span class="c">% query LFP data using filters</span>
+<span class="n">filter1</span> <span class="p">=</span> <span class="p">{</span><span class="s">&#39;date_created__month&#39;</span><span class="p">,</span> <span class="s">&#39;11&#39;</span><span class="p">};</span>
+<span class="n">filter2</span> <span class="p">=</span> <span class="p">{</span><span class="s">&#39;date_created__day&#39;</span><span class="p">,</span> <span class="s">&#39;9&#39;</span><span class="p">};</span>
+<span class="n">filter3</span> <span class="p">=</span> <span class="p">{</span><span class="s">&#39;name__icontains&#39;</span><span class="p">,</span> <span class="s">&#39;saccade&#39;</span><span class="p">};</span>
+
+<span class="n">segments</span> <span class="p">=</span> <span class="n">browse_search</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;segment&#39;</span><span class="p">,</span> <span class="n">filter1</span><span class="p">{:},</span> <span class="n">filter2</span><span class="p">{:},</span> <span class="n">filter3</span><span class="p">{:});</span>
+</pre></div>
 </div>
-<div class="section" id="bulk-data-upload">
-<span id="bulk-upload"></span><h2>Bulk data upload<a class="headerlink" href="#bulk-data-upload" title="Permalink to this headline">¶</a></h2>
-<p><strong>Sorry. This section is being developed.</strong></p>
-<div class="section" id="zip-archives">
-<h3>Zip archives<a class="headerlink" href="#zip-archives" title="Permalink to this headline">¶</a></h3>
-<p>This section is in development..</p>
+<p>The following example downloads one of the time segments with all related analog signal and spike time data:</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span class="n">segment_with_data</span> <span class="p">=</span> <span class="n">get_cascade</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">segments</span><span class="p">{</span>1<span class="p">})</span>
+</pre></div>
 </div>
-<div class="section" id="upload-via-sftp">
-<h3>Upload via sFTP<a class="headerlink" href="#upload-via-sftp" title="Permalink to this headline">¶</a></h3>
-<p>This section is in development..</p>
+<p>More advanced operations (e.g., updates, download queues, batch object creation and upload, and so on) are described in the reference.</p>
 </div>
+<div class="section" id="accessing-data-with-python">
+<h2>Accessing data with Python<a class="headerlink" href="#accessing-data-with-python" title="Permalink to this headline">¶</a></h2>
+<p>The Python library is a free package accessible at the <a class="reference external" href="https://github.com/G-Node/python-gnode-client">G-Node Github repository</a> as well as at the standard <a class="reference external" href="https://pypi.python.org/pypi/gnodeclient/">python package repository</a>.
+Installation instructions are contained in the attached documentation as well as online at the <a class="reference external" href="http://g-node.github.io/python-gnode-client">project documentation page</a>.</p>
+<p>To start using the library it is necessary to import the session class and initialize a session:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import core session class and model descriptions</span>
+<span class="kn">from</span> <span class="nn">gnodeclient</span> <span class="kn">import</span> <span class="n">session</span><span class="p">,</span> <span class="n">Model</span>
+
+<span class="c"># Initialize session as user &quot;demo&quot; with password &quot;demo&quot;</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&quot;demo&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&quot;demo&quot;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&quot;http://test.g-node.org&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
+<p>A session object provides the main interface to work with data and metadata.
+Like with the Matlab library example above, we demonstrate how to select a certain experimental trial using several criteria.
+In particular, the following script requests all time segments representing experimental trials that were created on November, 11th and have &#8216;saccade&#8217; in their name.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;date_created__month&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s">&#39;date_created__day&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s">&#39;name__icontains&#39;</span><span class="p">:</span> <span class="s">&#39;saccade&#39;</span>
+<span class="p">}</span>
+
+<span class="n">time_segments</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">SEGMENT</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This results in a number of experimental trials, saved on that day.
+The Neo data model assumes that time segments contain analog signal or event type data.
+For illustration, the script below plots all LFP traces from the first trial of the selection.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># take a first segment from the selection</span>
+<span class="n">lfp_data</span> <span class="o">=</span> <span class="n">time_segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">analogsignals</span>
+
+<span class="c"># plot LFP data from a certain trial (downloaded data is cached)</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pylab</span> <span class="k">as</span> <span class="n">pl</span>
+
+<span class="n">lfp</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">lfp_data</span><span class="p">:</span>
+    <span class="n">lfp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">recordingchannel</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="n">lfp_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c"># one of the signals</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;time [</span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="n">s1</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">dimensionality</span><span class="o">.</span><span class="n">string</span><span class="p">)</span> <span class="c"># set X units</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;voltage [</span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="n">s1</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">dimensionality</span><span class="o">.</span><span class="n">string</span><span class="p">)</span> <span class="c"># set Y units</span>
+
+<span class="c"># [...] # commands for axes and legend omitted</span>
+
+<span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Further examples as well as the full library reference are available at the project documentation page.</p>
+<img alt="_images/analog_signals_plot.jpg" class="align-center" src="_images/analog_signals_plot.jpg" style="width: 700px;" />
+<span class="target" id="query-overview"><span id="sharing-overview"></span><span id="id4"></span></span></div>
 </div>
 
 
@@ -148,18 +212,10 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Overview</a><ul>
-<li><a class="reference internal" href="#start-by-searching-public-data">Start by searching public data</a></li>
-<li><a class="reference internal" href="#organize-your-experimental-data">Organize your experimental Data</a></li>
-<li><a class="reference internal" href="#create-your-metadata-structure">Create your metadata structure</a></li>
-<li><a class="reference internal" href="#annotate-datasets">Annotate datasets</a></li>
-<li><a class="reference internal" href="#query-your-experiments">Query your experiments</a></li>
-<li><a class="reference internal" href="#open-your-data-for-collaborators">Open your data for Collaborators</a></li>
-<li><a class="reference internal" href="#track-changes">Track changes</a></li>
-<li><a class="reference internal" href="#bulk-data-upload">Bulk data upload</a><ul>
-<li><a class="reference internal" href="#zip-archives">Zip archives</a></li>
-<li><a class="reference internal" href="#upload-via-sftp">Upload via sFTP</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#start-by-browsing-the-demo-beta">Start by browsing the Demo (Beta)</a></li>
+<li><a class="reference internal" href="#accessing-the-rest-interface-via-web-browser">Accessing the REST interface via web browser</a></li>
+<li><a class="reference internal" href="#accessing-data-with-matlab">Accessing data with Matlab</a></li>
+<li><a class="reference internal" href="#accessing-data-with-python">Accessing data with Python</a></li>
 </ul>
 </li>
 </ul>
