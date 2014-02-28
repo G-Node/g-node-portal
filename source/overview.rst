@@ -118,7 +118,7 @@ More advanced operations (e.g., updates, download queues, batch object creation 
 Accessing data with Python
 --------------------------
 
-The Python library is a free package accessible at the `G-Node Github repository <https://github.com/G-Node/python-gnode-client>`_ as well as at the standard `python package repository <http://pypi.python.org/pypi>`_. 
+The Python library is a free package accessible at the `G-Node Github repository <https://github.com/G-Node/python-gnode-client>`_ as well as at the standard `python package repository <https://pypi.python.org/pypi/gnodeclient/>`_. 
 Installation instructions are contained in the attached documentation as well as online at the `project documentation page <http://g-node.github.io/python-gnode-client>`_.
 
 To start using the library it is necessary to import the session class and initialize a session:
