@@ -5,8 +5,8 @@ The address g-node.github.io/g-node-portal is referenced in a publication so the
 ---
 
 Note:
-*The themes needed for compilation of this documentation by Sphinx should be pulled from a different repository (https://github.com/apleonhardt/gnode-sphinx-themes) and stored in source/_themes/
-*The compiled html files should be pushed to gh-pages branch of this repository
+* The themes needed for compilation of this documentation by Sphinx should be pulled from a different repository (https://github.com/apleonhardt/gnode-sphinx-themes) and stored in source/_themes/
+* The compiled html files should be pushed to gh-pages branch of this repository
 
 
 Instructions:
